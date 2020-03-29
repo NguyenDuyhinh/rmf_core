@@ -64,15 +64,15 @@ public:
     initialized = true;
 
     casters.push_back(
-          [=](const ShapeTypePtr& shape) -> std::size_t
-    {
-      if(dynamic_cast<const DerivedShape*>(&shape->source()))
-        return type_index;
+      [=](const ShapeTypePtr& shape) -> std::size_t
+      {
+        if (dynamic_cast<const DerivedShape*>(&shape->source()))
+          return type_index;
 
-      return 0;
-    });
+        return 0;
+      });
 
-    if(type_index >= num_shape_types)
+    if (type_index >= num_shape_types)
     {
       num_shape_types = type_index+1;
       shapes.resize(num_shape_types);
@@ -81,10 +81,10 @@ public:
 
   std::size_t get_type_index(const ShapeTypePtr& shape)
   {
-    for(const auto& caster : casters)
+    for (const auto& caster : casters)
     {
       const std::size_t cast = caster(shape);
-      if(cast != 0)
+      if (cast != 0)
         return cast;
     }
 
@@ -106,11 +106,11 @@ public:
     }
 
     const auto insertion =
-        entry_map.insert(std::make_pair(shape, Entry{}));
+      entry_map.insert(std::make_pair(shape, Entry{}));
 
     const bool inserted = insertion.second;
     Entry& entry = insertion.first->second;
-    if(inserted)
+    if (inserted)
     {
       entry.type = get_type_index(shape);
 
