@@ -30,8 +30,8 @@ class BoxInternal : public Shape::Internal
 public:
 
   BoxInternal(double x, double y)
-    : _x(x),
-      _y(y)
+  : _x(x),
+    _y(y)
   {
     // Do nothing
   }
@@ -49,15 +49,15 @@ public:
 
 //==============================================================================
 Box::Box(double x_length, double y_length)
-  : ConvexShape(std::make_unique<BoxInternal>(x_length, y_length))
+: ConvexShape(std::make_unique<BoxInternal>(x_length, y_length))
 {
   // Do nothing
 }
 
 //==============================================================================
 Box::Box(const Box& other)
-  : ConvexShape(std::make_unique<BoxInternal>(
-                  static_cast<const BoxInternal&>(*other._get_internal())))
+: ConvexShape(std::make_unique<BoxInternal>(
+    static_cast<const BoxInternal&>(*other._get_internal())))
 {
   // Do nothing
 }
@@ -66,7 +66,7 @@ Box::Box(const Box& other)
 Box& Box::operator=(const Box& other)
 {
   static_cast<BoxInternal&>(*_get_internal()) =
-      static_cast<const BoxInternal&>(*other._get_internal());
+    static_cast<const BoxInternal&>(*other._get_internal());
 
   return *this;
 }
