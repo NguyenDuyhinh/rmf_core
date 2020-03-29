@@ -35,23 +35,23 @@ public:
 
 //==============================================================================
 ScheduleRouteValidator::ScheduleRouteValidator(
-    const schedule::Viewer& viewer,
-    schedule::ParticipantId participant_id,
-    Profile profile)
-  : _pimpl(rmf_utils::make_impl<Implementation>(
-             Implementation{
-               &viewer,
-               participant_id,
-               std::move(profile),
-               rmf_traffic::schedule::query_all()
-             }))
+  const schedule::Viewer& viewer,
+  schedule::ParticipantId participant_id,
+  Profile profile)
+: _pimpl(rmf_utils::make_impl<Implementation>(
+    Implementation{
+      &viewer,
+      participant_id,
+      std::move(profile),
+      rmf_traffic::schedule::query_all()
+    }))
 {
   _pimpl->query.spacetime().query_timespan({});
 }
 
 //==============================================================================
 ScheduleRouteValidator& ScheduleRouteValidator::schedule_viewer(
-    const schedule::Viewer& viewer)
+  const schedule::Viewer& viewer)
 {
   _pimpl->viewer = &viewer;
   return *this;
@@ -65,7 +65,7 @@ const schedule::Viewer& ScheduleRouteValidator::schedule_viewer() const
 
 //==============================================================================
 ScheduleRouteValidator& ScheduleRouteValidator::participant(
-    const schedule::ParticipantId p)
+  const schedule::ParticipantId p)
 {
   _pimpl->participant = p;
   return *this;
@@ -125,14 +125,14 @@ public:
 
 //==============================================================================
 NegotiatingRouteValidator::NegotiatingRouteValidator(
-    const schedule::Negotiation::Table& table,
-    Profile profile)
-  : _pimpl(rmf_utils::make_impl<Implementation>(
-             Implementation{
-               &table,
-               std::move(profile),
-               schedule::query_all()
-             }))
+  const schedule::Negotiation::Table& table,
+  Profile profile)
+: _pimpl(rmf_utils::make_impl<Implementation>(
+    Implementation{
+      &table,
+      std::move(profile),
+      schedule::query_all()
+    }))
 {
   _pimpl->query.spacetime().query_timespan({});
 }
