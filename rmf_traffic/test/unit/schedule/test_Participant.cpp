@@ -30,12 +30,11 @@
 #include <unordered_map>
 
 class FaultyWriter : public rmf_traffic::schedule::Writer
-
 {
 public:
 
   FaultyWriter(rmf_traffic::schedule::Database& database)
-    : _database(database)
+  : _database(database)
   {
     // Do nothing
   }
@@ -43,9 +42,9 @@ public:
   bool drop_packets = false;
 
   void set(
-      rmf_traffic::schedule::ParticipantId participant,
-      const Input& itinerary,
-      rmf_traffic::schedule::ItineraryVersion version) final
+    rmf_traffic::schedule::ParticipantId participant,
+    const Input& itinerary,
+    rmf_traffic::schedule::ItineraryVersion version) final
   {
     if (drop_packets)
       return;
@@ -54,9 +53,9 @@ public:
   }
 
   void extend(
-      rmf_traffic::schedule::ParticipantId participant,
-      const Input& routes,
-      rmf_traffic::schedule::ItineraryVersion version) final
+    rmf_traffic::schedule::ParticipantId participant,
+    const Input& routes,
+    rmf_traffic::schedule::ItineraryVersion version) final
   {
     if (drop_packets)
       return;
@@ -65,10 +64,10 @@ public:
   }
 
   void delay(
-      rmf_traffic::schedule::ParticipantId participant,
-      rmf_traffic::Time from,
-      rmf_traffic::Duration delay,
-      rmf_traffic::schedule::ItineraryVersion version) final
+    rmf_traffic::schedule::ParticipantId participant,
+    rmf_traffic::Time from,
+    rmf_traffic::Duration delay,
+    rmf_traffic::schedule::ItineraryVersion version) final
   {
     if (drop_packets)
       return;
@@ -77,8 +76,8 @@ public:
   }
 
   void erase(
-      rmf_traffic::schedule::ParticipantId participant,
-      rmf_traffic::schedule::ItineraryVersion version) final
+    rmf_traffic::schedule::ParticipantId participant,
+    rmf_traffic::schedule::ItineraryVersion version) final
   {
     if (drop_packets)
       return;
@@ -87,9 +86,9 @@ public:
   }
 
   void erase(
-      rmf_traffic::schedule::ParticipantId participant,
-      const std::vector<rmf_traffic::RouteId>& routes,
-      rmf_traffic::schedule::ItineraryVersion version) final
+    rmf_traffic::schedule::ParticipantId participant,
+    const std::vector<rmf_traffic::RouteId>& routes,
+    rmf_traffic::schedule::ItineraryVersion version) final
   {
     if (drop_packets)
       return;
@@ -98,14 +97,14 @@ public:
   }
 
   rmf_traffic::schedule::ParticipantId register_participant(
-      rmf_traffic::schedule::ParticipantDescription participant_info) final
+    rmf_traffic::schedule::ParticipantDescription participant_info) final
   {
     // We assume participant registration is done over a reliable connection
     return _database.register_participant(participant_info);
   }
 
   void unregister_participant(
-      rmf_traffic::schedule::ParticipantId participant) final
+    rmf_traffic::schedule::ParticipantId participant) final
   {
     _database.set_current_time(std::chrono::steady_clock::now());
     _database.unregister_participant(participant);
@@ -122,8 +121,8 @@ using RouteId = rmf_traffic::RouteId;
 using ConstRoutePtr = rmf_traffic::ConstRoutePtr;
 
 inline void CHECK_EQUAL_TRAJECOTRY(
-    const rmf_traffic::Trajectory& t1,
-    const rmf_traffic::Trajectory& t2)
+  const rmf_traffic::Trajectory& t1,
+  const rmf_traffic::Trajectory& t2)
 {
   REQUIRE(t1.size() == t2.size());
   REQUIRE(t1.start_time());
@@ -134,16 +133,18 @@ inline void CHECK_EQUAL_TRAJECOTRY(
   auto t1_it = t1.begin();
   auto t2_it = t2.begin();
 
-  for(; t1_it != t1.end(); ++t1_it, ++t2_it)
+  for (; t1_it != t1.end(); ++t1_it, ++t2_it)
   {
-    REQUIRE((t1_it->position() - t2_it->position()).norm() == Approx(0.0).margin(1e-6));
-    REQUIRE((t1_it->velocity() - t2_it->velocity()).norm() == Approx(0.0).margin(1e-6));
+    REQUIRE((t1_it->position() - t2_it->position()).norm() == Approx(0.0).margin(
+        1e-6));
+    REQUIRE((t1_it->velocity() - t2_it->velocity()).norm() == Approx(0.0).margin(
+        1e-6));
     REQUIRE((t1_it->time() - t2_it->time()).count() == Approx(0.0));
   }
 }
 
 std::unordered_map<RouteId, ConstRoutePtr> convert_itinerary(
-    rmf_traffic::schedule::Writer::Input input)
+  rmf_traffic::schedule::Writer::Input input)
 {
   std::unordered_map<RouteId, ConstRoutePtr> itinerary;
   itinerary.reserve(input.size());
@@ -157,8 +158,8 @@ std::unordered_map<RouteId, ConstRoutePtr> convert_itinerary(
 }
 
 inline void CHECK_ITINERARY(
-    const rmf_traffic::schedule::Participant& p,
-    const rmf_traffic::schedule::Database& db)
+  const rmf_traffic::schedule::Participant& p,
+  const rmf_traffic::schedule::Database& db)
 {
   using Debug = rmf_traffic::schedule::Database::Debug;
 
@@ -174,7 +175,8 @@ inline void CHECK_ITINERARY(
     const auto db_it = db_iti.find(item.first);
     REQUIRE(db_it != db_iti.end());
     CHECK(item.second->map() == db_it->second->map());
-    CHECK_EQUAL_TRAJECOTRY(item.second->trajectory(), db_it->second->trajectory());
+    CHECK_EQUAL_TRAJECOTRY(item.second->trajectory(),
+        db_it->second->trajectory());
   }
 }
 
@@ -220,7 +222,7 @@ SCENARIO("Test Participant")
 
   // Create a shape
   const auto shape = rmf_traffic::geometry::make_final_convex<
-      rmf_traffic::geometry::Circle>(1.0);
+    rmf_traffic::geometry::Circle>(1.0);
 
   // Create a participant
   auto p1 = rmf_traffic::schedule::make_participant(
@@ -238,7 +240,7 @@ SCENARIO("Test Participant")
   CHECK(description.name() == "participant 1");
   CHECK(description.owner() == "test_Participant");
   CHECK(description.responsiveness() == rmf_traffic::schedule
-      ::ParticipantDescription::Rx::Responsive);
+    ::ParticipantDescription::Rx::Responsive);
   REQUIRE(p1.itinerary().size() == 0);
 
   CHECK(db.participant_ids().size() == 1);
@@ -260,11 +262,11 @@ SCENARIO("Test Participant")
   REQUIRE(t2.size() == 2);
 
   rmf_traffic::Trajectory t3;
-  t3.insert(time + 22s, {10, 10 ,0}, {0, 0, 0});
-  t3.insert(time + 32s, {10, 0 , 0}, {0, 0, 0});
+  t3.insert(time + 22s, {10, 10, 0}, {0, 0, 0});
+  t3.insert(time + 32s, {10, 0, 0}, {0, 0, 0});
   REQUIRE(t3.size() == 2);
 
-  GIVEN ("Changes: S")
+  GIVEN("Changes: S")
   {
     auto route_id = p1.set({Route{"test_map", t1}});
     CHECK(route_id == std::numeric_limits<rmf_traffic::RouteId>::max());
@@ -372,7 +374,7 @@ SCENARIO("Test Participant")
     auto new_it = p1.itinerary().front().route->trajectory().begin();
 
     for (; new_it != p1.itinerary().front().route->trajectory().end();
-        new_it++, old_it++)
+      new_it++, old_it++)
     {
       CHECK((new_it->time() - (old_it->time() + delay_duration)).count()
           == Approx(0.0));
@@ -752,10 +754,10 @@ SCENARIO("Test Participant")
     {
       auto p2 = rmf_traffic::schedule::make_participant(
       rmf_traffic::schedule::ParticipantDescription{
-        "participant 2",
-        "test_Participant",
-        rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
-        rmf_traffic::Profile{shape}
+          "participant 2",
+          "test_Participant",
+          rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
+          rmf_traffic::Profile{shape}
       },
       writer,
       &rectifier);

@@ -43,14 +43,20 @@ TEMPLATE_TEST_CASE("Test Modular", "[modular]", uint8_t, uint16_t, uint64_t)
   CHECK_FALSE(rmf_traffic::schedule::modular(min_value+1).less_than(min_value));
 
   // Here we check lhs < rhs when basis < lhs
-  CHECK(rmf_traffic::schedule::modular(max_value-2).less_than(max_value-1, max_value));
-  CHECK(rmf_traffic::schedule::modular(max_value).less_than(min_value, min_value+1));
+  CHECK(rmf_traffic::schedule::modular(max_value-2).less_than(max_value-1,
+    max_value));
+  CHECK(rmf_traffic::schedule::modular(max_value).less_than(min_value,
+    min_value+1));
 
   // Check the noncommutativity
-  CHECK_FALSE(rmf_traffic::schedule::modular(max_value-2).less_than(max_value, max_value-1));
-  CHECK_FALSE(rmf_traffic::schedule::modular(max_value).less_than(min_value+1, min_value));
+  CHECK_FALSE(rmf_traffic::schedule::modular(max_value-2).less_than(max_value,
+    max_value-1));
+  CHECK_FALSE(rmf_traffic::schedule::modular(max_value).less_than(min_value+1,
+    min_value));
 
   // Here we check lhs = rhs when basis < lhs
-  CHECK(rmf_traffic::schedule::modular(max_value-1).less_than_or_equal(max_value, max_value));
-  CHECK(rmf_traffic::schedule::modular(max_value).less_than_or_equal(min_value, min_value));
+  CHECK(rmf_traffic::schedule::modular(max_value-
+    1).less_than_or_equal(max_value, max_value));
+  CHECK(rmf_traffic::schedule::modular(max_value).less_than_or_equal(min_value,
+    min_value));
 }
