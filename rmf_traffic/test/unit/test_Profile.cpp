@@ -31,9 +31,9 @@ SCENARIO("Testing Construction")
   WHEN("Vicinity is not passed into the constructor")
   {
     const auto circle_1 = rmf_traffic::geometry::make_final_convex<
-        rmf_traffic::geometry::Circle>(1.0);
+      rmf_traffic::geometry::Circle>(1.0);
     const auto circle_2 = rmf_traffic::geometry::make_final_convex<
-        rmf_traffic::geometry::Circle>(2.0);
+      rmf_traffic::geometry::Circle>(2.0);
 
     auto profile = Profile{circle_1};
 
@@ -76,12 +76,12 @@ SCENARIO("Testing Construction")
     }
   }
 
-  WHEN ("Vicinity is passed into the constructor")
+  WHEN("Vicinity is passed into the constructor")
   {
     const auto circle_1 = rmf_traffic::geometry::make_final_convex<
-        rmf_traffic::geometry::Circle>(1.0);
+      rmf_traffic::geometry::Circle>(1.0);
     const auto circle_2 = rmf_traffic::geometry::make_final_convex<
-        rmf_traffic::geometry::Circle>(2.0);
+      rmf_traffic::geometry::Circle>(2.0);
 
     auto profile = Profile{circle_1, circle_2};
 
@@ -123,22 +123,22 @@ SCENARIO("Testing Construction")
   }
 }
 
-SCENARIO ("Testing conflicts")
+SCENARIO("Testing conflicts")
 {
   using Trajecotry = rmf_traffic::Trajectory;
 
   const auto start_time = std::chrono::steady_clock::now();
 
   const auto circle_1 = rmf_traffic::geometry::make_final_convex<
-      rmf_traffic::geometry::Circle>(1.0);
+    rmf_traffic::geometry::Circle>(1.0);
   const auto circle_2 = rmf_traffic::geometry::make_final_convex<
-      rmf_traffic::geometry::Circle>(2.0);
+    rmf_traffic::geometry::Circle>(2.0);
   const auto box_1 = rmf_traffic::geometry::make_final_convex<
-      rmf_traffic::geometry::Box>(1.0, 1.0);
+    rmf_traffic::geometry::Box>(1.0, 1.0);
   const auto box_2 = rmf_traffic::geometry::make_final_convex<
-      rmf_traffic::geometry::Box>(2.0, 2.0);
+    rmf_traffic::geometry::Box>(2.0, 2.0);
   const auto box_3 = rmf_traffic::geometry::make_final_convex<
-      rmf_traffic::geometry::Box>(3.0, 3.0);
+    rmf_traffic::geometry::Box>(3.0, 3.0);
 
   GIVEN("Two stationary trajectories with non-overlapping vicinities")
   {
@@ -151,10 +151,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {5, 0, 0}, {0, 0, 0});
 
     CHECK_FALSE(rmf_traffic::DetectConflict::between(
-        {circle_1},
-        t1,
-        {circle_1},
-        t2));
+      {circle_1},
+      t1,
+      {circle_1},
+      t2));
   }
 
   GIVEN("Two moving trajectories with non-overlapping vicinities")
@@ -168,10 +168,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {10, 10, 0}, {0, 0, 0});
 
     CHECK_FALSE(rmf_traffic::DetectConflict::between(
-        {circle_1},
-        t1,
-        {circle_1},
-        t2));
+      {circle_1},
+      t1,
+      {circle_1},
+      t2));
   }
 
   GIVEN("Overlapping vicinities but not footprints")
@@ -185,10 +185,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {10, 10, 0}, {0, 0, 0});
 
     CHECK_FALSE(rmf_traffic::DetectConflict::between(
-        {circle_1, circle_2},
-        t1,
-        {circle_1, circle_2},
-        t2));
+      {circle_1, circle_2},
+      t1,
+      {circle_1, circle_2},
+      t2));
   }
 
   GIVEN("Overlapping footprints and vicinities")
@@ -202,10 +202,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {10, 2, 0}, {0, 0, 0});
 
     CHECK(rmf_traffic::DetectConflict::between(
-        {circle_1, circle_2},
-        t1,
-        {circle_1, circle_2},
-        t2));
+      {circle_1, circle_2},
+      t1,
+      {circle_1, circle_2},
+      t2));
   }
 
   GIVEN("Footprint overlaps with vicinity")
@@ -219,10 +219,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {2.8, 0, 0}, {0, 0, 0});
 
     CHECK(rmf_traffic::DetectConflict::between(
-        {circle_1, circle_2},
-        t1,
-        {circle_1},
-        t2));
+      {circle_1, circle_2},
+      t1,
+      {circle_1},
+      t2));
   }
 
   GIVEN("Overlapping box vicinities")
@@ -236,10 +236,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {2.8, 0, 0}, {0, 0, 0});
 
     CHECK_FALSE(rmf_traffic::DetectConflict::between(
-        {circle_1, box_3},
-        t1,
-        {circle_1, box_3},
-        t2));
+      {circle_1, box_3},
+      t1,
+      {circle_1, box_3},
+      t2));
   }
 
   GIVEN("Overlapping box vicinity and circle footprint")
@@ -253,10 +253,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {2.3, 0, 0}, {0, 0, 0});
 
     CHECK(rmf_traffic::DetectConflict::between(
-        {circle_1, box_3},
-        t1,
-        {circle_1, circle_1},
-        t2));
+      {circle_1, box_3},
+      t1,
+      {circle_1, circle_1},
+      t2));
   }
 
   GIVEN("Overlapping circle vicinity and box footprint")
@@ -270,10 +270,10 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {2.8, 0, 0}, {0, 0, 0});
 
     CHECK(rmf_traffic::DetectConflict::between(
-        {box_1, circle_2},
-        t1,
-        {box_2, box_2},
-        t2));
+      {box_1, circle_2},
+      t1,
+      {box_2, box_2},
+      t2));
   }
 
   GIVEN("Overlapping box footprints")
@@ -287,9 +287,9 @@ SCENARIO ("Testing conflicts")
     t2.insert(start_time + 10s, {1.8, 0, 0}, {0, 0, 0});
 
     CHECK(rmf_traffic::DetectConflict::between(
-        {box_2, box_2},
-        t1,
-        {box_2, box_2},
-        t2));
+      {box_2, box_2},
+      t1,
+      {box_2, box_2},
+      t2));
   }
 }
