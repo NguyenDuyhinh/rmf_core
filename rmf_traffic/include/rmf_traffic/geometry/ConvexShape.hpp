@@ -68,7 +68,7 @@ using ConstFinalConvexShapePtr = std::shared_ptr<const FinalConvexShape>;
 
 //==============================================================================
 template<typename T, typename... Args>
-FinalConvexShapePtr make_final_convex(Args&&... args)
+FinalConvexShapePtr make_final_convex(Args&& ... args)
 {
   return std::make_shared<FinalConvexShape>(
         T(std::forward<Args>(args)...).finalize_convex());
