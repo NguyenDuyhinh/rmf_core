@@ -157,12 +157,12 @@ namespace detail {
 
 //==============================================================================
 extern template class bidirectional_iterator<
-    geometry::Space, Region::IterImpl, Region
+  geometry::Space, Region::IterImpl, Region
 >;
 
 //==============================================================================
 extern template class bidirectional_iterator<
-    const geometry::Space, Region::IterImpl, Region
+  const geometry::Space, Region::IterImpl, Region
 >;
 
 } // namespace detail
