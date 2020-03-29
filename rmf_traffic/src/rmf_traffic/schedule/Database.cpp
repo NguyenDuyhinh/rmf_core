@@ -41,8 +41,8 @@ Writer::Input deep_copy_input(Writer::Input input)
   for (const auto& item : input)
   {
     auto copy_item = Writer::Item{
-        item.id,
-        std::make_shared<Route>(*item.route)};
+      item.id,
+      std::make_shared<Route>(*item.route)};
 
     copy.emplace_back(std::move(copy_item));
   }
@@ -119,7 +119,7 @@ public:
     Version original_version;
   };
   using ParticipantUnregistrationVersion =
-      std::map<Version, RemoveParticipantInfo>;
+    std::map<Version, RemoveParticipantInfo>;
   ParticipantUnregistrationVersion remove_participant_version;
 
   using ParticipantRegistrationTime = std::map<Time, Version>;
@@ -135,10 +135,8 @@ public:
   // entry in this field.
   Inconsistencies inconsistencies;
 
-  using StagedChanges =
-    std::unordered_map<
-      ParticipantId,
-      std::map<ItineraryVersion, Change>>;
+  using StagedChanges = std::unordered_map<ParticipantId,
+    std::map<ItineraryVersion, Change>>;
   StagedChanges staged_changes;
 
   std::unordered_set<ParticipantId> participant_ids;
@@ -165,8 +163,8 @@ public:
   /// that vector can be used to efficiently populate the route information,
   /// saving us the cost of a second map lookup later on.
   std::vector<RouteEntryPtr*> check_route_ids(
-      ParticipantState& state,
-      const Input& input)
+    ParticipantState& state,
+    const Input& input)
   {
     // NOTE(MXG): We store references to the values of the route entries,
     // because iterators to a std::unordered_map can be invalidated by
@@ -204,14 +202,14 @@ public:
   /// assumes that the items have already been fully validated and that there
   /// would be no negative side-effects to entering them.
   void insert_items(
-      ParticipantId participant,
-      ParticipantState& state,
-      const std::vector<RouteEntryPtr*>& entries,
-      const Input& input)
+    ParticipantId participant,
+    ParticipantState& state,
+    const std::vector<RouteEntryPtr*>& entries,
+    const Input& input)
   {
     assert(entries.size() == input.size());
 
-    for (std::size_t i=0; i < input.size(); ++i)
+    for (std::size_t i = 0; i < input.size(); ++i)
     {
       const auto& item = input[i];
       const RouteId route_id = item.id;
@@ -219,26 +217,26 @@ public:
 
       RouteEntryPtr& entry = *entries[i];
       entry = std::make_unique<RouteEntry>(
-            RouteEntry{
-              item.route,
-              participant,
-              route_id,
-              state.description,
-              nullptr,
-              schedule_version,
-              nullptr,
-              nullptr
-            });
+        RouteEntry{
+          item.route,
+          participant,
+          route_id,
+          state.description,
+          nullptr,
+          schedule_version,
+          nullptr,
+          nullptr
+        });
 
       timeline.insert(*entry);
     }
   }
 
   void apply_delay(
-      ParticipantId participant,
-      ParticipantState& state,
-      Time from,
-      Duration delay)
+    ParticipantId participant,
+    ParticipantState& state,
+    Time from,
+    Duration delay)
   {
     ParticipantStorage& storage = state.storage;
     for (const RouteId id : state.active_routes)
@@ -256,25 +254,25 @@ public:
             entry->route->map(), std::move(*delayed));
 
       auto transition = std::make_unique<Transition>(
-            Transition{
-              Change::Delay::Implementation{from, delay},
-              std::move(entry)
-            });
+        Transition{
+          Change::Delay::Implementation{from, delay},
+          std::move(entry)
+        });
 
       // NOTE(MXG): The previous contents of entry have been moved into the
       // predecessor field of transition, so we are free to refill entry with
       // the newly created data.
       entry = std::make_unique<RouteEntry>(
-            RouteEntry{
-              std::move(new_route),
-              participant,
-              id,
-              state.description,
-              nullptr,
-              schedule_version,
-              std::move(transition),
-              nullptr
-            });
+        RouteEntry{
+          std::move(new_route),
+          participant,
+          id,
+          state.description,
+          nullptr,
+          schedule_version,
+          std::move(transition),
+          nullptr
+        });
 
       entry->transition->predecessor->successor = entry.get();
       timeline.insert(*entry);
@@ -282,9 +280,9 @@ public:
   }
 
   void erase_routes(
-      ParticipantId participant,
-      ParticipantState& state,
-      const std::unordered_set<RouteId>& routes)
+    ParticipantId participant,
+    ParticipantState& state,
+    const std::unordered_set<RouteId>& routes)
   {
     ParticipantStorage& storage = state.storage;
     for (const RouteId id : routes)
@@ -293,22 +291,22 @@ public:
       auto& entry = storage.at(id);
 
       auto transition = std::make_unique<Transition>(
-            Transition{
-              rmf_utils::nullopt,
-              std::move(entry)
-            });
+        Transition{
+          rmf_utils::nullopt,
+          std::move(entry)
+        });
 
       entry = std::make_unique<RouteEntry>(
-            RouteEntry{
-              nullptr,
-              participant,
-              id,
-              state.description,
-              nullptr,
-              schedule_version,
-              std::move(transition),
-              nullptr
-            });
+        RouteEntry{
+          nullptr,
+          participant,
+          id,
+          state.description,
+          nullptr,
+          schedule_version,
+          std::move(transition),
+          nullptr
+        });
 
       entry->transition->predecessor->successor = entry.get();
       timeline.insert(*entry);
@@ -348,7 +346,7 @@ private:
 
 //==============================================================================
 std::size_t Database::Debug::current_entry_history_count(
-    const Database& database)
+  const Database& database)
 {
   std::size_t count = 0;
   for (const auto& p : database._pimpl->states)
@@ -359,15 +357,15 @@ std::size_t Database::Debug::current_entry_history_count(
 
 //==============================================================================
 std::size_t Database::Debug::current_removed_participant_count(
-    const Database& database)
+  const Database& database)
 {
   return database._pimpl->remove_participant_version.size();
 }
 
 //==============================================================================
 rmf_utils::optional<Writer::Input> Database::Debug::get_itinerary(
-    const Database& database,
-    const ParticipantId participant)
+  const Database& database,
+  const ParticipantId participant)
 {
   const auto state_it = database._pimpl->states.find(participant);
   if (state_it == database._pimpl->states.end())
@@ -386,9 +384,9 @@ rmf_utils::optional<Writer::Input> Database::Debug::get_itinerary(
 //==============================================================================
 
 void Database::set(
-    ParticipantId participant,
-    const Input& input,
-    ItineraryVersion version)
+  ParticipantId participant,
+  const Input& input,
+  ItineraryVersion version)
 {
   auto itinerary = deep_copy_input(input);
 
@@ -411,12 +409,12 @@ void Database::set(
 
   if (auto ticket = state.tracker->check(version, true))
   {
-    ticket->set([=](){ this->set(participant, itinerary, version); });
+    ticket->set([=]() { this->set(participant, itinerary, version); });
     return;
   }
 
   std::vector<Implementation::RouteEntryPtr*> entries =
-      _pimpl->check_route_ids(state, itinerary);
+    _pimpl->check_route_ids(state, itinerary);
 
   //======== All validation is complete ===========
   ++_pimpl->schedule_version;
@@ -433,9 +431,9 @@ void Database::set(
 
 //==============================================================================
 void Database::extend(
-    ParticipantId participant,
-    const Input& input,
-    ItineraryVersion version)
+  ParticipantId participant,
+  const Input& input,
+  ItineraryVersion version)
 {
   auto routes = deep_copy_input(input);
 
@@ -462,12 +460,12 @@ void Database::extend(
   {
     // If we got a ticket from the inconsistency tracker, then pass along a
     // callback to call this
-    ticket->set([=](){ this->extend(participant, routes, version); });
+    ticket->set([=]() { this->extend(participant, routes, version); });
     return;
   }
 
   std::vector<Implementation::RouteEntryPtr*> entries =
-      _pimpl->check_route_ids(state, routes);
+    _pimpl->check_route_ids(state, routes);
 
   //======== All validation is complete ===========
   ++_pimpl->schedule_version;
@@ -477,10 +475,10 @@ void Database::extend(
 
 //==============================================================================
 void Database::delay(
-    ParticipantId participant,
-    Time from,
-    Duration delay,
-    ItineraryVersion version)
+  ParticipantId participant,
+  Time from,
+  Duration delay,
+  ItineraryVersion version)
 {
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
@@ -502,7 +500,7 @@ void Database::delay(
 
   if (auto ticket = state.tracker->check(version))
   {
-    ticket->set([=](){ this->delay(participant, from, delay, version); });
+    ticket->set([=]() { this->delay(participant, from, delay, version); });
     return;
   }
 
@@ -513,8 +511,8 @@ void Database::delay(
 
 //==============================================================================
 void Database::erase(
-    ParticipantId participant,
-    ItineraryVersion version)
+  ParticipantId participant,
+  ItineraryVersion version)
 {
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
@@ -536,7 +534,7 @@ void Database::erase(
 
   if (auto ticket = state.tracker->check(version))
   {
-    ticket->set([=](){ this->erase(participant, version); });
+    ticket->set([=]() { this->erase(participant, version); });
     return;
   }
 
@@ -548,9 +546,9 @@ void Database::erase(
 
 //==============================================================================
 void Database::erase(
-    ParticipantId participant,
-    const std::vector<RouteId>& routes,
-    ItineraryVersion version)
+  ParticipantId participant,
+  const std::vector<RouteId>& routes,
+  ItineraryVersion version)
 {
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
@@ -572,7 +570,7 @@ void Database::erase(
 
   if (auto ticket = state.tracker->check(version))
   {
-    ticket->set([=](){ this->erase(participant, routes, version); });
+    ticket->set([=]() { this->erase(participant, routes, version); });
     return;
   }
 
@@ -599,45 +597,45 @@ void Database::erase(
 
 //==============================================================================
 ParticipantId Database::register_participant(
-    ParticipantDescription description)
+  ParticipantDescription description)
 {
   const ParticipantId id = _pimpl->get_next_participant_id();
   auto tracker = Inconsistencies::Implementation::register_participant(
         _pimpl->inconsistencies, id);
 
   const Version version = ++_pimpl->schedule_version;
-
+  // *INDENT-OFF*
   _pimpl->states.insert(
-        std::make_pair(
-          id,
-          Implementation::ParticipantState{
-            {},
-            std::move(tracker),
-            {},
-            std::make_shared<ParticipantDescription>(std::move(description)),
-            version
-          }));
-
+    std::make_pair(
+      id,
+      Implementation::ParticipantState{
+        {},
+        std::move(tracker),
+        {},
+        std::make_shared<ParticipantDescription>(std::move(description)),
+        version
+      }));
+  // *INDENT-ON*
   _pimpl->add_participant_version[version] = id;
   return id;
 }
 
 //==============================================================================
 void Database::unregister_participant(
-    ParticipantId participant)
+  ParticipantId participant)
 {
   const auto id_it = _pimpl->participant_ids.find(participant);
   const auto state_it = _pimpl->states.find(participant);
 
   if (id_it == _pimpl->participant_ids.end()
-      && state_it == _pimpl->states.end())
+    && state_it == _pimpl->states.end())
   {
     throw std::runtime_error(
           "[Database::unregister_participant] Requested unregistering an "
           "inactive participant ID [" + std::to_string(participant) + "]");
   }
   else if (id_it == _pimpl->participant_ids.end()
-           || state_it == _pimpl->states.end())
+    || state_it == _pimpl->states.end())
   {
     throw std::runtime_error(
           "[Database::unregister_participant] Inconsistency in participant "
@@ -665,7 +663,7 @@ namespace {
 
 //==============================================================================
 const Database::Implementation::RouteEntry* get_most_recent(
-    const Database::Implementation::RouteEntry* from)
+  const Database::Implementation::RouteEntry* from)
 {
   assert(from);
   while (from->successor)
@@ -691,7 +689,7 @@ struct ParticipantChanges
 
 //==============================================================================
 class PatchRelevanceInspector
-    : public TimelineInspector<Database::Implementation::RouteEntry>
+  : public TimelineInspector<Database::Implementation::RouteEntry>
 {
 public:
 
@@ -717,8 +715,7 @@ public:
     }
 
     while (from->successor
-           && modular(from->successor->schedule_version)
-                .less_than_or_equal(_after))
+      && modular(from->successor->schedule_version).less_than_or_equal(_after))
     {
       from = from->successor;
     }
@@ -727,8 +724,8 @@ public:
   }
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& relevant) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& relevant) final
   {
     const RouteEntry* const last = get_last_known_ancestor(entry);
     const RouteEntry* const newest = get_most_recent(entry);
@@ -754,12 +751,9 @@ public:
           assert(transition->delay);
           const auto& delay = *transition->delay;
           const auto insertion = p_changes.delays.insert(
-                std::make_pair(
-                  traverse->schedule_version,
-                  Delay{
-                    delay.from,
-                    delay.duration
-                  }));
+            std::make_pair(
+              traverse->schedule_version,
+              Delay{delay.from, delay.duration}));
 #ifndef NDEBUG
           // When compiling in debug mode, if we see a duplicate insertion,
           // let's make sure that the previously entered data matches what we
@@ -792,10 +786,10 @@ public:
       {
         // The newest version of this route is relevant to the mirror
         changes[newest->participant].additions.emplace_back(
-              Change::Add::Item{
-                newest->route_id,
-                newest->route
-              });
+          Change::Add::Item{
+            newest->route_id,
+            newest->route
+          });
       }
       else
       {
@@ -810,7 +804,7 @@ private:
 
 //==============================================================================
 class FirstPatchRelevanceInspector
-    : public TimelineInspector<Database::Implementation::RouteEntry>
+  : public TimelineInspector<Database::Implementation::RouteEntry>
 {
 public:
 
@@ -819,24 +813,24 @@ public:
   std::unordered_map<ParticipantId, ParticipantChanges> changes;
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& relevant) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& relevant) final
   {
     const RouteEntry* const newest = get_most_recent(entry);
     if (newest->route && relevant(*newest))
     {
       changes[newest->participant].additions.emplace_back(
-            Change::Add::Item{
-              newest->route_id,
-              newest->route
-            });
+        Change::Add::Item{
+          newest->route_id,
+          newest->route
+        });
     }
   }
 };
 
 //==============================================================================
 class ViewRelevanceInspector
-    : public TimelineInspector<Database::Implementation::RouteEntry>
+  : public TimelineInspector<Database::Implementation::RouteEntry>
 {
 public:
 
@@ -846,26 +840,26 @@ public:
   std::vector<Storage> routes;
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& relevant) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& relevant) final
   {
     entry = get_most_recent(entry);
     if (entry->route && relevant(*entry))
     {
       routes.emplace_back(
-            Storage{
-              entry->participant,
-              entry->route_id,
-              entry->route,
-              entry->description
-            });
+        Storage{
+          entry->participant,
+          entry->route_id,
+          entry->route,
+          entry->description
+        });
     }
   }
 };
 
 //==============================================================================
 class ViewerAfterRelevanceInspector
-    : public TimelineInspector<Database::Implementation::RouteEntry>
+  : public TimelineInspector<Database::Implementation::RouteEntry>
 {
 public:
 
@@ -877,33 +871,33 @@ public:
   const Version after;
 
   ViewerAfterRelevanceInspector(Version _after)
-    : after(_after)
+  : after(_after)
   {
     // Do nothing
   }
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& relevant) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& relevant) final
   {
     entry = get_most_recent(entry);
     if (modular(after).less_than(entry->schedule_version)
-        && entry->route && relevant(*entry))
+      && entry->route && relevant(*entry))
     {
       routes.emplace_back(
-            Storage{
-              entry->participant,
-              entry->route_id,
-              entry->route,
-              entry->description
-            });
+        Storage{
+          entry->participant,
+          entry->route_id,
+          entry->route,
+          entry->description
+        });
     }
   }
 };
 
 //==============================================================================
 class CullRelevanceInspector
-    : public TimelineInspector<Database::Implementation::RouteEntry>
+  : public TimelineInspector<Database::Implementation::RouteEntry>
 {
 public:
 
@@ -924,10 +918,10 @@ public:
   std::vector<Info> routes;
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& /*relevant*/) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& /*relevant*/) final
   {
-    while(entry->successor && entry->successor->route)
+    while (entry->successor && entry->successor->route)
       entry = entry->successor;
 
     assert(entry->route->trajectory().finish_time());
@@ -959,7 +953,7 @@ const std::unordered_set<ParticipantId>& Database::participant_ids() const
 
 //==============================================================================
 std::shared_ptr<const ParticipantDescription> Database::get_participant(
-    std::size_t participant_id) const
+  std::size_t participant_id) const
 {
   const auto state_it = _pimpl->states.find(participant_id);
   if (state_it == _pimpl->states.end())
@@ -970,7 +964,7 @@ std::shared_ptr<const ParticipantDescription> Database::get_participant(
 
 //==============================================================================
 rmf_utils::optional<Itinerary> Database::get_itinerary(
-    std::size_t participant_id) const
+  std::size_t participant_id) const
 {
   const auto state_it = _pimpl->states.find(participant_id);
   if (state_it == _pimpl->states.end())
@@ -1007,8 +1001,8 @@ const Inconsistencies& Database::inconsistencies() const
 
 //==============================================================================
 auto Database::changes(
-    const Query& parameters,
-    rmf_utils::optional<Version> after) const -> Patch
+  const Query& parameters,
+  rmf_utils::optional<Version> after) const -> Patch
 {
   std::unordered_map<ParticipantId, ParticipantChanges> changes;
   if (after)
@@ -1031,19 +1025,19 @@ auto Database::changes(
     for (const auto& d : p.second.delays)
     {
       delays.emplace_back(
-            Change::Delay{
-              d.second.from,
-              d.second.duration
-            });
+        Change::Delay{
+          d.second.from,
+          d.second.duration
+        });
     }
 
     part_patches.emplace_back(
-          Patch::Participant{
-            p.first,
-            Change::Erase(std::move(p.second.erasures)),
-            std::move(delays),
-            Change::Add(std::move(p.second.additions))
-          });
+      Patch::Participant{
+        p.first,
+        Change::Erase(std::move(p.second.erasures)),
+        std::move(delays),
+        Change::Add(std::move(p.second.additions))
+      });
   }
 
   std::vector<Change::RegisterParticipant> registered;
@@ -1132,7 +1126,7 @@ Version Database::cull(Time time)
   for (auto p_cull_it = p_cull_begin; p_cull_it != p_cull_end; ++p_cull_it)
   {
     const auto remove_it =
-        _pimpl->remove_participant_version.find(p_cull_it->second);
+      _pimpl->remove_participant_version.find(p_cull_it->second);
     assert(remove_it != _pimpl->remove_participant_version.end());
 
     _pimpl->remove_participant_version.erase(remove_it);
@@ -1146,8 +1140,8 @@ Version Database::cull(Time time)
 
   // Record the occurrence of this cull
   _pimpl->last_cull = Implementation::CullInfo{
-      Change::Cull(time),
-      _pimpl->schedule_version
+    Change::Cull(time),
+    _pimpl->schedule_version
   };
 
   return _pimpl->schedule_version;

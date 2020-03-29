@@ -43,7 +43,7 @@ public:
 
   const RangesSet& set;
   ItineraryVersion last_known_version =
-      std::numeric_limits<ItineraryVersion>::max();
+    std::numeric_limits<ItineraryVersion>::max();
 
   using raw_iterator = RangesSet::const_iterator;
   static const_iterator make_iterator(raw_iterator it)
@@ -107,8 +107,8 @@ ItineraryVersion Inconsistencies::Ranges::last_known_version() const
 //==============================================================================
 std::unique_ptr<InconsistencyTracker>
 Inconsistencies::Implementation::register_participant(
-    Inconsistencies& inconsistencies,
-    ParticipantId id)
+  Inconsistencies& inconsistencies,
+  ParticipantId id)
 {
   auto& _inconsistencies = inconsistencies._pimpl->_inconsistencies;
   auto& _api = inconsistencies._pimpl->_api;
@@ -117,18 +117,19 @@ Inconsistencies::Implementation::register_participant(
   const auto it = _inconsistencies.insert(std::make_pair(id, RangesSet()));
   assert(it.second);
   RangesSet& ranges = it.first->second;
+  // *INDENT-OFF*
   const auto ranges_it = _api.insert(
-        std::make_pair(
-          id,
-          Element{
-            id,
-            Ranges::Implementation::make(ranges)
-          }));
-
+    std::make_pair(
+      id,
+      Element{
+        id,
+        Ranges::Implementation::make(ranges)
+      }));
+  // *INDENT-ON*
   auto& ranges_api = ranges_it.first->second.ranges;
   return std::make_unique<InconsistencyTracker>(
-        ranges,
-        Ranges::Implementation::get_last_known_version(ranges_api));
+    ranges,
+    Ranges::Implementation::get_last_known_version(ranges_api));
 }
 
 //==============================================================================
@@ -244,16 +245,16 @@ namespace detail {
 
 //==============================================================================
 template class forward_iterator<
-    const schedule::Inconsistencies::Ranges::Range,
-    schedule::Inconsistencies::Ranges::IterImpl,
-    schedule::Inconsistencies::Ranges
+  const schedule::Inconsistencies::Ranges::Range,
+  schedule::Inconsistencies::Ranges::IterImpl,
+  schedule::Inconsistencies::Ranges
 >;
 
 //==============================================================================
 template class forward_iterator<
-    const schedule::Inconsistencies::Element,
-    schedule::Inconsistencies::IterImpl,
-    schedule::Inconsistencies
+  const schedule::Inconsistencies::Element,
+  schedule::Inconsistencies::IterImpl,
+  schedule::Inconsistencies
 >;
 
 }

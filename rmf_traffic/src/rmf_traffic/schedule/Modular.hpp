@@ -108,7 +108,7 @@ private:
   /// us to witness this large of a gap between updates.
   ///
   constexpr static V Window =
-      static_cast<V>(std::numeric_limits<std::make_signed_t<V>>::max());
+    static_cast<V>(std::numeric_limits<std::make_signed_t<V>>::max());
 
   constexpr static V HalfWindow = Window/2;
 

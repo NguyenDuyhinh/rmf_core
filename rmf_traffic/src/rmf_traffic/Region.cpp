@@ -57,30 +57,30 @@ public:
 
 //==============================================================================
 Region::Region(
-    std::string map,
-    Time lower_bound,
-    Time upper_bound,
-    std::vector<geometry::Space> spaces)
-  : _pimpl(rmf_utils::make_impl<Implementation>(
-             Implementation{
-               std::move(map),
-               lower_bound,
-               upper_bound,
-               std::move(spaces)}))
+  std::string map,
+  Time lower_bound,
+  Time upper_bound,
+  std::vector<geometry::Space> spaces)
+: _pimpl(rmf_utils::make_impl<Implementation>(
+    Implementation{
+      std::move(map),
+      lower_bound,
+      upper_bound,
+      std::move(spaces)}))
 {
   // Do nothing
 }
 
 //==============================================================================
 Region::Region(
-    std::string map,
-    std::vector<Space> spaces)
-  : _pimpl(rmf_utils::make_impl<Implementation>(
-             Implementation{
-               std::move(map),
-               rmf_utils::nullopt,
-               rmf_utils::nullopt,
-               std::move(spaces)}))
+  std::string map,
+  std::vector<Space> spaces)
+: _pimpl(rmf_utils::make_impl<Implementation>(
+    Implementation{
+      std::move(map),
+      rmf_utils::nullopt,
+      rmf_utils::nullopt,
+      std::move(spaces)}))
 {
   // Do nothing
 }
@@ -101,7 +101,7 @@ auto Region::set_map(std::string map) -> Region&
 //==============================================================================
 const Time* Region::get_lower_time_bound() const
 {
-  if(_pimpl->lower_bound)
+  if (_pimpl->lower_bound)
     return &(*_pimpl->lower_bound);
 
   return nullptr;
@@ -124,7 +124,7 @@ auto Region::remove_lower_time_bound() -> Region&
 //==============================================================================
 const Time* Region::get_upper_time_bound() const
 {
-  if(_pimpl->upper_bound)
+  if (_pimpl->upper_bound)
     return &(*_pimpl->upper_bound);
 
   return nullptr;
@@ -218,12 +218,12 @@ namespace detail {
 
 //==============================================================================
 template class bidirectional_iterator<
-    geometry::Space, Region::IterImpl, Region
+  geometry::Space, Region::IterImpl, Region
 >;
 
 //==============================================================================
 template class bidirectional_iterator<
-    const geometry::Space, Region::IterImpl, Region
+  const geometry::Space, Region::IterImpl, Region
 >;
 
 } // namespace detail

@@ -47,10 +47,10 @@ public:
 
     View view;
     view._pimpl = rmf_utils::make_impl<Implementation>(
-          Implementation{
-            std::move(input),
-            std::move(elements)
-          });
+      Implementation{
+        std::move(input),
+        std::move(elements)
+      });
     return view;
   }
 
@@ -64,7 +64,7 @@ public:
   }
 
   static std::vector<Element> make_elements(
-      const std::vector<Storage>& input)
+    const std::vector<Storage>& input)
   {
     std::vector<Element> elements;
     append_to_elements(elements, input);
@@ -72,8 +72,8 @@ public:
   }
 
   static void append_to_elements(
-      std::vector<Element>& elements,
-      const std::vector<Storage>& input)
+    std::vector<Element>& elements,
+    const std::vector<Storage>& input)
   {
     elements.reserve(elements.size() + input.size());
     for (const auto& s : input)

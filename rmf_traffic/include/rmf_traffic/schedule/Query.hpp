@@ -470,15 +470,15 @@ Query make_query(
 namespace detail {
 
 extern template class bidirectional_iterator<
-    Region,
-    schedule::Query::Spacetime::Regions::IterImpl,
-    schedule::Query::Spacetime::Regions
+  Region,
+  schedule::Query::Spacetime::Regions::IterImpl,
+  schedule::Query::Spacetime::Regions
 >;
 
 extern template class bidirectional_iterator<
-    const Region,
-    schedule::Query::Spacetime::Regions::IterImpl,
-    schedule::Query::Spacetime::Regions
+  const Region,
+  schedule::Query::Spacetime::Regions::IterImpl,
+  schedule::Query::Spacetime::Regions
 >;
 
 } // namespace detail

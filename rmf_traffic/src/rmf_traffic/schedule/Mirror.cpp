@@ -55,9 +55,9 @@ public:
   Version latest_version = 0;
 
   static void erase_routes(
-      const ParticipantId participant,
-      ParticipantState& state,
-      const Change::Erase& erase)
+    const ParticipantId participant,
+    ParticipantState& state,
+    const Change::Erase& erase)
   {
     for (const RouteId id : erase.ids())
     {
@@ -66,7 +66,7 @@ public:
       if (r_it == state.storage.end())
       {
         std::cerr << "[Mirror::update] Erasing unrecognized route [" << id
-                  << "] for participant [" << participant << "]" << std::endl;
+          << "] for participant [" << participant << "]" << std::endl;
         continue;
       }
 
@@ -75,8 +75,8 @@ public:
   }
 
   void apply_delay(
-      ParticipantState& state,
-      const Change::Delay& delay)
+    ParticipantState& state,
+    const Change::Delay& delay)
   {
     for (auto& s : state.storage)
     {
@@ -98,9 +98,9 @@ public:
   }
 
   void add_routes(
-      const ParticipantId participant,
-      ParticipantState& state,
-      const Change::Add& add)
+    const ParticipantId participant,
+    ParticipantState& state,
+    const Change::Add& add)
   {
     for (const auto& item : add.items())
     {
@@ -111,8 +111,8 @@ public:
       if (!inserted)
       {
         std::cerr << "[Mirror::update] Inserting a route [" << item.id
-                  << "] which already exists for participant [" << participant
-                  << "]" << std::endl;
+          << "] which already exists for participant [" << participant
+          << "]" << std::endl;
         // NOTE(MXG): We will continue anyway. The new route will simply
         // overwrite the old one.
       }
@@ -121,13 +121,13 @@ public:
 
       auto& entry = insertion.first->second;
       entry = std::make_unique<RouteEntry>(
-            RouteEntry{
-              std::move(route),
-              participant,
-              route_id,
-              state.description,
-              nullptr
-            });
+        RouteEntry{
+          std::move(route),
+          participant,
+          route_id,
+          state.description,
+          nullptr
+        });
 
       timeline.insert(*entry);
     }
@@ -137,7 +137,7 @@ public:
 namespace {
 //==============================================================================
 class MirrorViewRelevanceInspector
-    : public TimelineInspector<Mirror::Implementation::RouteEntry>
+  : public TimelineInspector<Mirror::Implementation::RouteEntry>
 {
 public:
 
@@ -147,20 +147,20 @@ public:
   std::vector<Storage> routes;
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& relevant) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& relevant) final
   {
     assert(entry);
     assert(entry->route);
     if (relevant(*entry))
     {
       routes.emplace_back(
-            Storage{
-              entry->participant,
-              entry->route_id,
-              entry->route,
-              entry->description
-            });
+        Storage{
+          entry->participant,
+          entry->route_id,
+          entry->route,
+          entry->description
+        });
     }
   }
 
@@ -168,7 +168,7 @@ public:
 
 //==============================================================================
 class MirrorCullRelevanceInspector
-    : public TimelineInspector<Mirror::Implementation::RouteEntry>
+  : public TimelineInspector<Mirror::Implementation::RouteEntry>
 {
 public:
 
@@ -182,8 +182,8 @@ public:
   std::vector<Info> info;
 
   void inspect(
-      const RouteEntry* entry,
-      const std::function<bool(const RouteEntry&)>& relevant) final
+    const RouteEntry* entry,
+    const std::function<bool(const RouteEntry&)>& relevant) final
   {
     assert(entry);
     assert(entry->route);
@@ -211,7 +211,7 @@ const std::unordered_set<ParticipantId>& Mirror::participant_ids() const
 
 //==============================================================================
 std::shared_ptr<const ParticipantDescription> Mirror::get_participant(
-    std::size_t participant_id) const
+  std::size_t participant_id) const
 {
   const auto p = _pimpl->states.find(participant_id);
   if (p == _pimpl->states.end())
@@ -222,7 +222,7 @@ std::shared_ptr<const ParticipantDescription> Mirror::get_participant(
 
 //==============================================================================
 rmf_utils::optional<Itinerary> Mirror::get_itinerary(
-    std::size_t participant_id) const
+  std::size_t participant_id) const
 {
   const auto p = _pimpl->states.find(participant_id);
   if (p == _pimpl->states.end())
@@ -261,7 +261,7 @@ Version Mirror::update(const Patch& patch)
     if (p_it == _pimpl->states.end())
     {
       std::cerr << "[Mirror::update] Unrecognized participant ["
-                << id << "] being unregistered" << std::endl;
+        << id << "] being unregistered" << std::endl;
       continue;
     }
 
@@ -272,22 +272,23 @@ Version Mirror::update(const Patch& patch)
   for (const auto& registered : patch.registered())
   {
     const ParticipantId id = registered.id();
+    // *INDENT-OFF*
     const bool inserted = _pimpl->states.insert(
-          std::make_pair(
-            id,
-            Implementation::ParticipantState{
-              {},
-              std::make_shared<ParticipantDescription>(registered.description())
-            })).second;
-
+      std::make_pair(
+        id,
+        Implementation::ParticipantState{
+          {},
+          std::make_shared<ParticipantDescription>(registered.description())
+        })).second;
+    // *INDENT-ON*
     _pimpl->participant_ids.insert(id);
 
     assert(inserted);
     if (!inserted)
     {
       std::cerr << "[Mirror::update] Duplicate participant ID ["
-                << id << "] while trying to register a new participant"
-                << std::endl;
+        << id << "] while trying to register a new participant"
+        << std::endl;
     }
   }
 
@@ -320,7 +321,7 @@ Version Mirror::update(const Patch& patch)
       if (p_it == _pimpl->states.end())
       {
         std::cerr << "[Mirror::update] Non-existent participant ["
-                  << route.participant << "] in timeline entry" << std::endl;
+          << route.participant << "] in timeline entry" << std::endl;
         continue;
       }
 

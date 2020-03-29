@@ -127,16 +127,16 @@ namespace detail {
 
 //==============================================================================
 extern template class forward_iterator<
-    const schedule::Inconsistencies::Ranges::Range,
-    schedule::Inconsistencies::Ranges::IterImpl,
-    schedule::Inconsistencies::Ranges
+  const schedule::Inconsistencies::Ranges::Range,
+  schedule::Inconsistencies::Ranges::IterImpl,
+  schedule::Inconsistencies::Ranges
 >;
 
 //==============================================================================
 extern template class forward_iterator<
-    const schedule::Inconsistencies::Element,
-    schedule::Inconsistencies::IterImpl,
-    schedule::Inconsistencies
+  const schedule::Inconsistencies::Element,
+  schedule::Inconsistencies::IterImpl,
+  schedule::Inconsistencies
 >;
 
 } // namespace detail

@@ -56,8 +56,8 @@ class InconsistencyTracker
 public:
 
   InconsistencyTracker(
-      RangesSet& parent,
-      ItineraryVersion& last_known_version);
+    RangesSet& parent,
+    ItineraryVersion& last_known_version);
 
   /// The Ticket class is a way to inform the caller that there is an
   /// inconsistency with the version of an incoming change. When the
@@ -76,8 +76,8 @@ public:
     void set(std::function<void()> change);
 
     Ticket(
-        InconsistencyTracker& parent,
-        std::function<void()>& callback);
+      InconsistencyTracker& parent,
+      std::function<void()>& callback);
 
     Ticket(const Ticket&) = delete;
     Ticket& operator=(const Ticket&) = delete;
@@ -113,8 +113,8 @@ public:
   // semantics aren't right, but maybe the STL version would. Or maybe we need
   // a moveable version of std::reference_wrapper.
   std::unique_ptr<Ticket> check(
-      ItineraryVersion version,
-      bool nullifying = false);
+    ItineraryVersion version,
+    bool nullifying = false);
 
   ItineraryVersion expected_version() const
   {
