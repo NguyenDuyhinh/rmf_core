@@ -28,7 +28,7 @@
 #include <iostream>
 
 void print_proposal(
-    const rmf_traffic::schedule::Negotiation::Proposal& proposals)
+  const rmf_traffic::schedule::Negotiation::Proposal& proposals)
 {
   for (const auto& proposal : proposals)
   {
@@ -51,35 +51,35 @@ SCENARIO("Test Plan Negotiation Between Two Participants")
 
   rmf_traffic::Profile profile{
     rmf_traffic::geometry::make_final_convex<
-        rmf_traffic::geometry::Circle>(1.0)
+      rmf_traffic::geometry::Circle>(1.0)
   };
 
   auto p1 = rmf_traffic::schedule::make_participant(
-        rmf_traffic::schedule::ParticipantDescription{
-          "participant 1",
-          "test_Negotiator",
-          rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
-          profile
-        },
-        database);
+    rmf_traffic::schedule::ParticipantDescription{
+      "participant 1",
+      "test_Negotiator",
+      rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
+      profile
+    },
+    database);
 
   auto p2 = rmf_traffic::schedule::make_participant(
-        rmf_traffic::schedule::ParticipantDescription{
-          "participant 2",
-          "test_Negotiator",
-          rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
-          profile
-        },
-        database);
+    rmf_traffic::schedule::ParticipantDescription{
+      "participant 2",
+      "test_Negotiator",
+      rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
+      profile
+    },
+    database);
 
   auto p3 = rmf_traffic::schedule::make_participant(
-        rmf_traffic::schedule::ParticipantDescription{
-          "participant 3",
-          "test_Negotiator",
-          rmf_traffic::schedule::ParticipantDescription::Rx::Unresponsive,
-          profile
-        },
-        database);
+    rmf_traffic::schedule::ParticipantDescription{
+      "participant 3",
+      "test_Negotiator",
+      rmf_traffic::schedule::ParticipantDescription::Rx::Unresponsive,
+      profile
+    },
+    database);
 
   const std::string test_map_name = "test_map";
   rmf_traffic::agv::Graph graph;
@@ -111,11 +111,12 @@ SCENARIO("Test Plan Negotiation Between Two Participants")
    *                   0
    **/
 
-  auto add_bidir_lane = [&](const std::size_t w0, const std::size_t w1)
-  {
-    graph.add_lane(w0, w1);
-    graph.add_lane(w1, w0);
-  };
+  auto add_bidir_lane =
+    [&](const std::size_t w0, const std::size_t w1)
+    {
+      graph.add_lane(w0, w1);
+      graph.add_lane(w1, w0);
+    };
 
   add_bidir_lane(0, 1);
   add_bidir_lane(1, 2);
@@ -220,14 +221,14 @@ SCENARIO("Test Plan Negotiation Between Two Participants")
     REQUIRE(negotiation->table(p1.id(), {p2.id()}));
 
     negotiator_1.respond(
-          negotiation->table(p1.id(), {p2.id()}),
-          rmf_traffic::schedule::SimpleResponder(negotiation, p1.id(), {p2.id()}));
+      negotiation->table(p1.id(), {p2.id()}),
+      rmf_traffic::schedule::SimpleResponder(negotiation, p1.id(), {p2.id()}));
 
     CHECK(negotiation->ready());
 
     negotiator_2.respond(
-          negotiation->table(p2.id(), {p1.id()}),
-          rmf_traffic::schedule::SimpleResponder(negotiation, p2.id(), {p1.id()}));
+      negotiation->table(p2.id(), {p1.id()}),
+      rmf_traffic::schedule::SimpleResponder(negotiation, p2.id(), {p1.id()}));
 
     CHECK(negotiation->complete());
 
@@ -296,8 +297,9 @@ SCENARIO("Test Plan Negotiation Between Two Participants")
     CHECK_FALSE(negotiation->complete());
 
     negotiator_1.respond(
-          negotiation->table(p1.id(), {p2.id()}),
-          rmf_traffic::schedule::SimpleResponder(negotiation, p1.id(), {p2.id()}));
+      negotiation->table(p1.id(), {p2.id()}),
+      rmf_traffic::schedule::SimpleResponder(negotiation, p1.id(),
+      {p2.id()}));
 
     // ready() will be false here, because the ideal itinerary for
     // participant 2 makes it impossible for participant 1 to get out of the
@@ -305,8 +307,9 @@ SCENARIO("Test Plan Negotiation Between Two Participants")
     // CHECK(negotiation->ready());
 
     negotiator_2.respond(
-          negotiation->table(p2.id(), {p1.id()}),
-          rmf_traffic::schedule::SimpleResponder(negotiation, p2.id(), {p1.id()}));
+      negotiation->table(p2.id(), {p1.id()}),
+      rmf_traffic::schedule::SimpleResponder(negotiation, p2.id(),
+      {p1.id()}));
 
     CHECK(negotiation->complete());
 
