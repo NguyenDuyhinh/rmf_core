@@ -197,7 +197,7 @@ SCENARIO("Test Mirror of a Database with two trajectories")
       conflicting_trajectories =
         get_conflicting_trajectories(view, profile, t3);
       CHECK(conflicting_trajectories.size() == 0);
-     }
+    }
   }
 }
 

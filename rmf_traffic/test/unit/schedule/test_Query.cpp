@@ -36,10 +36,10 @@ SCENARIO("Test Query API")
   REQUIRE(query.spacetime().regions() != nullptr);
 
   query.spacetime().regions()->push_back(
-      rmf_traffic::Region{"test_map", now, now+10s, {}});
+    rmf_traffic::Region{"test_map", now, now+10s, {}});
 
   REQUIRE(query.spacetime().regions()->begin()
-          != query.spacetime().regions()->end());
+    != query.spacetime().regions()->end());
 
   auto& region = *query.spacetime().regions()->begin();
 

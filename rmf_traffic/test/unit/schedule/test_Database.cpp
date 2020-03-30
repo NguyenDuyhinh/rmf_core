@@ -222,10 +222,10 @@ SCENARIO("Test Database Conflicts")
     {
       const auto cull_time = time + 5min;
       CHECK(rmf_traffic::schedule::Database::Debug::current_entry_history_count(
-        db) == 2);
+          db) == 2);
       const auto v = db.cull(cull_time);
       CHECK(rmf_traffic::schedule::Database::Debug::current_entry_history_count(
-        db) == 1);
+          db) == 1);
       CHECK(db.latest_version() == ++dbv);
       CHECK(v == db.latest_version());
       CHECK_TRAJECTORY_COUNT(db, 1, 0);
@@ -255,7 +255,7 @@ SCENARIO("Test Database Conflicts")
       db.unregister_participant(p1);
       CHECK(db.latest_version() == ++dbv);
       CHECK(rmf_traffic::schedule::Database::Debug::current_removed_participant_count(
-        db) == 1);
+          db) == 1);
 
       // query from the start
       changes = db.changes(query_all, rmf_utils::nullopt);
@@ -278,7 +278,7 @@ SCENARIO("Test Database Conflicts")
       db.cull(cull_time);
       CHECK(db.latest_version() == ++dbv);
       CHECK(rmf_traffic::schedule::Database::Debug::current_removed_participant_count(
-        db) == 0);
+          db) == 0);
 
       // query the diff
       changes = db.changes(query_all, db.latest_version()-1);

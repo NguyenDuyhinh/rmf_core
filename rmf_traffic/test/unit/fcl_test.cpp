@@ -60,9 +60,9 @@ TEST_CASE("Verify that FCL can handle continuous collisions")
   fcl::ContinuousCollisionResult result;
 
   fcl::continuousCollide(
-        object_1.get(), tf_sphere_final,
-        object_2.get(), tf_box_final,
-        request, result);
+    object_1.get(), tf_sphere_final,
+    object_2.get(), tf_box_final,
+    request, result);
 
   CHECK(result.is_collide);
 }

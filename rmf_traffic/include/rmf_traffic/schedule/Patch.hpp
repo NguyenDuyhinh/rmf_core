@@ -161,9 +161,9 @@ private:
 namespace detail {
 
 extern template class bidirectional_iterator<
-  const schedule::Patch::Participant,
-  schedule::Patch::IterImpl,
-  schedule::Patch
+    const schedule::Patch::Participant,
+    schedule::Patch::IterImpl,
+    schedule::Patch
 >;
 
 }

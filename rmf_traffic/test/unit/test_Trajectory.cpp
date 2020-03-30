@@ -411,7 +411,7 @@ SCENARIO("Trajectory and base_iterator unit tests")
       {
         const rmf_traffic::Trajectory::iterator copied_zeroth_it(zeroth_it);
         const rmf_traffic::Trajectory::iterator moved_zeroth_it(std::move(
-          copied_zeroth_it));
+            copied_zeroth_it));
         CHECK(&zeroth_it != &moved_zeroth_it);
         CHECK(zeroth_it == moved_zeroth_it);
       }

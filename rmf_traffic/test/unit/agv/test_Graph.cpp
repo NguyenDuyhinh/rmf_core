@@ -82,7 +82,7 @@ SCENARIO("Tests for Graph API")
       graph.add_waypoint(test_map_name, Eigen::Vector2d{2, 2});
       CHECK(graph.num_waypoints() == 2);
       CHECK_WAYPOINT(graph.get_waypoint(
-        1), Eigen::Vector2d{2, 2}, test_map_name, 1, false);
+          1), Eigen::Vector2d{2, 2}, test_map_name, 1, false);
     }
   }
   WHEN("A lane without a door is added")

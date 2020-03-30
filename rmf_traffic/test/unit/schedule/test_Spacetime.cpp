@@ -167,7 +167,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
     rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
     CHECK(rmf_traffic::internal::detect_conflicts(
-            unit_box, t1, region, &conflicts));
+        unit_box, t1, region, &conflicts));
     CHECK(conflicts.size() == 1);
   }
 
@@ -196,7 +196,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
     rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
     CHECK(rmf_traffic::internal::detect_conflicts(
-            unit_box, t1, region, &conflicts));
+        unit_box, t1, region, &conflicts));
     CHECK(conflicts.size() == 1);
   }
 
@@ -226,7 +226,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
     rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
     CHECK(rmf_traffic::internal::detect_conflicts(
-            unit_box, t1, region, &conflicts));
+        unit_box, t1, region, &conflicts));
     CHECK(conflicts.size() == 1);
   }
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -352,7 +352,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -467,7 +467,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-        unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -485,7 +485,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rotate = true;
       rot_ang = 90;
-        if (rotate)
+      if (rotate)
         tf.rotate(Eigen::Rotation2Dd(rot_ang*M_PI/180));//conflict is only detected when angle is 69deg
 
       rmf_traffic::internal::Spacetime region = {
@@ -499,7 +499,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
       // if(rotate) std::cout<<" Ang:"<<rot_ang<<"\n";
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              double_box, t1, region, &conflicts));
+          double_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -609,7 +609,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            double_box, t1, region, &conflicts));
+          double_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -643,7 +643,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -675,7 +675,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
       // if(rotate) std::cout<<" Ang:"<<rot_ang<<"\n";
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -709,7 +709,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
       // if(rotate) std::cout<<" Ang:"<<rot_ang<<"\n";
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            double_box, t1, region, &conflicts));
+          double_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -778,7 +778,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -812,7 +812,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -846,7 +846,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
       // if(rotate) std::cout<<" Ang:"<<rot_ang<<"\n";
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -881,8 +881,8 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
           rmf_traffic::Profile{
-          rmf_traffic::geometry::make_final_convex<
-          rmf_traffic::geometry::Box>(0.5, 1.0)},
+            rmf_traffic::geometry::make_final_convex<
+              rmf_traffic::geometry::Box>(0.5, 1.0)},
           t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
@@ -918,7 +918,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
       // if(rotate) std::cout<<" Ang:"<<rot_ang<<"\n";
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              unit_box, t1, region, &conflicts));
+          unit_box, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -1040,7 +1040,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-        small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -1072,7 +1072,7 @@ SCENARIO("Testing intersction of various spacetimes and trajectories")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -1288,7 +1288,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-              small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 4);
     }
 
@@ -1310,7 +1310,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 3);
     }
 
@@ -1331,7 +1331,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -1351,7 +1351,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 4);
     }
 
@@ -1373,7 +1373,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 3);
     }
 
@@ -1395,7 +1395,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
       rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
       CHECK(rmf_traffic::internal::detect_conflicts(
-            small_circle, t1, region, &conflicts));
+          small_circle, t1, region, &conflicts));
       CHECK(conflicts.size() == 1);
     }
 
@@ -1420,7 +1420,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
         rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
         CHECK(rmf_traffic::internal::detect_conflicts(
-              small_circle, t1, region, &conflicts));
+            small_circle, t1, region, &conflicts));
         CHECK(conflicts.size() == 1);
       }
 
@@ -1438,7 +1438,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
         rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
         CHECK(rmf_traffic::internal::detect_conflicts(
-              small_circle, t1, region, &conflicts));
+            small_circle, t1, region, &conflicts));
         CHECK(conflicts.size() == 1);
       }
 
@@ -1456,7 +1456,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
         rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
         CHECK(rmf_traffic::internal::detect_conflicts(
-              small_circle, t1, region, &conflicts));
+            small_circle, t1, region, &conflicts));
         CHECK(conflicts.size() == 1);
       }
 
@@ -1474,7 +1474,7 @@ SCENARIO("Testing multi-waypoint trajectories with various spacetimes")
 
         rmf_traffic::DetectConflict::Implementation::Conflicts conflicts;
         CHECK(rmf_traffic::internal::detect_conflicts(
-              small_circle, t1, region, &conflicts));
+            small_circle, t1, region, &conflicts));
         CHECK(conflicts.size() == 1);
       }
     }

@@ -117,9 +117,9 @@ public:
 namespace detail {
 
 extern template class bidirectional_iterator<
-  const schedule::Viewer::View::Element,
-  schedule::Viewer::View::IterImpl,
-  schedule::Viewer::View
+    const schedule::Viewer::View::Element,
+    schedule::Viewer::View::IterImpl,
+    schedule::Viewer::View
 >;
 
 } // namespace detail

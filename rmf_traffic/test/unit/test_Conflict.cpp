@@ -68,7 +68,7 @@ SCENARIO("DetectConflict unit tests")
             ++t1.begin(),    // Waypoint from Trajectory 1 that will conflict
             ++t2.begin(),    // Waypoint from Trajectory 2 that will conflict
             fcl_error_margin // Error Margin for computing collision time
-        });
+          });
 
         CHECK_ConflictList(conflicts, expected_conflicts);
         CHECK_between_is_commutative(profile, t1, profile, t2);
@@ -96,7 +96,7 @@ SCENARIO("DetectConflict unit tests")
             ++t1.begin(),    // Waypoint from Trajectory 1 that will conflict
             ++t2.begin(),    // Waypoint from Trajectory 2 that will conflict
             fcl_error_margin // Error Margin for computing collision time
-        });
+          });
 
         CHECK_ConflictList(conflicts, expected_conflicts);
         CHECK_between_is_commutative(profile, t1, profile, t2);
@@ -209,28 +209,28 @@ SCENARIO("DetectConflict unit tests")
 
     rmf_traffic::Trajectory trajectory_a;
     trajectory_a.insert(
-        begin_time,
-        Eigen::Vector3d{-5.0, 0.0, 0.0},
-        Eigen::Vector3d{0.0, 0.0, 0.0});
+      begin_time,
+      Eigen::Vector3d{-5.0, 0.0, 0.0},
+      Eigen::Vector3d{0.0, 0.0, 0.0});
 
     trajectory_a.insert(
-        begin_time + 10s,
-        Eigen::Vector3d{5.0, 0.0, 0.0},
-        Eigen::Vector3d{0.0, 0.0, 0.0});
+      begin_time + 10s,
+      Eigen::Vector3d{5.0, 0.0, 0.0},
+      Eigen::Vector3d{0.0, 0.0, 0.0});
     REQUIRE(trajectory_a.size() == 2);
 
     WHEN("Checked against a conflicting Trajectory")
     {
       rmf_traffic::Trajectory trajectory_b;
       trajectory_b.insert(
-          begin_time,
-          Eigen::Vector3d{0.0, -5.0, 0.0},
-          Eigen::Vector3d{0.0, 0.0, 0.0});
+        begin_time,
+        Eigen::Vector3d{0.0, -5.0, 0.0},
+        Eigen::Vector3d{0.0, 0.0, 0.0});
 
       trajectory_b.insert(
-          begin_time + 10s,
-          Eigen::Vector3d{0.0, 5.0, 0.0},
-          Eigen::Vector3d{0.0, 0.0, 0.0});
+        begin_time + 10s,
+        Eigen::Vector3d{0.0, 5.0, 0.0},
+        Eigen::Vector3d{0.0, 0.0, 0.0});
 
       REQUIRE(trajectory_b.size() == 2);
 
@@ -238,7 +238,7 @@ SCENARIO("DetectConflict unit tests")
           profile, trajectory_a, profile, trajectory_b));
 
       const auto conflicts = get_conflicts(
-          profile, trajectory_a, profile, trajectory_b);
+        profile, trajectory_a, profile, trajectory_b);
       REQUIRE(conflicts.size() == 1);
 
       // Note: The expected time in this case is the root of the polynomial
@@ -246,7 +246,7 @@ SCENARIO("DetectConflict unit tests")
       // -0.02 t^3 + 0.3 t^2 - 4 t = 0
       const double expected_time = 4.32931077;
       const double computed_time = rmf_traffic::time::to_seconds(
-          conflicts.front().time - begin_time);
+        conflicts.front().time - begin_time);
 
       // Note: FCL is able to calculate the collision time to very high
       // precision, but it requires many iterations (~1000000 for a precision of
@@ -265,19 +265,19 @@ SCENARIO("DetectConflict unit tests")
 
       // This trajectory is parallel to trajectory_a
       trajectory_c.insert(
-          begin_time,
-          Eigen::Vector3d{-5.0, 5.0, 0.0},
-          Eigen::Vector3d{0.0, 0.0, 0.0});
+        begin_time,
+        Eigen::Vector3d{-5.0, 5.0, 0.0},
+        Eigen::Vector3d{0.0, 0.0, 0.0});
 
       trajectory_c.insert(
-          begin_time + 10s,
-          Eigen::Vector3d{5.0, 5.0, 0.0},
-          Eigen::Vector3d{0.0, 0.0, 0.0});
+        begin_time + 10s,
+        Eigen::Vector3d{5.0, 5.0, 0.0},
+        Eigen::Vector3d{0.0, 0.0, 0.0});
 
       REQUIRE(trajectory_c.size() == 2);
 
       const auto conflicts = get_conflicts(
-            profile, trajectory_a, profile, trajectory_c);
+        profile, trajectory_a, profile, trajectory_c);
       CHECK(conflicts.empty());
     }
   }
@@ -289,38 +289,38 @@ SCENARIO("DetectConflict unit tests")
 
     rmf_traffic::Trajectory trajectory_a;
     trajectory_a.insert(
-        begin_time,
-        Eigen::Vector3d{-5.0, 0.0, 0.0},
-        Eigen::Vector3d{1.0, 0.0, 0.0});
+      begin_time,
+      Eigen::Vector3d{-5.0, 0.0, 0.0},
+      Eigen::Vector3d{1.0, 0.0, 0.0});
 
     trajectory_a.insert(
-        begin_time + 10s,
-        Eigen::Vector3d{0.0, -5.0, 0.0},
-        Eigen::Vector3d{0.0, -1.0, 0.0});
+      begin_time + 10s,
+      Eigen::Vector3d{0.0, -5.0, 0.0},
+      Eigen::Vector3d{0.0, -1.0, 0.0});
     REQUIRE(trajectory_a.size() == 2);
 
     WHEN("Checked against a conflicting Trajectory")
     {
       rmf_traffic::Trajectory trajectory_b;
       trajectory_b.insert(
-          begin_time,
-          Eigen::Vector3d{-5.0, -5.0, 0.0},
-          Eigen::Vector3d{1.0, 0.0, 0.0});
+        begin_time,
+        Eigen::Vector3d{-5.0, -5.0, 0.0},
+        Eigen::Vector3d{1.0, 0.0, 0.0});
 
       trajectory_b.insert(
-          begin_time + 10s,
-          Eigen::Vector3d{0.0, 0.0, 0.0},
-          Eigen::Vector3d{0.0, 1.0, 0.0});
+        begin_time + 10s,
+        Eigen::Vector3d{0.0, 0.0, 0.0},
+        Eigen::Vector3d{0.0, 1.0, 0.0});
       REQUIRE(trajectory_b.size() == 2);
 
       const auto conflicts = get_conflicts(
-            profile, trajectory_a, profile, trajectory_b);
+        profile, trajectory_a, profile, trajectory_b);
       REQUIRE(conflicts.size() == 1);
 
       // Note: The expected collision time, calculated by hand, is sqrt(30)
       const double expected_time = std::sqrt(30.0);
       const double computed_time = rmf_traffic::time::to_seconds(
-          conflicts.front().time - begin_time);
+        conflicts.front().time - begin_time);
 
       CHECK(computed_time == Approx(expected_time).margin(0.2));
     }
@@ -331,18 +331,18 @@ SCENARIO("DetectConflict unit tests")
 
       rmf_traffic::Trajectory trajectory_c;
       trajectory_c.insert(
-          begin_time,
-          Eigen::Vector3d{5.0, 0.0, 0.0},
-          Eigen::Vector3d{-1.0, 0.0, 0.0});
+        begin_time,
+        Eigen::Vector3d{5.0, 0.0, 0.0},
+        Eigen::Vector3d{-1.0, 0.0, 0.0});
 
       trajectory_c.insert(
-          begin_time + 10s,
-          Eigen::Vector3d{0.0, 5.0, 0.0},
-          Eigen::Vector3d{0.0, 1.0, 0.0});
+        begin_time + 10s,
+        Eigen::Vector3d{0.0, 5.0, 0.0},
+        Eigen::Vector3d{0.0, 1.0, 0.0});
       REQUIRE(trajectory_c.size() == 2);
 
       const auto conflicts = get_conflicts(
-          profile, trajectory_a, profile, trajectory_c);
+        profile, trajectory_a, profile, trajectory_c);
 
       CHECK(conflicts.empty());
     }
@@ -479,7 +479,7 @@ SCENARIO("DetectConflict unit tests")
     {
       std::vector<ConflictData> conflicts;
       const bool has_conflicts = rmf_traffic::internal::detect_conflicts(
-            profile, trajectory, region, &conflicts);
+        profile, trajectory, region, &conflicts);
       CHECK(has_conflicts);
 
       REQUIRE(conflicts.size() == 1);
@@ -496,7 +496,7 @@ SCENARIO("DetectConflict unit tests")
       region.upper_time_bound = &region_finish_time;
 
       const bool has_conflicts = rmf_traffic::internal::detect_conflicts(
-            profile, trajectory, region, nullptr);
+        profile, trajectory, region, nullptr);
       CHECK_FALSE(has_conflicts);
     }
 
@@ -509,7 +509,7 @@ SCENARIO("DetectConflict unit tests")
       region.upper_time_bound = &region_finish_time;
 
       const bool has_conflicts = rmf_traffic::internal::detect_conflicts(
-            profile, trajectory, region, nullptr);
+        profile, trajectory, region, nullptr);
       CHECK_FALSE(has_conflicts);
     }
 
@@ -523,7 +523,7 @@ SCENARIO("DetectConflict unit tests")
 
       std::vector<ConflictData> conflicts;
       const bool has_conflicts = rmf_traffic::internal::detect_conflicts(
-            profile, trajectory, region, &conflicts);
+        profile, trajectory, region, &conflicts);
       CHECK(has_conflicts);
 
       REQUIRE(conflicts.size() == 1);

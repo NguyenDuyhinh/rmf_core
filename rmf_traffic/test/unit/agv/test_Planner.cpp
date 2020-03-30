@@ -51,9 +51,9 @@ make_test_schedule_validator(
   rmf_traffic::Profile profile)
 {
   return rmf_utils::make_clone<rmf_traffic::agv::ScheduleRouteValidator>(
-        viewer,
-        std::numeric_limits<rmf_traffic::schedule::ParticipantId>::max(),
-        std::move(profile));
+    viewer,
+    std::numeric_limits<rmf_traffic::schedule::ParticipantId>::max(),
+    std::move(profile));
 }
 
 void display_path(const rmf_traffic::agv::Plan& plan)
@@ -116,12 +116,12 @@ rmf_traffic::Trajectory test_with_obstacle(
   rmf_traffic::Trajectory t_obs;
   const rmf_traffic::schedule::ParticipantId p_obs =
     database.register_participant(
-      rmf_traffic::schedule::ParticipantDescription{
+    rmf_traffic::schedule::ParticipantDescription{
       "obstacle",
       "test_Planner",
       rmf_traffic::schedule::ParticipantDescription::Rx::Unresponsive,
       create_test_profile(UnitCircle)
-      });
+    });
 
   rmf_traffic::RouteId rid = 0;
   rmf_traffic::schedule::ItineraryVersion iv = 0;
@@ -193,7 +193,7 @@ rmf_traffic::Trajectory test_with_obstacle(
   {
     const auto& p_obs = database.get_participant(entry.participant)->profile();
     CHECK(!rmf_traffic::DetectConflict::between(
-            profile, t_obs, p_obs, entry.route.trajectory()));
+        profile, t_obs, p_obs, entry.route.trajectory()));
   }
 
   // Confirm that the vehicle pulled into holding point in order to avoid
@@ -242,10 +242,10 @@ void test_ignore_obstacle(
   // The new plan which ignores the conflicts should be the same as the original
   REQUIRE(new_plan->get_itinerary().size() == 1);
   CHECK(new_plan->get_itinerary().front().trajectory().duration()
-        == original_plan.get_itinerary().front().trajectory().duration());
+    == original_plan.get_itinerary().front().trajectory().duration());
 
   REQUIRE(new_plan->get_waypoints().size()
-          == original_plan.get_waypoints().size());
+    == original_plan.get_waypoints().size());
 
   for (std::size_t i = 0; i < new_plan->get_waypoints().size(); ++i)
   {
@@ -264,7 +264,7 @@ void test_ignore_obstacle(
     const Eigen::Vector3d new_p = new_wp.position();
     const Eigen::Vector3d old_p = old_wp.position();
     CHECK( (new_p.block<2, 1>(0, 0) - old_p.block<2, 1>(0, 0)).norm()
-           == Approx(0.0) );
+      == Approx(0.0) );
     CHECK(rmf_utils::wrap_to_pi(new_p[2] - old_p[2]) == Approx(0.0) );
   }
 }
@@ -275,17 +275,17 @@ inline void CHECK_TRAITS(
 {
   CHECK((t1.get_differential()->get_forward()
     - t2.get_differential()->get_forward()).norm()
-      == Approx(0).margin(1e-6));
+    == Approx(0).margin(1e-6));
   CHECK(t1.get_differential()->is_reversible()
-      == t2.get_differential()->is_reversible());
+    == t2.get_differential()->is_reversible());
   CHECK(t1.linear().get_nominal_acceleration()
-      == t2.linear().get_nominal_acceleration());
+    == t2.linear().get_nominal_acceleration());
   CHECK(t1.linear().get_nominal_velocity()
-      == t2.linear().get_nominal_velocity());
+    == t2.linear().get_nominal_velocity());
   CHECK(t1.rotational().get_nominal_acceleration()
-      == t2.rotational().get_nominal_acceleration());
+    == t2.rotational().get_nominal_acceleration());
   CHECK(t1.rotational().get_nominal_velocity()
-      == t2.rotational().get_nominal_velocity());
+    == t2.rotational().get_nominal_velocity());
 }
 
 inline void CHECK_INTERPOLATION(
@@ -322,10 +322,10 @@ inline void CHECK_PLAN(
     - last_location).norm()  == Approx(0.0).margin(1e-6));
   // check orientations
   CHECK((t.front().position()[2] - first_orientation)
-      == Approx(0.0).margin(1e-6));
+    == Approx(0.0).margin(1e-6));
   if (last_orientation != nullptr)
     CHECK((t.back().position()[2] - *last_orientation)
-        == Approx(0.0).margin(1e-6));
+      == Approx(0.0).margin(1e-6));
   // check waypoints
   const auto& wps = plan->get_waypoints();
   // removing consecutive duplicates of waypoints
@@ -341,9 +341,8 @@ inline void CHECK_PLAN(
   plan_indices.resize(std::distance(plan_indices.begin(), ip));
   REQUIRE(plan_indices.size() == wp_indices.size());
   for (const auto& i : plan_indices)
-    CHECK(std::find(
-        wp_indices.begin(), wp_indices.end(), i)
-        != wp_indices.end());
+    CHECK(std::find(wp_indices.begin(), wp_indices.end(), i)
+      != wp_indices.end());
 }
 // ____________________________________________________________________________
 
@@ -373,7 +372,7 @@ SCENARIO("Test Configuration", "[config]")
     for (std::size_t i = 0; i < graph.num_waypoints(); i++)
       CHECK((graph.get_waypoint(i).get_location() -
         graph_.get_waypoint(i).get_location()).norm()
-            == Approx(0).margin(1e-6));
+        == Approx(0).margin(1e-6));
   }
 
   WHEN("Set the graph")
@@ -411,7 +410,7 @@ SCENARIO("Test Configuration", "[config]")
   {
     Interpolate::Options& options_ = config.interpolation();
     options_ = Interpolate::Options(
-        true, 1e-2, 5.0 * M_PI/180.0, 5.0 * M_PI/180.0);
+      true, 1e-2, 5.0 * M_PI/180.0, 5.0 * M_PI/180.0);
     CHECK_INTERPOLATION(config.interpolation(), options_);
   }
 }
@@ -430,7 +429,7 @@ SCENARIO("Test Options", "[options]")
   {
     CHECK(rmf_traffic::time::to_seconds(
         default_options.minimum_holding_time()- hold_time)
-            == Approx(0).margin(1e-6));
+      == Approx(0).margin(1e-6));
   }
 
   WHEN("Set the minimum_holding_time")
@@ -438,8 +437,8 @@ SCENARIO("Test Options", "[options]")
     Duration hold_time_ = std::chrono::seconds(5);
     default_options.minimum_holding_time(hold_time_);
     CHECK(rmf_traffic::time::to_seconds(
-      default_options.minimum_holding_time()- hold_time_)
-        == Approx(0).margin(1e-6));
+        default_options.minimum_holding_time()- hold_time_)
+      == Approx(0).margin(1e-6));
   }
 
   WHEN("Get the interrupt_flag")
@@ -570,8 +569,8 @@ SCENARIO("Test planning")
     const rmf_traffic::Time start_time = std::chrono::steady_clock::now();
 
     auto plan = planner.plan(
-          rmf_traffic::agv::Planner::Start(start_time, 3, 0.0),
-          rmf_traffic::agv::Planner::Goal(3, 0.0));
+      rmf_traffic::agv::Planner::Start(start_time, 3, 0.0),
+      rmf_traffic::agv::Planner::Goal(3, 0.0));
 
     REQUIRE(plan);
     CHECK(plan->get_itinerary().size() == 1);
@@ -588,8 +587,8 @@ SCENARIO("Test planning")
     for (std::size_t i = 0; i < N; ++i)
     {
       plan = planner.plan(
-          rmf_traffic::agv::Planner::Start{start_time, 3, 0.0},
-          rmf_traffic::agv::Planner::Goal{3, goal_orientation});
+        rmf_traffic::agv::Planner::Start{start_time, 3, 0.0},
+        rmf_traffic::agv::Planner::Goal{3, goal_orientation});
 
       REQUIRE(plan);
     }
@@ -623,8 +622,8 @@ SCENARIO("Test planning")
     for (std::size_t i = 0; i < N; ++i)
     {
       plan = planner.plan(
-            rmf_traffic::agv::Planner::Start{start_time, 3, M_PI},
-            rmf_traffic::agv::Planner::Goal{2, goal_orientation});
+        rmf_traffic::agv::Planner::Start{start_time, 3, M_PI},
+        rmf_traffic::agv::Planner::Goal{2, goal_orientation});
       REQUIRE(plan);
     }
 
@@ -638,7 +637,7 @@ SCENARIO("Test planning")
     }
 
     const auto expected_t = rmf_traffic::agv::Interpolate::positions(
-          traits, start_time, {{10.0, -5.0, M_PI}, {5.0, -5.0, M_PI}});
+      traits, start_time, {{10.0, -5.0, M_PI}, {5.0, -5.0, M_PI}});
 
     REQUIRE(plan->get_itinerary().size() == 1);
     const rmf_traffic::Trajectory t =
@@ -719,7 +718,7 @@ SCENARIO("Test planning")
       WHEN("An obstacle is introduced")
       {
         test_with_obstacle(
-              "Unconstrained 12->5", *plan, database, obstacles, 6, time);
+          "Unconstrained 12->5", *plan, database, obstacles, 6, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -764,10 +763,10 @@ SCENARIO("Test planning")
       CHECK( (p_final - Eigen::Vector2d(0, 0)).norm() == Approx(0.0) );
       CHECK(t.back().position()[2] == Approx(M_PI/2.0) );
 
-     WHEN("An obstacle is introduced")
+      WHEN("An obstacle is introduced")
       {
         test_with_obstacle(
-              "Constrained to 0.0  12->5", *plan, database, obstacles, 6, time);
+          "Constrained to 0.0  12->5", *plan, database, obstacles, 6, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -838,7 +837,7 @@ SCENARIO("Test planning")
       WHEN("An obstacle is introduced")
       {
         test_with_obstacle(
-              "Unconstrained  2->12", *plan, database, obstacles, 4, time);
+          "Unconstrained  2->12", *plan, database, obstacles, 4, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -886,7 +885,7 @@ SCENARIO("Test planning")
       WHEN("An obstacle is introduced")
       {
         test_with_obstacle(
-              "Constrained to 0.0  2->12", *plan, database, obstacles, 4, time);
+          "Constrained to 0.0  2->12", *plan, database, obstacles, 4, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -930,14 +929,14 @@ SCENARIO("Test planning")
       CHECK( (p_final - Eigen::Vector2d(12, 12)).norm() == Approx(0.0) );
 
       const double err = rmf_utils::wrap_to_pi(
-            t.back().position()[2] - M_PI);
+        t.back().position()[2] - M_PI);
       CHECK(err == Approx(0.0) );
 
       WHEN("An obstacle is introduced")
       {
         test_with_obstacle(
-              "Constrained to 180.0  2->12",
-              *plan, database, obstacles, 4, time);
+          "Constrained to 180.0  2->12",
+          *plan, database, obstacles, 4, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -1014,11 +1013,11 @@ SCENARIO("Test planning")
       WHEN("First obstacle is introduced")
       {
         CHECK(rmf_traffic::DetectConflict::between(
-                profile, t, profile, obstacle_1));
+            profile, t, profile, obstacle_1));
         obstacles.push_back(obstacle_1);
 
         test_with_obstacle(
-              "Unconstrained (1)  12->0", *plan, database, obstacles, 6, time);
+          "Unconstrained (1)  12->0", *plan, database, obstacles, 6, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -1041,13 +1040,13 @@ SCENARIO("Test planning")
           {0.0, 0.0, 0.0});
         REQUIRE(obstacle_2.size() == 3);
         REQUIRE_FALSE(rmf_traffic::DetectConflict::between(
-                  profile, obstacle_1, profile, obstacle_2));
+            profile, obstacle_1, profile, obstacle_2));
         CHECK(rmf_traffic::DetectConflict::between(
-                profile, t, profile, obstacle_2));
+            profile, t, profile, obstacle_2));
 
         obstacles.push_back(obstacle_2);
         test_with_obstacle(
-              "Unconstrained (2)  12->0", *plan, database, obstacles, 4, time);
+          "Unconstrained (2)  12->0", *plan, database, obstacles, 4, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -1072,7 +1071,7 @@ SCENARIO("Test planning")
         obstacles.push_back(obstacle_2);
 
         test_with_obstacle(
-              "Unconstrained (3)  12->0", *plan, database, obstacles, 6, time);
+          "Unconstrained (3)  12->0", *plan, database, obstacles, 6, time);
 
         test_ignore_obstacle(*plan, database.latest_version());
       }
@@ -1196,7 +1195,7 @@ SCENARIO("DP1 Graph")
   using rmf_traffic::DetectConflict;
 
   WHEN("Robot moves from 1->30 given multiple non-conflicting "
-       "obstacles that partially overlap in time")
+    "obstacles that partially overlap in time")
   {
     const std::size_t start_index = 1;
     const auto start = rmf_traffic::agv::Plan::Start{time, start_index, 0.0};
@@ -1242,11 +1241,11 @@ SCENARIO("DP1 Graph")
         Eigen::Vector3d{0, 0, 0});
 
       REQUIRE_FALSE(rmf_traffic::DetectConflict::between(
-                profile, obstacle_1, profile, t));
+          profile, obstacle_1, profile, t));
       obstacles.push_back(obstacle_1);
 
       test_with_obstacle(
-            "Partial 28->3", *plan, database, obstacles, 0, time, false);
+        "Partial 28->3", *plan, database, obstacles, 0, time, false);
 
       test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1266,14 +1265,14 @@ SCENARIO("DP1 Graph")
         for (const auto& _t : view)
         {
           REQUIRE_FALSE(DetectConflict::between(
-                          profile, obstacle_2, profile, _t.route.trajectory()));
+              profile, obstacle_2, profile, _t.route.trajectory()));
         }
 
         REQUIRE_FALSE(DetectConflict::between(profile, obstacle_2, profile, t));
         obstacles.push_back(obstacle_2);
         test_with_obstacle(
-              "Partial 28->3, 16-29",
-              *plan, database, obstacles, 0, time, false);
+          "Partial 28->3, 16-29",
+          *plan, database, obstacles, 0, time, false);
 
         test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1294,16 +1293,16 @@ SCENARIO("DP1 Graph")
           for (const auto& _t : view)
           {
             REQUIRE_FALSE(DetectConflict::between(
-                      profile, obstacle_3, profile, _t.route.trajectory()));
+                profile, obstacle_3, profile, _t.route.trajectory()));
           }
 
           REQUIRE_FALSE(DetectConflict::between(
-                          profile, obstacle_3, profile, t));
+              profile, obstacle_3, profile, t));
           obstacles.push_back(obstacle_3);
 
           test_with_obstacle(
-                "Partial 28->3, 16-29, 24->26", *plan, database,
-                obstacles, 0, time, false);
+            "Partial 28->3, 16-29, 24->26", *plan, database,
+            obstacles, 0, time, false);
 
           test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1323,56 +1322,56 @@ SCENARIO("DP1 Graph")
               database.query(rmf_traffic::schedule::query_all());
             for (const auto& _t : view)
               REQUIRE_FALSE(DetectConflict::between(
-                        profile, obstacle_4, profile, _t.route.trajectory()));
+                  profile, obstacle_4, profile, _t.route.trajectory()));
 
             REQUIRE_FALSE(DetectConflict::between(
-                            profile, obstacle_4, profile, t));
+                profile, obstacle_4, profile, t));
             obstacles.push_back(obstacle_4);
 
             rmf_traffic::Trajectory obstacle_5;
             obstacle_5.insert(
-                  time + 15s,
-                  Eigen::Vector3d{-15, 0, 0},
-                  Eigen::Vector3d{0, 0, 0});
+              time + 15s,
+              Eigen::Vector3d{-15, 0, 0},
+              Eigen::Vector3d{0, 0, 0});
 
             obstacle_5.insert(
-                  time + 45s,
-                  Eigen::Vector3d{-10, 0, 0},
-                  Eigen::Vector3d{0, 0, 0});
+              time + 45s,
+              Eigen::Vector3d{-10, 0, 0},
+              Eigen::Vector3d{0, 0, 0});
 
             for (const auto& _t : view)
             {
               REQUIRE_FALSE(DetectConflict::between(
-                        profile, obstacle_5, profile, _t.route.trajectory()));
+                  profile, obstacle_5, profile, _t.route.trajectory()));
             }
 
             REQUIRE_FALSE(DetectConflict::between(
-                      profile, obstacle_5, profile, t));
+                profile, obstacle_5, profile, t));
             obstacles.push_back(obstacle_5);
 
             rmf_traffic::Trajectory obstacle_6;
             obstacle_6.insert(
-                  time + 60s,
-                  Eigen::Vector3d{-12, -8, 0},
-                  Eigen::Vector3d{0, 0, 0});
+              time + 60s,
+              Eigen::Vector3d{-12, -8, 0},
+              Eigen::Vector3d{0, 0, 0});
             obstacle_6.insert(
-                  time + 75s,
-                  Eigen::Vector3d{-18, -8, 0},
-                  Eigen::Vector3d{0, 0, 0});
+              time + 75s,
+              Eigen::Vector3d{-18, -8, 0},
+              Eigen::Vector3d{0, 0, 0});
 
             for (const auto& _t : view)
             {
               REQUIRE_FALSE(DetectConflict::between(
-                        profile, obstacle_6, profile, _t.route.trajectory()));
+                  profile, obstacle_6, profile, _t.route.trajectory()));
             }
 
             REQUIRE_FALSE(DetectConflict::between(
-                            profile, obstacle_6, profile, t));
+                profile, obstacle_6, profile, t));
             obstacles.push_back(obstacle_6);
 
             test_with_obstacle(
-                  "Partial 28->3, 16-29, 24->26, 21->22, 13->14, 5->6",
-                  *plan, database, obstacles, 0, time, false);
+              "Partial 28->3, 16-29, 24->26, 21->22, 13->14, 5->6",
+              *plan, database, obstacles, 0, time, false);
 
             test_ignore_obstacle(*plan, database.latest_version());
           }
@@ -1432,7 +1431,7 @@ SCENARIO("DP1 Graph")
       REQUIRE_FALSE(DetectConflict::between(profile, obstacle_1, profile, t));
       obstacles.push_back(obstacle_1);
       test_with_obstacle(
-            "Full 28->3", *plan, database, obstacles, 0, time, false);
+        "Full 28->3", *plan, database, obstacles, 0, time, false);
 
       test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1452,13 +1451,13 @@ SCENARIO("DP1 Graph")
         for (const auto& _t : view)
         {
           REQUIRE_FALSE(DetectConflict::between(
-                          profile, obstacle_2, profile, _t.route.trajectory()));
+              profile, obstacle_2, profile, _t.route.trajectory()));
         }
 
         REQUIRE_FALSE(DetectConflict::between(profile, obstacle_2, profile, t));
         obstacles.push_back(obstacle_2);
         test_with_obstacle(
-              "Full 28->3, 16-29", *plan, database, obstacles, 0, time, false);
+          "Full 28->3, 16-29", *plan, database, obstacles, 0, time, false);
 
         test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1478,16 +1477,16 @@ SCENARIO("DP1 Graph")
           for (const auto& _t : view)
           {
             REQUIRE_FALSE(DetectConflict::between(
-                      profile, obstacle_3, profile, _t.route.trajectory()));
+                profile, obstacle_3, profile, _t.route.trajectory()));
           }
 
           REQUIRE_FALSE(DetectConflict::between(
-                          profile, obstacle_3, profile, t));
+              profile, obstacle_3, profile, t));
           obstacles.push_back(obstacle_3);
 
           test_with_obstacle(
-                "Full 28->3, 16-29, 24->26",
-                *plan, database, obstacles, 0, time, false);
+            "Full 28->3, 16-29, 24->26",
+            *plan, database, obstacles, 0, time, false);
 
           test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1495,24 +1494,24 @@ SCENARIO("DP1 Graph")
           {
             rmf_traffic::Trajectory obstacle_4;
             obstacle_4.insert(
-                 time,
-                 Eigen::Vector3d{-2, 4, 0},
-                 Eigen::Vector3d{0, 0, 0});
+              time,
+              Eigen::Vector3d{-2, 4, 0},
+              Eigen::Vector3d{0, 0, 0});
             obstacle_4.insert(
-                 time + 76s,
-                 Eigen::Vector3d{3, 4, 0},
-                 Eigen::Vector3d{0, 0, 0});
+              time + 76s,
+              Eigen::Vector3d{3, 4, 0},
+              Eigen::Vector3d{0, 0, 0});
 
             const auto view =
               database.query(rmf_traffic::schedule::query_all());
             for (const auto& _t : view)
             {
               REQUIRE_FALSE(DetectConflict::between(
-                        profile, obstacle_4, profile, _t.route.trajectory()));
+                  profile, obstacle_4, profile, _t.route.trajectory()));
             }
 
             REQUIRE_FALSE(DetectConflict::between(
-                            profile, obstacle_4, profile, t));
+                profile, obstacle_4, profile, t));
             obstacles.push_back(obstacle_4);
 
             rmf_traffic::Trajectory obstacle_5;
@@ -1521,18 +1520,18 @@ SCENARIO("DP1 Graph")
               Eigen::Vector3d{-15, 0, 0},
               Eigen::Vector3d{0, 0, 0});
             obstacle_5.insert(
-               time + 76s,
-               Eigen::Vector3d{-10, 0, 0},
-               Eigen::Vector3d{0, 0, 0});
+              time + 76s,
+              Eigen::Vector3d{-10, 0, 0},
+              Eigen::Vector3d{0, 0, 0});
 
             for (const auto& _t : view)
             {
               REQUIRE_FALSE(DetectConflict::between(
-                        profile, obstacle_5, profile, _t.route.trajectory()));
+                  profile, obstacle_5, profile, _t.route.trajectory()));
             }
 
             REQUIRE_FALSE(DetectConflict::between(
-                            profile, obstacle_5, profile, t));
+                profile, obstacle_5, profile, t));
             obstacles.push_back(obstacle_5);
 
             rmf_traffic::Trajectory obstacle_6;
@@ -1548,16 +1547,16 @@ SCENARIO("DP1 Graph")
             for (const auto& _t : view)
             {
               REQUIRE_FALSE(DetectConflict::between(
-                        profile, obstacle_6, profile, _t.route.trajectory()));
+                  profile, obstacle_6, profile, _t.route.trajectory()));
             }
 
             REQUIRE_FALSE(DetectConflict::between(
-                            profile, obstacle_6, profile, t));
+                profile, obstacle_6, profile, t));
             obstacles.push_back(obstacle_6);
 
             test_with_obstacle(
-                  "Full 28->3, 16-29, 24->26, 2->3, 13->14, 5->6",
-                  *plan, database, obstacles, 0, time, false);
+              "Full 28->3, 16-29, 24->26, 2->3, 13->14, 5->6",
+              *plan, database, obstacles, 0, time, false);
 
             test_ignore_obstacle(*plan, database.latest_version());
           }
@@ -1610,13 +1609,13 @@ SCENARIO("DP1 Graph")
 
     WHEN("First obstacle is introduced")
     {
-       REQUIRE_FALSE(!rmf_traffic::DetectConflict::between(
-                       profile, obstacle, profile, t));
-       obstacles.push_back(obstacle);
-       test_with_obstacle("Unconstrained", *plan, database, obstacles, 32,
+      REQUIRE_FALSE(!rmf_traffic::DetectConflict::between(
+          profile, obstacle, profile, t));
+      obstacles.push_back(obstacle);
+      test_with_obstacle("Unconstrained", *plan, database, obstacles, 32,
         time);
 
-       test_ignore_obstacle(*plan, database.latest_version());
+      test_ignore_obstacle(*plan, database.latest_version());
     }
   }
 
@@ -1689,7 +1688,7 @@ SCENARIO("DP1 Graph")
       obstacles.push_back(obstacle_1);
 
       const auto t_obs1 = test_with_obstacle(
-            "Obstacle 28->2", *plan, database, obstacles, 27, time);
+        "Obstacle 28->2", *plan, database, obstacles, 27, time);
 
       test_ignore_obstacle(*plan, database.latest_version());
 
@@ -1744,8 +1743,8 @@ SCENARIO("DP1 Graph")
           //std::cout<<"Obstacle Size: "<<obstacles.size()<<std::endl;
 
           test_with_obstacle(
-                "Obstacle 28->2 , 29->4, 23->26",
-                *plan, database, obstacles, 27, time);
+            "Obstacle 28->2 , 29->4, 23->26",
+            *plan, database, obstacles, 27, time);
 
           test_ignore_obstacle(*plan, database.latest_version());
         }
@@ -1885,15 +1884,15 @@ SCENARIO("Graph with door", "[door]")
   const rmf_traffic::Time start_time = std::chrono::steady_clock::now();
 
   const auto plan_no_door = planner.plan(
-        rmf_traffic::agv::Planner::Start(start_time, 0, 0.0),
-        rmf_traffic::agv::Planner::Goal(4));
+    rmf_traffic::agv::Planner::Start(start_time, 0, 0.0),
+    rmf_traffic::agv::Planner::Goal(4));
   REQUIRE(plan_no_door);
   REQUIRE(plan_no_door->get_itinerary().size() == 1);
   CHECK(count_events(*plan_no_door) == 0);
 
   const auto plan_with_door_open = planner.plan(
-        rmf_traffic::agv::Planner::Start(start_time, 1, 0.0),
-        rmf_traffic::agv::Planner::Goal(4));
+    rmf_traffic::agv::Planner::Start(start_time, 1, 0.0),
+    rmf_traffic::agv::Planner::Goal(4));
   REQUIRE(plan_with_door_open);
   REQUIRE(plan_with_door_open->get_itinerary().size() == 1);
   CHECK(count_events(*plan_with_door_open) == 1);
@@ -1904,11 +1903,11 @@ SCENARIO("Graph with door", "[door]")
   const auto t_no_door =
     plan_no_door->get_itinerary().front().trajectory().duration();
   CHECK(rmf_traffic::time::to_seconds(t_with_door_open - t_no_door)
-        == Approx(5.0).margin(1e-12));
+    == Approx(5.0).margin(1e-12));
 
   const auto plan_with_door_open_close = planner.plan(
-        rmf_traffic::agv::Planner::Start(start_time, 2, 0.0),
-        rmf_traffic::agv::Planner::Goal(4));
+    rmf_traffic::agv::Planner::Start(start_time, 2, 0.0),
+    rmf_traffic::agv::Planner::Goal(4));
   REQUIRE(plan_with_door_open_close);
   REQUIRE(plan_with_door_open_close->get_itinerary().size() == 1);
   CHECK(count_events(*plan_with_door_open_close) == 2);
@@ -1916,7 +1915,7 @@ SCENARIO("Graph with door", "[door]")
   const auto t_with_door_open_close =
     plan_with_door_open_close->get_itinerary().front().trajectory().duration();
   CHECK(rmf_traffic::time::to_seconds(t_with_door_open_close - t_no_door)
-        > rmf_traffic::time::to_seconds(8s));
+    > rmf_traffic::time::to_seconds(8s));
   CHECK(has_event(ExpectEvent::DoorOpen, *plan_with_door_open_close));
   CHECK(has_event(ExpectEvent::DoorClose, *plan_with_door_open_close));
 }
@@ -1958,12 +1957,12 @@ SCENARIO("Test planner with various start conditions")
   rmf_traffic::schedule::Database database;
   const rmf_traffic::schedule::ParticipantId p_obs =
     database.register_participant(
-      rmf_traffic::schedule::ParticipantDescription{
+    rmf_traffic::schedule::ParticipantDescription{
       "obstacles",
       "test_Planner",
       rmf_traffic::schedule::ParticipantDescription::Rx::Unresponsive,
       profile
-      });
+    });
   rmf_traffic::schedule::ItineraryVersion iv_o = 0;
   rmf_traffic::RouteId ri_o = 0;
 
@@ -2024,7 +2023,7 @@ SCENARIO("Test planner with various start conditions")
     CHECK_PLAN(plan, {-5.0, 0}, 0.0, {5.0, 0}, {1, 3});
     CHECK(
       (plan->get_itinerary().front().trajectory().duration() - duration1).count() == Approx(
-      0.));
+        0.));
     CHECK(plan->get_itinerary().size() == plan1->get_itinerary().size());
   }
 
@@ -2065,23 +2064,23 @@ SCENARIO("Test planner with various start conditions")
       std::vector<rmf_traffic::Trajectory> obstacles;
       rmf_traffic::Trajectory obstacle;
       obstacle.insert(
-          initial_time,
-          Eigen::Vector3d{0, 0, 0},
-          Eigen::Vector3d{0, 0, 0});
+        initial_time,
+        Eigen::Vector3d{0, 0, 0},
+        Eigen::Vector3d{0, 0, 0});
 
       obstacle.insert(
-          initial_time + 60s,
-          Eigen::Vector3d{0, 0, 0},
-          Eigen::Vector3d{0, 0, 0});
+        initial_time + 60s,
+        Eigen::Vector3d{0, 0, 0},
+        Eigen::Vector3d{0, 0, 0});
 
       CHECK(DetectConflict::between(
-                profile, obstacle, profile,
-                plan->get_itinerary().front().trajectory()));
+          profile, obstacle, profile,
+          plan->get_itinerary().front().trajectory()));
       obstacles.push_back(obstacle);
 
       test_with_obstacle(
-          "Obstace 4->0 overlaps",
-          *plan, database, obstacles, 1, initial_time, true);
+        "Obstace 4->0 overlaps",
+        *plan, database, obstacles, 1, initial_time, true);
 
       // Note: Waypoint 2 will be skipped because the robot does not need to
       // stop or turn there. It moves directly from waypoint 1 to waypoint 3.
@@ -2183,14 +2182,14 @@ SCENARIO("Test planner with various start conditions")
       std::vector<rmf_traffic::Trajectory> obstacles;
       rmf_traffic::Trajectory obstacle;
       obstacle.insert(
-          initial_time,
-          Eigen::Vector3d{0, 0, 0},
-          Eigen::Vector3d{0, 0, 0});
+        initial_time,
+        Eigen::Vector3d{0, 0, 0},
+        Eigen::Vector3d{0, 0, 0});
 
       obstacle.insert(
-          initial_time + 60s,
-          Eigen::Vector3d{0, 0, 0},
-          Eigen::Vector3d{0, 0, 0});
+        initial_time + 60s,
+        Eigen::Vector3d{0, 0, 0},
+        Eigen::Vector3d{0, 0, 0});
       auto t = plan->get_itinerary().front().trajectory();
       REQUIRE(DetectConflict::between(profile, obstacle, profile, t));
       obstacles.push_back(obstacle);
@@ -2198,7 +2197,7 @@ SCENARIO("Test planner with various start conditions")
       for (auto& obstacle : obstacles)
       {
         const auto r = std::make_shared<rmf_traffic::Route>(
-              "test_map", obstacle);
+          "test_map", obstacle);
         database.extend(p_obs, {{ri_o++, r}}, iv_o++);
       }
 

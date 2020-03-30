@@ -34,7 +34,7 @@ SCENARIO("Test computing Starts from coordinates")
   double min_lane_length = 1e-8;
 
   WHEN("Location is on a waypoint, that is part of both a unidirectional and "
-      "bidirectional lane")
+    "bidirectional lane")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {0.05, 0.05}); // 1
@@ -50,10 +50,10 @@ SCENARIO("Test computing Starts from coordinates")
 
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
 
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 1);
@@ -63,7 +63,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near a waypoint, within the waypoint merging distance. "
-      "Waypoint is part of both a unidirectional and a bidirectional lane.")
+    "Waypoint is part of both a unidirectional and a bidirectional lane.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {0.1, 0.1}); // 1
@@ -79,10 +79,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1 + 1e-8, 0.1, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -93,10 +93,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1 - 1e-8, 0.1, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -107,10 +107,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1, 0.1 + 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -121,10 +121,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1, 0.1 - 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -134,7 +134,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is right on the border of merging to a waypoint, that is "
-      "connected to both a unidirectional and bidirectional lane.")
+    "connected to both a unidirectional and bidirectional lane.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {0.1, 0.1}); // 1
@@ -150,10 +150,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1 + 0.1 - 1e-8, 0.1, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -164,10 +164,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1 - 0.1 + 1e-8, 0.1, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -178,10 +178,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1, 0.1 + 0.1 - 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -192,10 +192,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0.1, 0.1 - 0.1 + 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].location());
@@ -205,8 +205,8 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near multiple waypoints, could be merged to either one. "
-      "Waypoints are either connected to both unidirectional and bidirectional "
-      "lanes.")
+    "Waypoints are either connected to both unidirectional and bidirectional "
+    "lanes.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {0.01, 0.01}); // 1
@@ -229,10 +229,10 @@ SCENARIO("Test computing Starts from coordinates")
 
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
 
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 1);
@@ -244,9 +244,9 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is not within merging with waypoints, within lane merging, "
-      "not between lane entry and lane exit, right outside of waypoint "
-      "merging distance. Waypoints are connected to both unidirectional or "
-      "bidirectional lanes.")
+    "not between lane entry and lane exit, right outside of waypoint "
+    "merging distance. Waypoints are connected to both unidirectional or "
+    "bidirectional lanes.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {1, 0}); // 1
@@ -263,10 +263,10 @@ SCENARIO("Test computing Starts from coordinates")
         0 - max_waypoint_merging_distance - 1e-8, 0, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -281,10 +281,10 @@ SCENARIO("Test computing Starts from coordinates")
         0 - slightly_larger_radius_x_y, 0 + slightly_larger_radius_x_y, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -296,10 +296,10 @@ SCENARIO("Test computing Starts from coordinates")
         0 - slightly_larger_radius_x_y, 0 - slightly_larger_radius_x_y, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -313,10 +313,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0 - 1e-8, 0 + very_near_to_border_y, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -327,10 +327,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0 - 1e-8, 0 - very_near_to_border_y, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -340,9 +340,9 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is not within merging with waypoints, within lane merging, "
-      "not between lane entry and lane exit, right within lane merging "
-      "distance. Waypoint is connected to both unidirectional and bidirectional"
-      " lanes.")
+    "not between lane entry and lane exit, right within lane merging "
+    "distance. Waypoint is connected to both unidirectional and bidirectional"
+    " lanes.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {1, 0}); // 1
@@ -358,10 +358,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0 - max_lane_merging_distance + 1e-8, 0, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -378,10 +378,10 @@ SCENARIO("Test computing Starts from coordinates")
         0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -395,10 +395,10 @@ SCENARIO("Test computing Starts from coordinates")
         0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -412,10 +412,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0 - 1e-8, 0 + very_near_to_border_y, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -426,10 +426,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {0 - 1e-8, 0 - very_near_to_border_y, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK_FALSE(start_set[0].lane());
@@ -453,10 +453,10 @@ SCENARIO("Test computing Starts from coordinates")
 
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 1);
     CHECK(start_set[0].waypoint() == 2);
@@ -481,10 +481,10 @@ SCENARIO("Test computing Starts from coordinates")
 
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 2);
 
@@ -509,7 +509,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is not within merging with waypoints, within lane merging, "
-      "between unidirectional lane entry and exit.")
+    "between unidirectional lane entry and exit.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {1, 0}); // 1
@@ -524,10 +524,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 + 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK(start_set[0].waypoint() == 2);
@@ -540,10 +540,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 - 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK(start_set[0].location());
@@ -555,10 +555,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 + max_lane_merging_distance - 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK(start_set[0].location());
@@ -570,10 +570,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 - max_lane_merging_distance + 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 1);
       CHECK(start_set[0].location());
@@ -584,7 +584,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is not within merging with waypoints, within lane merging, "
-      "between bidirectional lane entry and exit.")
+    "between bidirectional lane entry and exit.")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {1, 0}); // 1
@@ -600,10 +600,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 + 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 2);
 
@@ -630,10 +630,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 - 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 2);
 
@@ -660,10 +660,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 + 1.0 - 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 2);
 
@@ -690,10 +690,10 @@ SCENARIO("Test computing Starts from coordinates")
       Eigen::Vector3d robot_loc = {5, 0 - 1.0 + 1e-8, 0};
       std::vector<rmf_traffic::agv::Plan::Start> start_set =
         rmf_traffic::agv::compute_plan_starts(
-          graph, robot_loc, initial_time,
-          max_waypoint_merging_distance,
-          max_lane_merging_distance,
-          min_lane_length);
+        graph, robot_loc, initial_time,
+        max_waypoint_merging_distance,
+        max_lane_merging_distance,
+        min_lane_length);
       CHECK(!start_set.empty());
       CHECK(start_set.size() == 2);
 
@@ -719,7 +719,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is on the cross section of 2 unidirectional lanes, within "
-      "lane merging for both lanes")
+    "lane merging for both lanes")
   {
     graph.add_waypoint(test_map_name, {-10, 0}); // 0
     graph.add_waypoint(test_map_name, {10, 0}); // 1
@@ -737,10 +737,10 @@ SCENARIO("Test computing Starts from coordinates")
       0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 2);
 
@@ -765,7 +765,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is on the cross section of a unidirectional lane, and a "
-      "bidirectional lane, within lane merging for both lanes")
+    "bidirectional lane, within lane merging for both lanes")
   {
     graph.add_waypoint(test_map_name, {-10, 0}); // 0
     graph.add_waypoint(test_map_name, {10, 0}); // 1
@@ -784,10 +784,10 @@ SCENARIO("Test computing Starts from coordinates")
       0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 3);
 
@@ -814,7 +814,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is on the cross section of 2 bidirectional lanes, within lane "
-      "merging for both lanes")
+    "merging for both lanes")
   {
     graph.add_waypoint(test_map_name, {-10, 0}); // 0
     graph.add_waypoint(test_map_name, {10, 0}); // 1
@@ -834,10 +834,10 @@ SCENARIO("Test computing Starts from coordinates")
       0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 4);
 
@@ -866,7 +866,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near an elbow cross section of 2 unidirectional lanes, "
-      "within lane merging for both lanes, lanes moving away from elbow")
+    "within lane merging for both lanes, lanes moving away from elbow")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {5, 0}); // 1
@@ -881,10 +881,10 @@ SCENARIO("Test computing Starts from coordinates")
       0 + max_waypoint_merging_distance + 1e-8, 0, 0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 2);
 
@@ -909,7 +909,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near an elbow cross section of 2 unidirectional lanes, "
-      "within lane merging for both lanes, lanes moving towards the elbow")
+    "within lane merging for both lanes, lanes moving towards the elbow")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {5, 0}); // 1
@@ -924,10 +924,10 @@ SCENARIO("Test computing Starts from coordinates")
       0 + max_waypoint_merging_distance + 1e-8, 0, 0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 2);
 
@@ -945,8 +945,8 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near an elbow cross section of 2 unidirectional lanes, "
-      "within lane merging for both lanes, one lane moving away from the elbow "
-      "the other towards the elbow")
+    "within lane merging for both lanes, one lane moving away from the elbow "
+    "the other towards the elbow")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {5, 0}); // 1
@@ -961,10 +961,10 @@ SCENARIO("Test computing Starts from coordinates")
       0 + max_waypoint_merging_distance + 1e-8, 0, 0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 2);
 
@@ -989,8 +989,8 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near an elbow cross section of one unidirectional lane "
-      "towards the elbow, and one bidirectional lane, within lane merging for "
-      "both lanes")
+    "towards the elbow, and one bidirectional lane, within lane merging for "
+    "both lanes")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {5, 0}); // 1
@@ -1006,10 +1006,10 @@ SCENARIO("Test computing Starts from coordinates")
       0 + max_waypoint_merging_distance + 1e-8, 0, 0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 3);
 
@@ -1032,7 +1032,7 @@ SCENARIO("Test computing Starts from coordinates")
   }
 
   WHEN("Location is near an elbow cross section of two bidirectional lanes, "
-      "within lane merging for both lanes")
+    "within lane merging for both lanes")
   {
     graph.add_waypoint(test_map_name, {0, 0}); // 0
     graph.add_waypoint(test_map_name, {5, 0}); // 1
@@ -1049,10 +1049,10 @@ SCENARIO("Test computing Starts from coordinates")
       0 + max_waypoint_merging_distance + 1e-8, 0, 0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(!start_set.empty());
     CHECK(start_set.size() == 4);
 
@@ -1091,10 +1091,10 @@ SCENARIO("Test computing Starts from coordinates")
     Eigen::Vector3d robot_loc = {1 + 1e-8, 1 + 1e-8, 0.0};
     std::vector<rmf_traffic::agv::Plan::Start> start_set =
       rmf_traffic::agv::compute_plan_starts(
-        graph, robot_loc, initial_time,
-        max_waypoint_merging_distance,
-        max_lane_merging_distance,
-        min_lane_length);
+      graph, robot_loc, initial_time,
+      max_waypoint_merging_distance,
+      max_lane_merging_distance,
+      min_lane_length);
     CHECK(start_set.empty());
   }
 }

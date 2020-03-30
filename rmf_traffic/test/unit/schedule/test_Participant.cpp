@@ -166,7 +166,7 @@ inline void CHECK_ITINERARY(
   REQUIRE(db.get_itinerary(p.id()));
 
   auto db_iti = convert_itinerary(
-      Debug::get_itinerary(db, p.id()).value());
+    Debug::get_itinerary(db, p.id()).value());
   auto p_iti = convert_itinerary(p.itinerary());
   REQUIRE(db_iti.size() == p_iti.size());
 
@@ -176,7 +176,7 @@ inline void CHECK_ITINERARY(
     REQUIRE(db_it != db_iti.end());
     CHECK(item.second->map() == db_it->second->map());
     CHECK_EQUAL_TRAJECOTRY(item.second->trajectory(),
-        db_it->second->trajectory());
+      db_it->second->trajectory());
   }
 }
 
@@ -297,9 +297,9 @@ SCENARIO("Test Participant")
     CHECK_ITINERARY(p1, db);
 
     route_id = p1.set({
-        Route{"test_map_2", t1},
-        Route{"test_map_3", t2}
-    });
+          Route{"test_map_2", t1},
+          Route{"test_map_3", t2}
+        });
 
     CHECK(route_id == 0);
     // The RouteIds continue from previous set()
@@ -343,14 +343,14 @@ SCENARIO("Test Participant")
   {
     p1.delay(time, 5s);
     CHECK(p1.last_route_id() ==
-        std::numeric_limits<rmf_traffic::RouteId>::max());
+      std::numeric_limits<rmf_traffic::RouteId>::max());
     CHECK(p1.itinerary().size() == 0);
 
     // We do not need to transmit a delay when the itinerary is empty
     CHECK(db.latest_version() == dbv);
 
     CHECK(p1.last_route_id() ==
-        std::numeric_limits<rmf_traffic::RouteId>::max());
+      std::numeric_limits<rmf_traffic::RouteId>::max());
   }
 
   GIVEN("Changes: SD")
@@ -368,7 +368,7 @@ SCENARIO("Test Participant")
     REQUIRE(p1.itinerary().size() == 1);
     CHECK(old_itinerary.front().id == p1.itinerary().front().id);
     CHECK(old_itinerary.front().route->map() ==
-        p1.itinerary().front().route->map());
+      p1.itinerary().front().route->map());
 
     auto old_it = old_itinerary.front().route->trajectory().begin();
     auto new_it = p1.itinerary().front().route->trajectory().begin();
@@ -377,7 +377,7 @@ SCENARIO("Test Participant")
       new_it++, old_it++)
     {
       CHECK((new_it->time() - (old_it->time() + delay_duration)).count()
-          == Approx(0.0));
+        == Approx(0.0));
     }
 
     CHECK(db.latest_version() == ++dbv);
@@ -389,7 +389,7 @@ SCENARIO("Test Participant")
     // Erasing RouteId not in the itinerary
     p1.erase({0});
     CHECK(p1.last_route_id() ==
-        std::numeric_limits<rmf_traffic::RouteId>::max());
+      std::numeric_limits<rmf_traffic::RouteId>::max());
     CHECK(p1.itinerary().size() == 0);
     // No change in database version
     CHECK(db.latest_version() == dbv);
@@ -414,7 +414,7 @@ SCENARIO("Test Participant")
     // Clearing an empty itinerary
     p1.clear();
     CHECK(p1.last_route_id() ==
-        std::numeric_limits<rmf_traffic::RouteId>::max());
+      std::numeric_limits<rmf_traffic::RouteId>::max());
     CHECK(p1.itinerary().size() == 0);
     // No change in database version
     CHECK(db.latest_version() == dbv);
@@ -489,14 +489,14 @@ SCENARIO("Test Participant")
     REQUIRE(db.inconsistencies().size() == 1);
     CHECK(db.inconsistencies().begin()->ranges.size() == 1);
     CHECK(db.inconsistencies().begin()->ranges.last_known_version() ==
-          rmf_traffic::schedule::Participant::Debug::get_itinerary_version(p1));
+      rmf_traffic::schedule::Participant::Debug::get_itinerary_version(p1));
 
     writer.drop_packets = true;
 
     p1.delay(time, 10s);
     CHECK(db.latest_version() == dbv);
     CHECK(db.inconsistencies().begin()->ranges.last_known_version() + 1 ==
-          rmf_traffic::schedule::Participant::Debug::get_itinerary_version(p1));
+      rmf_traffic::schedule::Participant::Debug::get_itinerary_version(p1));
 
     writer.drop_packets = false;
 
@@ -507,7 +507,7 @@ SCENARIO("Test Participant")
     CHECK(db.get_itinerary(p1.id())->size() == 1);
     CHECK(db.inconsistencies().begin()->ranges.size() == 0);
     CHECK(db.inconsistencies().begin()->ranges.last_known_version() ==
-          rmf_traffic::schedule::Participant::Debug::get_itinerary_version(p1));
+      rmf_traffic::schedule::Participant::Debug::get_itinerary_version(p1));
 
     rectifier.rectify();
     // There is no need to fix anything, because the last change was a
@@ -753,14 +753,14 @@ SCENARIO("Test Participant")
 
     {
       auto p2 = rmf_traffic::schedule::make_participant(
-      rmf_traffic::schedule::ParticipantDescription{
+        rmf_traffic::schedule::ParticipantDescription{
           "participant 2",
           "test_Participant",
           rmf_traffic::schedule::ParticipantDescription::Rx::Responsive,
           rmf_traffic::Profile{shape}
-      },
-      writer,
-      &rectifier);
+        },
+        writer,
+        &rectifier);
 
       p2_id = p2.id();
       CHECK(db.latest_version() == ++dbv);

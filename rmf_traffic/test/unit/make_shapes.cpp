@@ -33,7 +33,7 @@ SCENARIO("Verify that these shape types can be upcast")
 
   std::shared_ptr<rmf_traffic::geometry::Shape> polygon =
     std::make_shared<rmf_traffic::geometry::SimplePolygon>(
-        std::vector<Eigen::Vector2d>());
+    std::vector<Eigen::Vector2d>());
 
   // Make sure the two convex shape type can be constructed and cast to Convex
   std::shared_ptr<rmf_traffic::geometry::ConvexShape> convex_box =

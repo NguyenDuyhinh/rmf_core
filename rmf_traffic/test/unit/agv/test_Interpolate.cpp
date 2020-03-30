@@ -69,14 +69,14 @@ void test_interpolation(
     const double u = static_cast<double>(i)/static_cast<double>(NumTests);
     const double t_rel = u*dt;
     const auto t = rmf_traffic::time::apply_offset(
-          trajectory_start_time, t_rel + t_start);
+      trajectory_start_time, t_rel + t_start);
 
     const auto it = trajectory.find(t);
     REQUIRE(it != trajectory.end());
 
     const auto motion = rmf_traffic::Motion::compute_cubic_splines(
-          --rmf_traffic::Trajectory::const_iterator(it),
-          ++rmf_traffic::Trajectory::const_iterator(it));
+      --rmf_traffic::Trajectory::const_iterator(it),
+      ++rmf_traffic::Trajectory::const_iterator(it));
 
     REQUIRE(motion != nullptr);
     CHECK(start_time - 10ns <= motion->start_time());
@@ -194,7 +194,7 @@ SCENARIO("Test Interpolations")
       Eigen::Vector3d{0.0, 0.0, 0.0},
       Eigen::Vector3d{xf, 0.0, angle1},
       Eigen::Vector3d{xf, -xf, angle2}
-      };
+    };
 
     rmf_traffic::Trajectory trajectory =
       rmf_traffic::agv::Interpolate::positions(traits, start_time, positions);
@@ -205,25 +205,24 @@ SCENARIO("Test Interpolations")
 
       const PredictedTimes times1 = compute_predicted_times(0.0, xf, v_n, a_n);
       test_interpolation(
-          positions[0], Eigen::Vector3d::UnitX(), a_n, times1, trajectory);
+        positions[0], Eigen::Vector3d::UnitX(), a_n, times1, trajectory);
 
       const PredictedTimes times2 =
         compute_predicted_times(times1.t_finish, angle1, w_n, alpha_n);
       test_interpolation(
-          Eigen::Vector3d{xf, 0.0, 0.0}, Eigen::Vector3d::UnitZ(),
-          alpha_n, times2, trajectory);
+        Eigen::Vector3d{xf, 0.0, 0.0}, Eigen::Vector3d::UnitZ(),
+        alpha_n, times2, trajectory);
 
       const PredictedTimes times3 =
         compute_predicted_times(times2.t_finish, xf, v_n, a_n);
       test_interpolation(
-          positions[1], -Eigen::Vector3d::UnitY(), a_n, times3, trajectory);
+        positions[1], -Eigen::Vector3d::UnitY(), a_n, times3, trajectory);
 
-      const PredictedTimes times4 =
-        compute_predicted_times(
-            times3.t_finish, std::abs(angle2 - angle1), w_n, alpha_n);
+      const PredictedTimes times4 = compute_predicted_times(
+        times3.t_finish, std::abs(angle2 - angle1), w_n, alpha_n);
       test_interpolation(
-          Eigen::Vector3d{xf, -xf, angle1}, -Eigen::Vector3d::UnitZ(),
-          alpha_n, times4, trajectory);
+        Eigen::Vector3d{xf, -xf, angle1}, -Eigen::Vector3d::UnitZ(),
+        alpha_n, times4, trajectory);
     }
   }
 
@@ -252,24 +251,24 @@ SCENARIO("Test Interpolations")
 
       const PredictedTimes times1 = compute_predicted_times(0.0, pf, v_n, a_n);
       test_interpolation(
-            positions[0], -Eigen::Vector3d::UnitX(), a_n, times1, trajectory);
+        positions[0], -Eigen::Vector3d::UnitX(), a_n, times1, trajectory);
 
       const PredictedTimes times2 = compute_predicted_times(
-            times1.t_finish, angle1, w_n, alpha_n);
+        times1.t_finish, angle1, w_n, alpha_n);
       test_interpolation(
-            Eigen::Vector3d{x0 - pf, -15.0, theta0}, Eigen::Vector3d::UnitZ(),
-            alpha_n, times2, trajectory);
+        Eigen::Vector3d{x0 - pf, -15.0, theta0}, Eigen::Vector3d::UnitZ(),
+        alpha_n, times2, trajectory);
 
       const PredictedTimes times3 = compute_predicted_times(
-            times2.t_finish, pf, v_n, a_n);
+        times2.t_finish, pf, v_n, a_n);
       test_interpolation(
-            positions[1], Eigen::Vector3d::UnitY(), a_n, times3, trajectory);
+        positions[1], Eigen::Vector3d::UnitY(), a_n, times3, trajectory);
 
       const PredictedTimes times4 = compute_predicted_times(
-            times3.t_finish, std::abs(angle2 - angle1), w_n, alpha_n);
+        times3.t_finish, std::abs(angle2 - angle1), w_n, alpha_n);
       test_interpolation(
-            Eigen::Vector3d{x0 - pf, -15 + pf, theta0 + angle1},
-            -Eigen::Vector3d::UnitZ(), alpha_n, times4, trajectory);
+        Eigen::Vector3d{x0 - pf, -15 + pf, theta0 + angle1},
+        -Eigen::Vector3d::UnitZ(), alpha_n, times4, trajectory);
     }
   }
 
