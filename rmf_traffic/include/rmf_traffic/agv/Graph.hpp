@@ -343,7 +343,7 @@ public:
       DerivedExecutor& execute(DerivedExecutor& executor) const
       {
         return static_cast<DerivedExecutor&>(execute(
-              static_cast<Executor&>(executor)));
+          static_cast<Executor&>(executor)));
       }
 
       /// Execute this event

@@ -28,7 +28,7 @@ Rectifier Rectifier::Implementation::make(
 {
   Rectifier rectifier;
   rectifier._pimpl = rmf_utils::make_unique_impl<Implementation>(
-        Implementation{participant});
+    Implementation{participant});
 
   return rectifier;
 }
@@ -118,7 +118,7 @@ public:
 DatabaseRectificationRequesterFactory::DatabaseRectificationRequesterFactory(
   const Database& database)
 : _pimpl(rmf_utils::make_unique_impl<Implementation>(
-             Implementation{database, {}}))
+    Implementation{database, {}}))
 {
   // Do nothing
 }
@@ -130,7 +130,7 @@ DatabaseRectificationRequesterFactory::make(
   ParticipantId participant_id)
 {
   auto requester = std::make_unique<DatabaseRectificationRequester>(
-        _pimpl->_database, std::move(rectifier), participant_id);
+    _pimpl->_database, std::move(rectifier), participant_id);
 
   _pimpl->_handles.push_back(requester->_handle);
   return std::move(requester);

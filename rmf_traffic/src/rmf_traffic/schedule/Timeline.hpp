@@ -173,7 +173,7 @@ public:
       const std::string& map_name = entry.route->map();
 
       const auto map_it = _timelines.insert(
-            std::make_pair(map_name, Entries())).first;
+        std::make_pair(map_name, Entries())).first;
 
       Entries& timeline = map_it->second;
 
@@ -188,7 +188,7 @@ public:
     }
 
     entry.timeline_handle = std::make_shared<Handle>(
-          &entry, std::move(buckets));
+      &entry, std::move(buckets));
   }
 
   /// Inspect the timeline for entries that match the query
@@ -203,29 +203,29 @@ public:
     if (Query::Participants::Mode::All == mode)
     {
       inspect_spacetime(
-            query.spacetime(),
-            ParticipantFilter::AllowAll(),
-            inspector);
+        query.spacetime(),
+        ParticipantFilter::AllowAll(),
+        inspector);
     }
     else if (Query::Participants::Mode::Include == mode)
     {
       inspect_spacetime(
-            query.spacetime(),
-            ParticipantFilter::Include(participants.include()->get_ids()),
-            inspector);
+        query.spacetime(),
+        ParticipantFilter::Include(participants.include()->get_ids()),
+        inspector);
     }
     else if (Query::Participants::Mode::Exclude == mode)
     {
       inspect_spacetime(
-            query.spacetime(),
-            ParticipantFilter::Exclude(participants.exclude()->get_ids()),
-            inspector);
+        query.spacetime(),
+        ParticipantFilter::Exclude(participants.exclude()->get_ids()),
+        inspector);
     }
     else
     {
       throw std::runtime_error(
-            "Unexpected Query::Participants mode: "
-            + std::to_string(static_cast<uint16_t>(mode)));
+        "Unexpected Query::Participants mode: "
+        + std::to_string(static_cast<uint16_t>(mode)));
     }
   }
 
@@ -262,12 +262,12 @@ private:
     else if (Query::Spacetime::Mode::Regions == mode)
     {
       inspect_spacetime_regions(
-            *spacetime.regions(), participant_filter, inspector);
+        *spacetime.regions(), participant_filter, inspector);
     }
     else if (Query::Spacetime::Mode::Timespan == mode)
     {
       inspect_spacetime_timespan(
-            *spacetime.timespan(), participant_filter, inspector);
+        *spacetime.timespan(), participant_filter, inspector);
     }
   }
 
@@ -304,9 +304,9 @@ private:
       [&spacetime_data](const Entry& entry) -> bool
       {
         return rmf_traffic::internal::detect_conflicts(
-            entry.description->profile(),
-            entry.route->trajectory(),
-            spacetime_data);
+          entry.description->profile(),
+          entry.route->trajectory(),
+          spacetime_data);
       };
 
     for (const Region& region : regions)
@@ -342,12 +342,12 @@ private:
         spacetime_data.shape = space_it->get_shape();
 
         inspect_entries(
-              relevant,
-              participant_filter,
-              inspector,
-              timeline_begin,
-              timeline_end,
-              checked);
+          relevant,
+          participant_filter,
+          inspector,
+          timeline_begin,
+          timeline_end,
+          checked);
       }
     }
   }
@@ -383,12 +383,12 @@ private:
       {
         const Entries& timeline = timeline_it.second;
         inspect_entries(
-              relevant,
-              participant_filter,
-              inspector,
-              get_timeline_begin(timeline, lower_time_bound),
-              get_timeline_end(timeline, upper_time_bound),
-              checked);
+          relevant,
+          participant_filter,
+          inspector,
+          get_timeline_begin(timeline, lower_time_bound),
+          get_timeline_end(timeline, upper_time_bound),
+          checked);
       }
     }
     else
@@ -402,12 +402,12 @@ private:
 
         const Entries& timeline = map_it->second;
         inspect_entries(
-              relevant,
-              participant_filter,
-              inspector,
-              get_timeline_begin(timeline, lower_time_bound),
-              get_timeline_end(timeline, upper_time_bound),
-              checked);
+          relevant,
+          participant_filter,
+          inspector,
+          get_timeline_begin(timeline, lower_time_bound),
+          get_timeline_end(timeline, upper_time_bound),
+          checked);
       }
     }
   }
@@ -455,20 +455,20 @@ private:
         // This timeline is completely empty, so we'll begin creating buckets
         // starting from the time of this trajectory.
         return timeline.insert(
-              timeline.end(),
-              std::make_pair(
-                time + PartialBucketDuration,
-                std::make_shared<Bucket>()));
+          timeline.end(),
+          std::make_pair(
+          time + PartialBucketDuration,
+          std::make_shared<Bucket>()));
       }
 
       auto last_it = --timeline.end();
       while (last_it->first < time)
       {
         last_it = timeline.insert(
-              timeline.end(),
-              std::make_pair(
-                last_it->first + BucketDuration,
-                std::make_shared<Bucket>()));
+          timeline.end(),
+          std::make_pair(
+          last_it->first + BucketDuration,
+          std::make_shared<Bucket>()));
       }
 
       return last_it;
@@ -477,10 +477,10 @@ private:
     while (time + BucketDuration < start_it->first)
     {
       start_it = timeline.insert(
-            start_it,
-            std::make_pair(
-              start_it->first - BucketDuration,
-              std::make_shared<Bucket>()));
+        start_it,
+        std::make_pair(
+        start_it->first - BucketDuration,
+        std::make_shared<Bucket>()));
     }
 
     return start_it;

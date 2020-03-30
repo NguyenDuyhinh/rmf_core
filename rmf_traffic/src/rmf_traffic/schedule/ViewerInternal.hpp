@@ -58,9 +58,9 @@ public:
   {
     append_to_elements(view._pimpl->elements, input);
     view._pimpl->storage.insert(
-          view._pimpl->storage.end(),
-          std::make_move_iterator(input.begin()),
-          std::make_move_iterator(input.end()));
+      view._pimpl->storage.end(),
+      std::make_move_iterator(input.begin()),
+      std::make_move_iterator(input.end()));
   }
 
   static std::vector<Element> make_elements(
@@ -80,7 +80,7 @@ public:
     {
       assert(s.route);
       elements.emplace_back(
-            Element{s.participant, s.route_id, *s.route, *s.description});
+        Element{s.participant, s.route_id, *s.route, *s.description});
     }
   }
 };

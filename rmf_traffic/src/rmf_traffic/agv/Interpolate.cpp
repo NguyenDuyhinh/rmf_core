@@ -143,7 +143,7 @@ void interpolate_rotation(
   const double dir = diff_heading < 0.0 ? -1.0 : 1.0;
 
   States states = compute_traversal(
-        start_time, diff_heading_abs, w_nom, alpha_nom);
+    start_time, diff_heading_abs, w_nom, alpha_nom);
 
   for (const State& state : states)
   {
@@ -168,13 +168,13 @@ public:
     std::vector<std::pair<std::string, double>> values;
     for (const auto& pair :
       {std::make_pair("linear velocity",
-                       traits.linear().get_nominal_velocity()),
+        traits.linear().get_nominal_velocity()),
         std::make_pair("linear acceleration",
-                        traits.linear().get_nominal_acceleration()),
+          traits.linear().get_nominal_acceleration()),
         std::make_pair("rotational velocity",
-                        traits.rotational().get_nominal_velocity()),
+          traits.rotational().get_nominal_velocity()),
         std::make_pair("rotational acceleration",
-                        traits.rotational().get_nominal_acceleration())})
+          traits.rotational().get_nominal_acceleration())})
     {
       if (pair.second <= 0.0)
         values.push_back(pair);
@@ -306,7 +306,7 @@ bool can_skip_interpolation(
   {
     const double dot_product = d_next_p.dot(d_future_p);
     const double angle = std::acos(
-          dot_product/(d_next_p_norm * d_future_p_norm));
+      dot_product/(d_next_p_norm * d_future_p_norm));
     // If the corner is smaller than the threshold, then we can skip it
     if (angle < options.corner_angle_thresh)
       can_skip = true;
@@ -343,9 +343,9 @@ Trajectory Interpolate::positions(
     return trajectory;
 
   trajectory.insert(
-        start_time,
-        input_positions.front(),
-        Eigen::Vector3d::Zero());
+    start_time,
+    input_positions.front(),
+    Eigen::Vector3d::Zero());
   assert(trajectory.size() > 0);
 
   const double v = traits.linear().get_nominal_velocity();
@@ -365,7 +365,7 @@ Trajectory Interpolate::positions(
     {
       const Eigen::Vector3d& future_position = input_positions[i+1];
       if (internal::can_skip_interpolation(
-           last_position, next_position, future_position, options))
+        last_position, next_position, future_position, options))
       {
         continue;
       }
@@ -373,12 +373,12 @@ Trajectory Interpolate::positions(
 
     assert(trajectory.finish_time());
     internal::interpolate_translation(
-          trajectory, v, a, *trajectory.finish_time(), last_position,
-          next_position, options.translation_thresh);
+      trajectory, v, a, *trajectory.finish_time(), last_position,
+      next_position, options.translation_thresh);
 
     internal::interpolate_rotation(
-          trajectory, w, alpha, *trajectory.finish_time(), last_position,
-          next_position, options.rotation_thresh);
+      trajectory, w, alpha, *trajectory.finish_time(), last_position,
+      next_position, options.rotation_thresh);
 
     last_stop_index = i;
   }

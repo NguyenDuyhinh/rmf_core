@@ -175,7 +175,7 @@ public:
 
     std::vector<ParticipantId> all_participants = submitted_;
     all_participants.insert(
-          all_participants.end(), unsubmitted.begin(), unsubmitted.end());
+      all_participants.end(), unsubmitted.begin(), unsubmitted.end());
     participant_query = Query::Participants::make_all_except(all_participants);
 
     // Add this Table's participant to the sequence
@@ -217,8 +217,8 @@ public:
   {
     auto table = std::make_shared<Table>(Table());
     table->_pimpl = rmf_utils::make_unique_impl<Implementation>(
-          table, weak_negotiation_data.lock(), *viewer, p, depth+1,
-          sequence, unsubmitted, proposal, weak_owner.lock());
+      table, weak_negotiation_data.lock(), *viewer, p, depth+1,
+      sequence, unsubmitted, proposal, weak_owner.lock());
 
     descendants.insert(std::make_pair(p, std::move(table)));
   }
@@ -231,9 +231,9 @@ public:
   {
     auto table = std::make_shared<Table>(Table());
     table->_pimpl = rmf_utils::make_unique_impl<Implementation>(
-          Implementation(
-            table, negotiation_data, viewer, participant, 1, {},
-            participants, {}, nullptr));
+      Implementation(
+      table, negotiation_data, viewer, participant, 1, {},
+      participants, {}, nullptr));
 
     return table;
   }
@@ -322,7 +322,7 @@ public:
     if (negotiation_data)
     {
       negotiation_data->num_terminated_tables += termination_factor(
-            depth, negotiation_data->participants.size());
+        depth, negotiation_data->participants.size());
       negotiation_data->rejected_tables.insert(this);
 
       // Erase any successful tables that branched off of this rejected table
@@ -341,7 +341,7 @@ public:
         });
 
       negotiation_data->successful_tables.erase(
-            erase_it, negotiation_data->successful_tables.end());
+        erase_it, negotiation_data->successful_tables.end());
     }
   }
 
@@ -404,7 +404,7 @@ public:
     for (const auto p : participants_)
     {
       tables[p] = Table::Implementation::make_root(
-            viewer_, data, p, participants_);
+        viewer_, data, p, participants_);
     }
   }
 
@@ -477,7 +477,7 @@ public:
     const std::vector<ParticipantId>& to_accommodate) const
   {
     return const_cast<Implementation&>(*this).get_entry(
-          for_participant, to_accommodate);
+      for_participant, to_accommodate);
   }
 
   void add_participant(const ParticipantId new_participant)
@@ -485,9 +485,9 @@ public:
     if (!data->participants.insert(new_participant).second)
     {
       throw std::runtime_error(
-          "[rmf_traffic::schedule::Negotiation::add_participant] "
-          "Participant [" + std::to_string(new_participant) + "] is already "
-          "present in the Negotiation");
+        "[rmf_traffic::schedule::Negotiation::add_participant] "
+        "Participant [" + std::to_string(new_participant) + "] is already "
+        "present in the Negotiation");
     }
 
     // We can update the maximum number of terminating tables by just
@@ -533,7 +533,7 @@ Negotiation::Negotiation(
   const Viewer& viewer,
   std::vector<ParticipantId> participants)
 : _pimpl(rmf_utils::make_unique_impl<Implementation>(
-             viewer, std::move(participants)))
+    viewer, std::move(participants)))
 {
   // Do nothing
 }
@@ -611,7 +611,7 @@ Viewer::View Negotiation::Table::Implementation::query(
 
   // Merge them together into a single view
   Viewer::View::Implementation::append_to_view(
-        view, std::move(inspector.routes));
+    view, std::move(inspector.routes));
 
   return view;
 }
@@ -821,7 +821,7 @@ std::size_t QuickestFinishEvaluator::choose(
       finish_times[p.participant] = *finish_time;
 
       const auto insertion = best_finish_times.insert(
-            std::make_pair(p.participant, *finish_time));
+        std::make_pair(p.participant, *finish_time));
 
       if (insertion.second)
       {

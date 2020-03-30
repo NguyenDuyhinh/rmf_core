@@ -49,7 +49,7 @@ public:
   {
     iterator result;
     result._pimpl = rmf_utils::make_impl<iterator::Implementation>(
-          iterator::Implementation{it});
+      iterator::Implementation{it});
     return result;
   }
 
@@ -160,14 +160,14 @@ void Region::pop_back()
 auto Region::erase(iterator it) -> iterator
 {
   return Implementation::make_iterator(
-        _pimpl->spaces.erase(it._pimpl->iter));
+    _pimpl->spaces.erase(it._pimpl->iter));
 }
 
 //==============================================================================
 auto Region::erase(iterator first, iterator last) -> iterator
 {
   return Implementation::make_iterator(
-        _pimpl->spaces.erase(first._pimpl->iter, last._pimpl->iter));
+    _pimpl->spaces.erase(first._pimpl->iter, last._pimpl->iter));
 }
 
 //==============================================================================
@@ -180,7 +180,7 @@ auto Region::begin() -> iterator
 auto Region::begin() const -> const_iterator
 {
   return Implementation::make_iterator(
-        const_cast<Implementation::Spaces&>(_pimpl->spaces).begin());
+    const_cast<Implementation::Spaces&>(_pimpl->spaces).begin());
 }
 
 //==============================================================================
@@ -199,7 +199,7 @@ auto Region::end() -> iterator
 auto Region::end() const -> const_iterator
 {
   return Implementation::make_iterator(
-        const_cast<Implementation::Spaces&>(_pimpl->spaces).end());
+    const_cast<Implementation::Spaces&>(_pimpl->spaces).end());
 }
 
 //==============================================================================

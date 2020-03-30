@@ -50,7 +50,7 @@ public:
   {
     const_iterator result;
     result._pimpl = rmf_utils::make_impl<const_iterator::Implementation>(
-          const_iterator::Implementation{it});
+      const_iterator::Implementation{it});
     return result;
   }
 
@@ -192,7 +192,7 @@ auto Inconsistencies::Implementation::make_iterator(raw_iterator it)
 {
   const_iterator result;
   result._pimpl = rmf_utils::make_impl<const_iterator::Implementation>(
-        const_iterator::Implementation{it});
+    const_iterator::Implementation{it});
   return result;
 }
 

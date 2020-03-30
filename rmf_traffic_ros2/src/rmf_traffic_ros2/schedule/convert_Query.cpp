@@ -105,8 +105,8 @@ rmf_traffic::schedule::Query::Spacetime convert(
     return parse_timespan(from);
 
   throw std::runtime_error(
-        "Invalid rmf_traffic_msgs/ScheduleQuerySpacetime type ["
-        + std::to_string(from.type) + "]");
+    "Invalid rmf_traffic_msgs/ScheduleQuerySpacetime type ["
+    + std::to_string(from.type) + "]");
 }
 
 namespace {
@@ -158,8 +158,8 @@ void convert_regions(
     region_msg.map = region.get_map();
 
     region_msg.timespan = convert_timespan(
-          region.get_lower_time_bound(),
-          region.get_upper_time_bound());
+      region.get_lower_time_bound(),
+      region.get_upper_time_bound());
 
     for (const auto& space : region)
     {
@@ -181,8 +181,8 @@ void convert_timespan(
   const rmf_traffic::schedule::Query::Spacetime::Timespan& from)
 {
   msg.timespan = convert_timespan(
-        from.get_lower_time_bound(),
-        from.get_upper_time_bound());
+    from.get_lower_time_bound(),
+    from.get_upper_time_bound());
 }
 } // anonymous namespace
 
@@ -216,9 +216,9 @@ rmf_traffic::schedule::Query::Participants convert(
     return Participants::make_all_except(from.ids);
 
   throw std::runtime_error(
-        "[rmf_traffic_ros2::convert] Invalid type value for "
-        "rmf_traffic::schedule::Query::Participants: " +
-        std::to_string(from.type));
+    "[rmf_traffic_ros2::convert] Invalid type value for "
+    "rmf_traffic::schedule::Query::Participants: " +
+    std::to_string(from.type));
 }
 
 //==============================================================================

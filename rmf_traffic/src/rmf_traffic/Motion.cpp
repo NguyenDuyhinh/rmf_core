@@ -27,8 +27,8 @@ std::unique_ptr<Motion> Motion::compute_cubic_splines(
   if (input_begin == input_end)
   {
     throw std::runtime_error(
-          "[rmf_traffic::Motion::compute_cubic_spline] invalid waypoint range: "
-          "begin == end");
+      "[rmf_traffic::Motion::compute_cubic_spline] invalid waypoint range: "
+      "begin == end");
   }
 
   using const_iterator = internal::WaypointList::const_iterator;
@@ -39,7 +39,7 @@ std::unique_ptr<Motion> Motion::compute_cubic_splines(
   {
     const auto& point = *begin;
     return std::make_unique<SinglePointMotion>(
-          point.data.time, point.data.position, point.data.velocity);
+      point.data.time, point.data.position, point.data.velocity);
   }
 
   std::vector<Spline> splines;

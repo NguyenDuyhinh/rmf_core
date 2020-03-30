@@ -42,7 +42,7 @@ public:
   {
     Waypoint result;
     result._pimpl = rmf_utils::make_impl<Implementation>(
-          Implementation{std::forward<Args>(args)...});
+      Implementation{std::forward<Args>(args)...});
 
     return result;
   }
@@ -213,7 +213,7 @@ rmf_utils::clone_ptr<Graph::OrientationConstraint>
 Graph::OrientationConstraint::make(std::vector<double> acceptable_orientations)
 {
   return rmf_utils::make_clone<AcceptableOrientationConstraint>(
-        std::move(acceptable_orientations));
+    std::move(acceptable_orientations));
 }
 
 //==============================================================================
@@ -626,7 +626,7 @@ public:
   {
     Lane lane;
     lane._pimpl = rmf_utils::make_impl<Implementation>(
-          Implementation{std::forward<Args>(args)...});
+      Implementation{std::forward<Args>(args)...});
 
     return lane;
   }
@@ -670,9 +670,9 @@ auto Graph::add_waypoint(
   const bool is_holding_point) -> Waypoint&
 {
   _pimpl->waypoints.emplace_back(
-        Waypoint::Implementation::make(
-          _pimpl->waypoints.size(),
-          std::move(map_name), std::move(location), is_holding_point));
+    Waypoint::Implementation::make(
+      _pimpl->waypoints.size(),
+      std::move(map_name), std::move(location), is_holding_point));
 
   _pimpl->lanes_from.push_back({});
 
@@ -707,11 +707,11 @@ auto Graph::add_lane(Lane::Node entry, Lane::Node exit) -> Lane&
   _pimpl->lanes_from[entry.waypoint_index()].push_back(lane_id);
 
   _pimpl->lanes.emplace_back(
-        Lane::Implementation::make(
-          _pimpl->lanes.size(),
-          std::move(entry),
-          std::move(exit),
-          false, std::size_t()));
+    Lane::Implementation::make(
+    _pimpl->lanes.size(),
+    std::move(entry),
+    std::move(exit),
+    false, std::size_t()));
 
   return _pimpl->lanes.back();
 }

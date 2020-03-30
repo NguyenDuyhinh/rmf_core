@@ -38,7 +38,7 @@ Participant Participant::Implementation::make(
 
   Participant participant;
   participant._pimpl = rmf_utils::make_unique_impl<Implementation>(
-        id, std::move(description), writer);
+    id, std::move(description), writer);
 
   if (rectifier_factory)
   {
@@ -180,7 +180,7 @@ RouteId Participant::extend(const std::vector<Route>& additional_routes)
   auto input = _pimpl->make_input(std::move(additional_routes));
 
   _pimpl->_current_itinerary.reserve(
-        _pimpl->_current_itinerary.size() + input.size());
+    _pimpl->_current_itinerary.size() + input.size());
 
   for (const auto& item : input)
     _pimpl->_current_itinerary.push_back(item);
@@ -334,9 +334,9 @@ Participant make_participant(
   RectificationRequesterFactory* rectifier_factory)
 {
   return Participant::Implementation::make(
-        std::move(description),
-        writer,
-        rectifier_factory);
+    std::move(description),
+    writer,
+    rectifier_factory);
 }
 
 } // namespace schedule

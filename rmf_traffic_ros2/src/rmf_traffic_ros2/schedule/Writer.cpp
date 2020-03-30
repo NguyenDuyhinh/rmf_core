@@ -349,7 +349,7 @@ public:
         // received. That way we don't need to create an additional thread here
         // and worry about the threat of race conditions.
         auto participant = rmf_traffic::schedule::make_participant(
-            std::move(description), *this, &rectifier_factory);
+          std::move(description), *this, &rectifier_factory);
 
         if (ready_callback)
           ready_callback(std::move(participant));

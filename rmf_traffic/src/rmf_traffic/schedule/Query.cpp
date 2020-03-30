@@ -204,7 +204,7 @@ auto Query::Spacetime::Regions::erase(
   iterator first, iterator last) -> iterator
 {
   return Implementation::make_iterator(
-        _pimpl->regions.erase(first._pimpl->iter, last._pimpl->iter));
+    _pimpl->regions.erase(first._pimpl->iter, last._pimpl->iter));
 }
 
 //==============================================================================
@@ -217,7 +217,7 @@ auto Query::Spacetime::Regions::begin() -> iterator
 auto Query::Spacetime::Regions::begin() const -> const_iterator
 {
   return Implementation::make_iterator(
-        const_cast<Implementation::RegionSet&>(_pimpl->regions).begin());
+    const_cast<Implementation::RegionSet&>(_pimpl->regions).begin());
 }
 
 //==============================================================================
@@ -236,7 +236,7 @@ auto Query::Spacetime::Regions::end() -> iterator
 auto Query::Spacetime::Regions::end() const -> const_iterator
 {
   return Implementation::make_iterator(
-        const_cast<Implementation::RegionSet&>(_pimpl->regions).end());
+    const_cast<Implementation::RegionSet&>(_pimpl->regions).end());
 }
 
 //==============================================================================
@@ -388,7 +388,7 @@ auto Query::Spacetime::query_timespan(
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-        std::move(maps), lower_bound, upper_bound);
+      std::move(maps), lower_bound, upper_bound);
 
   return _pimpl->timespan_instance;
 }
@@ -401,7 +401,7 @@ auto Query::Spacetime::query_timespan(
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-        std::move(maps), lower_bound, rmf_utils::nullopt);
+      std::move(maps), lower_bound, rmf_utils::nullopt);
 
   return _pimpl->timespan_instance;
 }
@@ -413,9 +413,9 @@ auto Query::Spacetime::query_timespan(
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-        std::move(maps),
-        rmf_utils::nullopt,
-        rmf_utils::nullopt);
+      std::move(maps),
+      rmf_utils::nullopt,
+      rmf_utils::nullopt);
 
   return _pimpl->timespan_instance;
 }
@@ -503,7 +503,7 @@ public:
 //==============================================================================
 Query::Participants::Include::Include(std::vector<ParticipantId> ids)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-           Implementation{uniquify(std::move(ids))}))
+    Implementation{uniquify(std::move(ids))}))
 {
   // Do nothing
 }
@@ -760,7 +760,7 @@ Query make_query(
   const Time* finish_time)
 {
   return Query::Implementation::make_query(
-        std::move(maps), start_time, finish_time);
+    std::move(maps), start_time, finish_time);
 }
 
 } // namespace schedule

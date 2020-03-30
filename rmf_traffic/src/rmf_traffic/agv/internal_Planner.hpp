@@ -41,7 +41,7 @@ public:
   {
     Waypoint wp;
     wp._pimpl = rmf_utils::make_impl<Implementation>(
-          Implementation{std::forward<Args>(args)...});
+      Implementation{std::forward<Args>(args)...});
 
     return wp;
   }

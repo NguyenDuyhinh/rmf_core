@@ -106,13 +106,13 @@ rmf_traffic_msgs::msg::ShapeContext convert(
   for (const auto& box : from.shapes.at(Shape::BOX))
   {
     context.convex_shapes.boxes.emplace_back(
-          convert(static_cast<const Box&>(box->source())));
+      convert(static_cast<const Box&>(box->source())));
   }
 
   for (const auto& circle : from.shapes.at(Shape::CIRCLE))
   {
     context.convex_shapes.circles.emplace_back(
-          convert(static_cast<const Circle&>(circle->source())));
+      convert(static_cast<const Circle&>(circle->source())));
   }
 
   // TODO(MXG): Add SimplePolygon here once we're ready to support it

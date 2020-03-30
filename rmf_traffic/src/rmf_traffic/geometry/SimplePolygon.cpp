@@ -330,7 +330,7 @@ std::vector<Triangle> decompose_polygon(
       find_deepest_reflex_point(next_polygon, next_triangle);
 
     const auto new_subpolygons = split_subpolygon(
-          next_polygon, {pivot_point, reflex_point});
+      next_polygon, {pivot_point, reflex_point});
 
     for (auto&& new_subpolygon : new_subpolygons)
       subpolygon_queue.emplace_back(std::move(new_subpolygon));
@@ -402,7 +402,7 @@ public:
     }
 
     return std::make_shared<ConvexWrapper>(
-          std::move(fcl_points), 2*points.size());
+      std::move(fcl_points), 2*points.size());
   }
 
   std::unique_ptr<fcl::Vec3f[]> point_storage;
@@ -576,7 +576,7 @@ SimplePolygon::SimplePolygon(std::vector<Eigen::Vector2d> points)
 //==============================================================================
 SimplePolygon::SimplePolygon(const SimplePolygon& other)
 : Shape(std::make_unique<SimplePolygonInternal>(
-            static_cast<const SimplePolygonInternal&>(*other._get_internal())))
+    static_cast<const SimplePolygonInternal&>(*other._get_internal())))
 {
   // Do nothing
 }
@@ -667,8 +667,8 @@ FinalShape SimplePolygon::finalize() const
       characteristic_length = distance;
   }
   return FinalShape::Implementation::make_final_shape(
-        rmf_utils::make_derived_impl<const Shape, const SimplePolygon>(*this),
-        _get_internal()->make_fcl(), characteristic_length);
+    rmf_utils::make_derived_impl<const Shape, const SimplePolygon>(*this),
+    _get_internal()->make_fcl(), characteristic_length);
 }
 
 } // namespace geometry

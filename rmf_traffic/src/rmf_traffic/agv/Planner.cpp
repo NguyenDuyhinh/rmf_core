@@ -387,7 +387,7 @@ public:
 
     Plan plan;
     plan._pimpl = rmf_utils::make_impl<Implementation>(
-          Implementation{std::move(*result), std::move(cache_mgr)});
+      Implementation{std::move(*result), std::move(cache_mgr)});
 
     return std::move(plan);
   }
@@ -460,10 +460,10 @@ rmf_utils::optional<Plan> Planner::plan(
 rmf_utils::optional<Plan> Planner::plan(const StartSet& starts, Goal goal) const
 {
   return Plan::Implementation::generate(
-        _pimpl->cache_mgr,
-        starts,
-        std::move(goal),
-        _pimpl->default_options);
+    _pimpl->cache_mgr,
+    starts,
+    std::move(goal),
+    _pimpl->default_options);
 }
 
 //==============================================================================
@@ -547,10 +547,10 @@ rmf_utils::optional<Plan> Plan::replan(
 rmf_utils::optional<Plan> Plan::replan(const StartSet& new_starts) const
 {
   return Plan::Implementation::generate(
-        _pimpl->cache_mgr,
-        new_starts,
-        _pimpl->result.goal,
-        _pimpl->result.options);
+    _pimpl->cache_mgr,
+    new_starts,
+    _pimpl->result.goal,
+    _pimpl->result.options);
 }
 
 //==============================================================================
@@ -559,10 +559,10 @@ rmf_utils::optional<Plan> Plan::replan(
   Options new_options) const
 {
   return Plan::Implementation::generate(
-        _pimpl->cache_mgr,
-        new_starts,
-        _pimpl->result.goal,
-        std::move(new_options));
+    _pimpl->cache_mgr,
+    new_starts,
+    _pimpl->result.goal,
+    std::move(new_options));
 }
 
 //==============================================================================
@@ -649,8 +649,8 @@ std::vector<Plan::Start> compute_plan_starts(
           continue;
 
         starts.emplace_back(
-            Plan::Start(
-                start_time, entry_waypoint_index, start_yaw, p_location));
+          Plan::Start(
+            start_time, entry_waypoint_index, start_yaw, p_location));
       }
     }
     // If it's larger than the lane length, then its closest point on the lane
@@ -666,8 +666,8 @@ std::vector<Plan::Start> compute_plan_starts(
           continue;
 
         starts.emplace_back(
-            Plan::Start(
-                start_time, exit_waypoint_index, start_yaw, p_location));
+          Plan::Start(
+            start_time, exit_waypoint_index, start_yaw, p_location));
       }
     }
     // If its between the entry and the exit waypoints, then we should
@@ -680,8 +680,8 @@ std::vector<Plan::Start> compute_plan_starts(
       if (lane_dist < max_merge_lane_distance)
       {
         starts.emplace_back(
-            Plan::Start(
-                start_time, exit_waypoint_index, start_yaw, p_location, i));
+          Plan::Start(
+            start_time, exit_waypoint_index, start_yaw, p_location, i));
       }
     }
   }

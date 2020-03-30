@@ -115,7 +115,7 @@ VehicleTraits::Differential::Differential(
   Eigen::Vector2d forward,
   const bool reversible)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-      Implementation{std::move(forward), reversible}))
+    Implementation{std::move(forward), reversible}))
 {
   // Do nothing
 }

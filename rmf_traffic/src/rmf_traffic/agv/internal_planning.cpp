@@ -218,9 +218,9 @@ std::vector<agv::Plan::Waypoint> reconstruct_waypoints(
       .template block<2, 1>(0, 0);
     const Time time{*n->route_from_parent.trajectory.finish_time()};
     waypoints.emplace_back(
-          agv::Plan::Waypoint::Implementation::make(
-            Eigen::Vector3d{p[0], p[1], n->orientation}, time,
-            n->waypoint, n->event));
+      agv::Plan::Waypoint::Implementation::make(
+      Eigen::Vector3d{p[0], p[1], n->orientation}, time,
+      n->waypoint, n->event));
   }
 
   return waypoints;
@@ -506,10 +506,10 @@ struct DifferentialDriveExpander
       assert(_event);
       const auto duration = _event->duration();
       return expander->make_delay(
-            *_parent->waypoint,
-            _parent,
-            duration,
-            std::move(_event));
+        *_parent->waypoint,
+        _parent,
+        duration,
+        std::move(_event));
     }
 
     LaneEventExecutor& add_if_valid(
@@ -555,9 +555,9 @@ struct DifferentialDriveExpander
         // The pair was inserted, which implies that the cost estimate for this
         // waypoint has never been found before, and we should compute it now.
         const EuclideanExpander::NodePtr solution = search<EuclideanExpander>(
-              EuclideanExpander::Context{context.graph, context.final_waypoint},
-              EuclideanExpander::InitialNodeArgs{waypoint},
-              nullptr);
+          EuclideanExpander::Context{context.graph, context.final_waypoint},
+          EuclideanExpander::InitialNodeArgs{waypoint},
+          nullptr);
 
         // TODO(MXG): Instead of asserting that the goal exists, we should
         // probably take this opportunity to shortcircuit the planner and return
@@ -580,7 +580,7 @@ struct DifferentialDriveExpander
         // about the Trajectory's start/end time being correct; we only care
         // about the difference between the two.
         const rmf_traffic::Trajectory estimate = agv::Interpolate::positions(
-              context.traits, context.initial_time, positions);
+          context.traits, context.initial_time, positions);
 
         const double cost_esimate = time::to_seconds(estimate.duration());
         estimate_it.first->second = cost_esimate;
@@ -639,8 +639,7 @@ struct DifferentialDriveExpander
       const std::size_t initial_waypoint = start.waypoint();
 
       const double cost_estimate =
-        _context.heuristic.estimate_remaining_cost(
-            _context, initial_waypoint);
+        _context.heuristic.estimate_remaining_cost(_context, initial_waypoint);
 
       const double initial_orientation = start.orientation();
       const std::string& map_name =
@@ -663,9 +662,9 @@ struct DifferentialDriveExpander
         initial_route.map = map_name;
         Trajectory& initial_trajectory = initial_route.trajectory;
         initial_trajectory.insert(
-              initial_time,
-              initial_position,
-              Eigen::Vector3d::Zero());
+          initial_time,
+          initial_position,
+          Eigen::Vector3d::Zero());
 
         const auto initial_node = std::make_shared<Node>(
           Node{
@@ -696,14 +695,14 @@ struct DifferentialDriveExpander
             if (lane_exit != initial_waypoint)
             {
               throw std::invalid_argument(
-                    "[rmf_traffic::agv::Planner] Disagreement between initial "
-                    "waypoint index [" + std::to_string(initial_waypoint)
-                    + "] and the initial lane exit ["
-                    + std::to_string(lane_exit) + "]");
+                "[rmf_traffic::agv::Planner] Disagreement between initial "
+                "waypoint index [" + std::to_string(initial_waypoint)
+                + "] and the initial lane exit ["
+                + std::to_string(lane_exit) + "]");
             }
 
             if (!is_orientation_okay(
-                  *initial_location, orientation, course, lane))
+              *initial_location, orientation, course, lane))
             {
               // We cannot approach the initial_waypoint with this orientation,
               // so we cannot use this orientation to start.
@@ -726,13 +725,13 @@ struct DifferentialDriveExpander
             // we use interpolate_rotation
 
             agv::internal::interpolate_rotation(
-                  rotation_trajectory,
-                  rotational.get_nominal_velocity(),
-                  rotational.get_nominal_acceleration(),
-                  initial_time,
-                  initial_position,
-                  rotated_position,
-                  _context.interpolate.rotation_thresh);
+              rotation_trajectory,
+              rotational.get_nominal_velocity(),
+              rotational.get_nominal_acceleration(),
+              initial_time,
+              initial_position,
+              rotated_position,
+              _context.interpolate.rotation_thresh);
 
             if (rotation_trajectory.size() != 1 && !is_valid(rotation_route))
             {
@@ -800,9 +799,9 @@ struct DifferentialDriveExpander
         initial_route.map = map_name;
         Trajectory& initial_trajectory = initial_route.trajectory;
         initial_trajectory.insert(
-              initial_time,
-              to_3d(wp_location, initial_orientation),
-              Eigen::Vector3d::Zero());
+          initial_time,
+          to_3d(wp_location, initial_orientation),
+          Eigen::Vector3d::Zero());
 
         queue.push(std::make_shared<Node>(
           Node{
@@ -860,13 +859,13 @@ struct DifferentialDriveExpander
     // context to reduce the dereferencing cost here.
     const auto& rotational = _context.traits.rotational();
     agv::internal::interpolate_rotation(
-          trajectory,
-          rotational.get_nominal_velocity(),
-          rotational.get_nominal_acceleration(),
-          last.time(),
-          p,
-          Eigen::Vector3d(p[0], p[1], target_orientation),
-          _context.interpolate.rotation_thresh);
+      trajectory,
+      rotational.get_nominal_velocity(),
+      rotational.get_nominal_acceleration(),
+      last.time(),
+      p,
+      Eigen::Vector3d(p[0], p[1], target_orientation),
+      _context.interpolate.rotation_thresh);
 
     if (is_valid(route))
     {
@@ -987,11 +986,11 @@ struct DifferentialDriveExpander
     agv::Graph::Lane::EventPtr event = nullptr)
   {
     const auto node = make_if_valid(
-          waypoint,
-          orientation,
-          parent_node,
-          std::move(route),
-          std::move(event));
+      waypoint,
+      orientation,
+      parent_node,
+      std::move(route),
+      std::move(event));
 
     if (node)
     {
@@ -1017,7 +1016,7 @@ struct DifferentialDriveExpander
   {
     const std::size_t initial_waypoint = *initial_parent->waypoint;
     assert(_context.graph.lanes[initial_lane_index].entry().waypoint_index()
-           == initial_waypoint);
+      == initial_waypoint);
     const Eigen::Vector2d initial_p =
       _context.graph.waypoints[initial_waypoint].get_location();
     const double orientation = initial_parent->orientation;
@@ -1026,7 +1025,7 @@ struct DifferentialDriveExpander
     if (const auto* entry_event = initial_lane.entry().event())
     {
       initial_parent = entry_event->execute(
-            _executor.update(initial_parent)).get(this);
+        _executor.update(initial_parent)).get(this);
 
       if (!initial_parent)
       {
@@ -1067,13 +1066,13 @@ struct DifferentialDriveExpander
       Trajectory& trajectory = route.trajectory;
       trajectory.insert(initial_wp);
       agv::internal::interpolate_translation(
-            trajectory,
-            _context.traits.linear().get_nominal_velocity(),
-            _context.traits.linear().get_nominal_acceleration(),
-            initial_time,
-            initial_position,
-            next_position,
-            _context.interpolate.translation_thresh);
+        trajectory,
+        _context.traits.linear().get_nominal_velocity(),
+        _context.traits.linear().get_nominal_acceleration(),
+        initial_time,
+        initial_position,
+        next_position,
+        _context.interpolate.translation_thresh);
 
       if (const auto* event = lane.exit().event())
       {
@@ -1083,7 +1082,7 @@ struct DifferentialDriveExpander
         auto parent_to_event = std::make_shared<Node>(
           Node{
             _context.heuristic.estimate_remaining_cost(
-               _context, exit_waypoint_index),
+            _context, exit_waypoint_index),
             compute_current_cost(initial_parent, trajectory),
             exit_waypoint_index,
             orientation,
@@ -1101,7 +1100,7 @@ struct DifferentialDriveExpander
       // we may need to copy the trajectory later when we expand further down
       // other lanes.
       else if (!add_if_valid(exit_waypoint_index, orientation, initial_parent,
-                        route, queue))
+        route, queue))
       {
         // This lane was not successfully added, so we should not try to expand
         // this any further.
@@ -1145,8 +1144,8 @@ struct DifferentialDriveExpander
         };
 
         if (!agv::internal::can_skip_interpolation(
-             initial_position, next_position,
-             future_position, _context.interpolate))
+          initial_position, next_position,
+          future_position, _context.interpolate))
         {
           continue;
         }
@@ -1185,14 +1184,14 @@ struct DifferentialDriveExpander
     trajectory.insert(initial_segment);
 
     trajectory.insert(
-          initial_time + delay,
-          initial_pos,
-          Eigen::Vector3d::Zero());
+      initial_time + delay,
+      initial_pos,
+      Eigen::Vector3d::Zero());
     assert(trajectory.size() == 2);
 
     return make_if_valid(
-          waypoint, initial_pos[2], parent_node,
-          std::move(route), std::move(event));
+      waypoint, initial_pos[2], parent_node,
+      std::move(route), std::move(event));
   }
 
   void expand_delay(
@@ -1203,7 +1202,7 @@ struct DifferentialDriveExpander
     agv::Graph::Lane::EventPtr event = nullptr)
   {
     const auto node = make_delay(
-          waypoint, parent_node, delay, std::move(event));
+      waypoint, parent_node, delay, std::move(event));
 
     if (node)
       queue.push(node);
@@ -1305,7 +1304,7 @@ public:
     {
 
       auto& heuristic = _heuristics.insert(
-            std::make_pair(h.first, Heuristic{})).first->second;
+        std::make_pair(h.first, Heuristic{})).first->second;
 
       heuristic.update(h.second);
     }
@@ -1321,7 +1320,7 @@ public:
 
     const std::size_t goal_waypoint = goal.waypoint();
     Heuristic& h = _heuristics.insert(
-          std::make_pair(goal_waypoint, Heuristic{})).first->second;
+      std::make_pair(goal_waypoint, Heuristic{})).first->second;
     const bool* const interrupt_flag = options.interrupt_flag();
 
     const NodePtr solution = search<DifferentialDriveExpander>(
@@ -1384,12 +1383,12 @@ CacheManager make_cache(agv::Planner::Configuration config)
   if (config.vehicle_traits().get_differential())
   {
     return CacheManager(std::make_shared<DifferentialDriveCache>(
-                          std::move(config)));
+      std::move(config)));
   }
 
   throw std::runtime_error(
-        "[rmf_traffic::agv::Planner] Planning utilities are currently only "
-        "implemented for AGVs that use a differential drive.");
+    "[rmf_traffic::agv::Planner] Planning utilities are currently only "
+    "implemented for AGVs that use a differential drive.");
 }
 
 } // namespace planning

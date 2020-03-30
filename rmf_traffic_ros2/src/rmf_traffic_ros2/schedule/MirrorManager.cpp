@@ -169,7 +169,7 @@ public:
   {
     MirrorManager mgr;
     mgr._pimpl = rmf_utils::make_unique_impl<Implementation>(
-          std::forward<Args>(args)...);
+      std::forward<Args>(args)...);
 
     return mgr;
   }

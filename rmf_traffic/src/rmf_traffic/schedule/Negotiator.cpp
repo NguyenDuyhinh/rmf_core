@@ -52,11 +52,11 @@ void SimpleResponder::submit(
   std::function<void()> /*approval_callback*/) const
 {
   const auto table = _pimpl->negotiation->table(
-        _pimpl->for_participant, _pimpl->to_accommodate);
+    _pimpl->for_participant, _pimpl->to_accommodate);
 
   table->submit(
-        std::move(itinerary),
-        table->version() ? *table->version()+1 : 0);
+    std::move(itinerary),
+    table->version() ? *table->version()+1 : 0);
 }
 
 //==============================================================================

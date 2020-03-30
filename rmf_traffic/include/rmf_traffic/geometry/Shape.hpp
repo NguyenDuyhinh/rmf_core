@@ -98,7 +98,7 @@ template<typename T, typename... Args>
 FinalShapePtr make_final(Args&& ... args)
 {
   return std::make_shared<FinalShape>(
-        T(std::forward<Args>(args)...).finalize());
+    T(std::forward<Args>(args)...).finalize());
 }
 
 //==============================================================================

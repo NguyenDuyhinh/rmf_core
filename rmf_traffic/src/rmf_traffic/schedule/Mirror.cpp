@@ -84,12 +84,12 @@ public:
       assert(entry);
       assert(entry->route);
       auto delayed = schedule::apply_delay(
-            entry->route->trajectory(), delay.from(), delay.duration());
+        entry->route->trajectory(), delay.from(), delay.duration());
       if (!delayed)
         continue;
 
       auto new_route = std::make_shared<Route>(
-            entry->route->map(), std::move(*delayed));
+        entry->route->map(), std::move(*delayed));
 
       entry = std::make_unique<RouteEntry>(*entry);
       entry->route = std::move(new_route);

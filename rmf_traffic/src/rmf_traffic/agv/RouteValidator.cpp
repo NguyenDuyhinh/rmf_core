@@ -84,10 +84,10 @@ bool ScheduleRouteValidator::valid(const Route& route) const
   _pimpl->query.spacetime().timespan()->add_map(route.map());
 
   _pimpl->query.spacetime().timespan()->set_lower_time_bound(
-        *route.trajectory().start_time());
+    *route.trajectory().start_time());
 
   _pimpl->query.spacetime().timespan()->set_upper_time_bound(
-        *route.trajectory().finish_time());
+    *route.trajectory().finish_time());
 
   const auto view = _pimpl->viewer->query(_pimpl->query);
   for (const auto& v : view)
@@ -96,10 +96,10 @@ bool ScheduleRouteValidator::valid(const Route& route) const
       continue;
 
     if (rmf_traffic::DetectConflict::between(
-          _pimpl->profile,
-          route.trajectory(),
-          v.description.profile(),
-          v.route.trajectory()))
+      _pimpl->profile,
+      route.trajectory(),
+      v.description.profile(),
+      v.route.trajectory()))
       return false;
   }
 
@@ -144,19 +144,19 @@ bool NegotiatingRouteValidator::valid(const Route& route) const
   _pimpl->query.spacetime().timespan()->add_map(route.map());
 
   _pimpl->query.spacetime().timespan()->set_lower_time_bound(
-        *route.trajectory().start_time());
+    *route.trajectory().start_time());
 
   _pimpl->query.spacetime().timespan()->set_upper_time_bound(
-        *route.trajectory().finish_time());
+    *route.trajectory().finish_time());
 
   const auto view = _pimpl->table->query(_pimpl->query.spacetime());
   for (const auto& v : view)
   {
     if (rmf_traffic::DetectConflict::between(
-          _pimpl->profile,
-          route.trajectory(),
-          v.description.profile(),
-          v.route.trajectory()))
+      _pimpl->profile,
+      route.trajectory(),
+      v.description.profile(),
+      v.route.trajectory()))
     {
       return false;
     }

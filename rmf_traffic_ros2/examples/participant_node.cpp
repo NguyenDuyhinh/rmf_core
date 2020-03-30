@@ -65,7 +65,7 @@ std::shared_ptr<ParticipantNode> make_node()
   t.insert(now + 10s, {0, 10, 0}, {0, 0, 0});
 
   node->writer->async_make_participant(
-        std::move(description),
+    std::move(description),
     [node, t = std::move(t)](rmf_traffic::schedule::Participant participant)
     {
       node->participant = std::move(participant);

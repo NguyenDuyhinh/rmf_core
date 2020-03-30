@@ -490,7 +490,7 @@ public:
     NegotiatorPtr negotiator)
   {
     const auto insertion = negotiators->insert(
-          std::make_pair(for_participant, std::move(negotiator)));
+      std::make_pair(for_participant, std::move(negotiator)));
 
     if (!insertion.second)
     {

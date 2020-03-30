@@ -59,9 +59,9 @@ rmf_traffic_msgs::msg::ScheduleParticipantPatch convert(
 
   output.erasures = from.erasures().ids();
   output.additions = convert_vector<rmf_traffic_msgs::msg::ScheduleChangeAdd>(
-        from.additions().items());
+    from.additions().items());
   output.delays = convert_vector<rmf_traffic_msgs::msg::ScheduleChangeDelay>(
-        from.delays());
+    from.delays());
 
   return output;
 }
