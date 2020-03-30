@@ -388,7 +388,7 @@ auto Query::Spacetime::query_timespan(
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-      std::move(maps), lower_bound, upper_bound);
+    std::move(maps), lower_bound, upper_bound);
 
   return _pimpl->timespan_instance;
 }
@@ -401,7 +401,7 @@ auto Query::Spacetime::query_timespan(
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-      std::move(maps), lower_bound, rmf_utils::nullopt);
+    std::move(maps), lower_bound, rmf_utils::nullopt);
 
   return _pimpl->timespan_instance;
 }
@@ -413,9 +413,9 @@ auto Query::Spacetime::query_timespan(
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-      std::move(maps),
-      rmf_utils::nullopt,
-      rmf_utils::nullopt);
+    std::move(maps),
+    rmf_utils::nullopt,
+    rmf_utils::nullopt);
 
   return _pimpl->timespan_instance;
 }
@@ -426,9 +426,9 @@ auto Query::Spacetime::query_timespan(bool query_all_maps) -> Timespan&
   _pimpl->mode = Mode::Timespan;
   _pimpl->timespan_instance =
     Timespan::Implementation::make(
-      query_all_maps,
-      rmf_utils::nullopt,
-      rmf_utils::nullopt);
+    query_all_maps,
+    rmf_utils::nullopt,
+    rmf_utils::nullopt);
 
   return _pimpl->timespan_instance;
 }
@@ -503,7 +503,7 @@ public:
 //==============================================================================
 Query::Participants::Include::Include(std::vector<ParticipantId> ids)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{uniquify(std::move(ids))}))
+      Implementation{uniquify(std::move(ids))}))
 {
   // Do nothing
 }
@@ -540,7 +540,7 @@ public:
 //==============================================================================
 Query::Participants::Exclude::Exclude(std::vector<ParticipantId> ids)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{uniquify(std::move(ids))}))
+      Implementation{uniquify(std::move(ids))}))
 {
   // Do nothing
 }
@@ -769,16 +769,16 @@ namespace detail {
 
 //==============================================================================
 template class bidirectional_iterator<
-  Region,
-  schedule::Query::Spacetime::Regions::IterImpl,
-  schedule::Query::Spacetime::Regions
+    Region,
+    schedule::Query::Spacetime::Regions::IterImpl,
+    schedule::Query::Spacetime::Regions
 >;
 
 //==============================================================================
 template class bidirectional_iterator<
-  const Region,
-  schedule::Query::Spacetime::Regions::IterImpl,
-  schedule::Query::Spacetime::Regions
+    const Region,
+    schedule::Query::Spacetime::Regions::IterImpl,
+    schedule::Query::Spacetime::Regions
 >;
 
 } // namespace detail

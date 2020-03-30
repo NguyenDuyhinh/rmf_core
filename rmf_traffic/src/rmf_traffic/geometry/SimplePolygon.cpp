@@ -538,9 +538,11 @@ public:
       throw InvalidSimplePolygonException(_points.size());
 
     Intersections intersections;
+    // *INDENT-OFF*
     if (check_self_intersections(&intersections))
       throw InvalidSimplePolygonException(std::move(intersections),
         _points.size());
+    // *INDENT-ON*
   }
 
   CollisionGeometries make_fcl() const final
@@ -576,7 +578,7 @@ SimplePolygon::SimplePolygon(std::vector<Eigen::Vector2d> points)
 //==============================================================================
 SimplePolygon::SimplePolygon(const SimplePolygon& other)
 : Shape(std::make_unique<SimplePolygonInternal>(
-    static_cast<const SimplePolygonInternal&>(*other._get_internal())))
+      static_cast<const SimplePolygonInternal&>(*other._get_internal())))
 {
   // Do nothing
 }

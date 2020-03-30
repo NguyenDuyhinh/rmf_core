@@ -118,7 +118,7 @@ public:
 DatabaseRectificationRequesterFactory::DatabaseRectificationRequesterFactory(
   const Database& database)
 : _pimpl(rmf_utils::make_unique_impl<Implementation>(
-    Implementation{database, {}}))
+      Implementation{database, {}}))
 {
   // Do nothing
 }
@@ -151,9 +151,9 @@ void DatabaseRectificationRequesterFactory::rectify()
 
   // If any handles have expired, remove them
   handles.erase(std::remove_if(
-    handles.begin(),
-    handles.end(),
-    [](const WeakHandlePtr& h) { return h.expired(); }),
+      handles.begin(),
+      handles.end(),
+      [](const WeakHandlePtr& h) { return h.expired(); }),
     handles.end());
 }
 

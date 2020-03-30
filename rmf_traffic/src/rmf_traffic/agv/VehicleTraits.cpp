@@ -62,7 +62,7 @@ public:
 //==============================================================================
 VehicleTraits::Limits::Limits(const double velocity, const double acceleration)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{velocity, acceleration}))
+      Implementation{velocity, acceleration}))
 {
   // Do nothing
 }
@@ -115,7 +115,7 @@ VehicleTraits::Differential::Differential(
   Eigen::Vector2d forward,
   const bool reversible)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{std::move(forward), reversible}))
+      Implementation{std::move(forward), reversible}))
 {
   // Do nothing
 }
@@ -167,10 +167,10 @@ VehicleTraits::VehicleTraits(
   Profile profile,
   Differential steering)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    std::move(linear),
-    std::move(rotational),
-    std::move(profile),
-    std::move(steering)))
+      std::move(linear),
+      std::move(rotational),
+      std::move(profile),
+      std::move(steering)))
 {
   // Do nothing
 }

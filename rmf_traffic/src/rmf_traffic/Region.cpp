@@ -62,11 +62,11 @@ Region::Region(
   Time upper_bound,
   std::vector<geometry::Space> spaces)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(map),
-      lower_bound,
-      upper_bound,
-      std::move(spaces)}))
+      Implementation{
+        std::move(map),
+        lower_bound,
+        upper_bound,
+        std::move(spaces)}))
 {
   // Do nothing
 }
@@ -76,11 +76,11 @@ Region::Region(
   std::string map,
   std::vector<Space> spaces)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(map),
-      rmf_utils::nullopt,
-      rmf_utils::nullopt,
-      std::move(spaces)}))
+      Implementation{
+        std::move(map),
+        rmf_utils::nullopt,
+        rmf_utils::nullopt,
+        std::move(spaces)}))
 {
   // Do nothing
 }
@@ -218,12 +218,12 @@ namespace detail {
 
 //==============================================================================
 template class bidirectional_iterator<
-  geometry::Space, Region::IterImpl, Region
+    geometry::Space, Region::IterImpl, Region
 >;
 
 //==============================================================================
 template class bidirectional_iterator<
-  const geometry::Space, Region::IterImpl, Region
+    const geometry::Space, Region::IterImpl, Region
 >;
 
 } // namespace detail

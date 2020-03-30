@@ -219,8 +219,8 @@ std::vector<agv::Plan::Waypoint> reconstruct_waypoints(
     const Time time{*n->route_from_parent.trajectory.finish_time()};
     waypoints.emplace_back(
       agv::Plan::Waypoint::Implementation::make(
-      Eigen::Vector3d{p[0], p[1], n->orientation}, time,
-      n->waypoint, n->event));
+        Eigen::Vector3d{p[0], p[1], n->orientation}, time,
+        n->waypoint, n->event));
   }
 
   return waypoints;
@@ -291,13 +291,13 @@ struct EuclideanExpander
       context.graph.waypoints[args.waypoint].get_location();
 
     queue.emplace(std::make_shared<Node>(
-      Node{
-        args.waypoint,
-        estimate_remaining_cost(location),
-        0.0,
-        location,
-        nullptr
-      }));
+        Node{
+          args.waypoint,
+          estimate_remaining_cost(location),
+          0.0,
+          location,
+          nullptr
+        }));
   }
 
   bool is_finished(const NodePtr& node)
@@ -342,13 +342,13 @@ struct EuclideanExpander
       + (p_exit - p_start).norm();
 
     queue.push(std::make_shared<Node>(
-      Node{
-        exit_waypoint_index,
-        estimate_remaining_cost(p_exit),
-        cost,
-        p_exit,
-        parent_node
-      }));
+        Node{
+          exit_waypoint_index,
+          estimate_remaining_cost(p_exit),
+          cost,
+          p_exit,
+          parent_node
+        }));
   }
 
   void expand(const NodePtr& parent_node, SearchQueue& queue)
@@ -694,15 +694,17 @@ struct DifferentialDriveExpander
             const auto lane_exit = lane.exit().waypoint_index();
             if (lane_exit != initial_waypoint)
             {
+              // *INDENT-OFF*
               throw std::invalid_argument(
                 "[rmf_traffic::agv::Planner] Disagreement between initial "
                 "waypoint index [" + std::to_string(initial_waypoint)
                 + "] and the initial lane exit ["
                 + std::to_string(lane_exit) + "]");
+              // *INDENT-ON*
             }
 
             if (!is_orientation_okay(
-              *initial_location, orientation, course, lane))
+                *initial_location, orientation, course, lane))
             {
               // We cannot approach the initial_waypoint with this orientation,
               // so we cannot use this orientation to start.
@@ -782,15 +784,15 @@ struct DifferentialDriveExpander
             + rotated_initial_node->current_cost;
 
           queue.push(std::make_shared<Node>(
-            Node{
-              cost_estimate,
-              current_cost,
-              initial_waypoint,
-              orientation,
-              std::move(approach_route),
-              nullptr,
-              rotated_initial_node
-            }));
+              Node{
+                cost_estimate,
+                current_cost,
+                initial_waypoint,
+                orientation,
+                std::move(approach_route),
+                nullptr,
+                rotated_initial_node
+              }));
         }
       }
       else
@@ -804,16 +806,16 @@ struct DifferentialDriveExpander
           Eigen::Vector3d::Zero());
 
         queue.push(std::make_shared<Node>(
-          Node{
-            cost_estimate,
-            0.0,
-            initial_waypoint,
-            initial_orientation,
-            std::move(initial_route),
-            nullptr,
-            nullptr,
-            start_index
-          }));
+            Node{
+              cost_estimate,
+              0.0,
+              initial_waypoint,
+              initial_orientation,
+              std::move(initial_route),
+              nullptr,
+              nullptr,
+              start_index
+            }));
       }
     }
   }
@@ -1082,7 +1084,7 @@ struct DifferentialDriveExpander
         auto parent_to_event = std::make_shared<Node>(
           Node{
             _context.heuristic.estimate_remaining_cost(
-            _context, exit_waypoint_index),
+              _context, exit_waypoint_index),
             compute_current_cost(initial_parent, trajectory),
             exit_waypoint_index,
             orientation,
@@ -1144,8 +1146,8 @@ struct DifferentialDriveExpander
         };
 
         if (!agv::internal::can_skip_interpolation(
-          initial_position, next_position,
-          future_position, _context.interpolate))
+            initial_position, next_position,
+            future_position, _context.interpolate))
         {
           continue;
         }
@@ -1383,12 +1385,14 @@ CacheManager make_cache(agv::Planner::Configuration config)
   if (config.vehicle_traits().get_differential())
   {
     return CacheManager(std::make_shared<DifferentialDriveCache>(
-      std::move(config)));
+          std::move(config)));
   }
 
+  // *INDENT-OFF*
   throw std::runtime_error(
     "[rmf_traffic::agv::Planner] Planning utilities are currently only "
     "implemented for AGVs that use a differential drive.");
+  // *INDENT-ON*
 }
 
 } // namespace planning

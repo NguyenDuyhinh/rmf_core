@@ -42,9 +42,8 @@ Participant Participant::Implementation::make(
 
   if (rectifier_factory)
   {
-    participant._pimpl->_rectification =
-      rectifier_factory->make(
-        Rectifier::Implementation::make(*participant._pimpl), id);
+    participant._pimpl->_rectification = rectifier_factory->make(
+      Rectifier::Implementation::make(*participant._pimpl), id);
   }
 
   return participant;

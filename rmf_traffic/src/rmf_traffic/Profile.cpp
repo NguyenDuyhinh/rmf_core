@@ -24,10 +24,10 @@ Profile::Profile(
   geometry::ConstFinalConvexShapePtr footprint,
   geometry::ConstFinalConvexShapePtr vicinity)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(footprint),
-      std::move(vicinity)
-    }))
+      Implementation{
+        std::move(footprint),
+        std::move(vicinity)
+      }))
 {
   // Do nothing
 }

@@ -57,7 +57,7 @@ public:
 //==============================================================================
 Change::Add::Add(std::vector<Item> additions)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{std::move(additions)}))
+      Implementation{std::move(additions)}))
 {
   // Do nothing
 }
@@ -124,7 +124,7 @@ Change::RegisterParticipant::RegisterParticipant(
   ParticipantId id,
   ParticipantDescription description)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{id, description}))
+      Implementation{id, description}))
 {
   // Do nothing
 }

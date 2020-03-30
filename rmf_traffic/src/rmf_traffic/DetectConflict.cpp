@@ -231,11 +231,11 @@ std::array<double, 2> get_local_extrema(
   std::array<double, 2> extrema;
   assert(!extrema_candidates.empty());
   extrema[0] = *std::min_element(
-      extrema_candidates.begin(),
-      extrema_candidates.end());
+    extrema_candidates.begin(),
+    extrema_candidates.end());
   extrema[1] = *std::max_element(
-      extrema_candidates.begin(),
-      extrema_candidates.end());
+    extrema_candidates.begin(),
+    extrema_candidates.end());
 
   return extrema;
 }
@@ -348,12 +348,12 @@ rmf_utils::optional<fcl::FCL_REAL> check_collision(
   const fcl::ContinuousCollisionRequest& request)
 {
   const auto obj_a = fcl::ContinuousCollisionObject(
-        geometry::FinalConvexShape::Implementation::get_collision(shape_a),
-        motion_a);
+    geometry::FinalConvexShape::Implementation::get_collision(shape_a),
+    motion_a);
 
   const auto obj_b = fcl::ContinuousCollisionObject(
-        geometry::FinalConvexShape::Implementation::get_collision(shape_b),
-        motion_b);
+    geometry::FinalConvexShape::Implementation::get_collision(shape_b),
+    motion_b);
 
   fcl::ContinuousCollisionResult result;
   fcl::collide(&obj_a, &obj_b, request, result);
@@ -398,9 +398,9 @@ bool DetectConflict::between(
   Interpolate interpolation)
 {
   return Implementation::between(
-        profile_a, trajectory_a,
-        profile_b, trajectory_b,
-        interpolation);
+    profile_a, trajectory_a,
+    profile_b, trajectory_b,
+    interpolation);
 }
 
 bool DetectConflict::Implementation::between(
@@ -415,8 +415,10 @@ bool DetectConflict::Implementation::between(
     std::min(trajectory_a.size(), trajectory_b.size());
   if (min_size < 2)
   {
+    // *INDENT-OFF*
     throw invalid_trajectory_error::Implementation::make_segment_num_error(
       min_size);
+    // *INDENT-ON*
   }
 
   const Profile::Implementation profile_a = convert_profile(input_profile_a);
@@ -485,8 +487,8 @@ bool DetectConflict::Implementation::between(
     if (overlap(bound_a.footprint, bound_b.vicinity))
     {
       if (const auto collision = check_collision(
-            *profile_a.footprint, motion_a,
-            *profile_b.vicinity, motion_b, request))
+          *profile_a.footprint, motion_a,
+          *profile_b.vicinity, motion_b, request))
       {
         if (!output_conflicts)
           return true;
@@ -501,8 +503,8 @@ bool DetectConflict::Implementation::between(
     if (test_complement && overlap(bound_a.vicinity, bound_b.footprint))
     {
       if (const auto collision = check_collision(
-            *profile_a.vicinity, motion_a,
-            *profile_b.footprint, motion_b, request))
+          *profile_a.vicinity, motion_a,
+          *profile_b.footprint, motion_b, request))
       {
         if (!output_conflicts)
           return true;
@@ -558,8 +560,10 @@ bool detect_conflicts(
       << "trajectory was passed to detect_conflicts. This is a bug "
       << "that should never happen. Please alert the RMF developers."
       << std::endl;
+    // *INDENT-OFF*
     throw invalid_trajectory_error::Implementation::make_segment_num_error(
       trajectory.size());
+    // *INDENT-ON*
   }
 #endif // NDEBUG
 
@@ -617,10 +621,10 @@ bool detect_conflicts(
       std::min(spline_trajectory.finish_time(), finish_time);
 
     *motion_trajectory = spline_trajectory.to_fcl(
-          spline_start_time, spline_finish_time);
+      spline_start_time, spline_finish_time);
 
     const auto obj_trajectory = fcl::ContinuousCollisionObject(
-          vicinity_geom, motion_trajectory);
+      vicinity_geom, motion_trajectory);
 
     assert(region.shape);
     const auto& region_shapes = geometry::FinalShape::Implementation
@@ -628,7 +632,7 @@ bool detect_conflicts(
     for (const auto& region_shape : region_shapes)
     {
       const auto obj_region = fcl::ContinuousCollisionObject(
-            region_shape, motion_region);
+        region_shape, motion_region);
 
       // TODO(MXG): We should do a broadphase test here before using
       // fcl::collide

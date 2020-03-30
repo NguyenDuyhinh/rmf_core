@@ -45,11 +45,11 @@ Planner::Configuration::Configuration(
   VehicleTraits traits,
   Interpolate::Options interpolation)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(graph),
-      std::move(traits),
-      std::move(interpolation)
-    }))
+      Implementation{
+        std::move(graph),
+        std::move(traits),
+        std::move(interpolation)
+      }))
 {
   // Do nothing
 }
@@ -130,11 +130,11 @@ Planner::Options::Options(
   const Duration min_hold_time,
   const bool* interrupt_flag)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(validator),
-      min_hold_time,
-      interrupt_flag
-    }))
+      Implementation{
+        std::move(validator),
+        min_hold_time,
+        interrupt_flag
+      }))
 {
   // Do nothing
 }
@@ -201,13 +201,13 @@ Planner::Start::Start(
   rmf_utils::optional<Eigen::Vector2d> initial_location,
   rmf_utils::optional<std::size_t> initial_lane)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      initial_time,
-      initial_waypoint,
-      initial_orientation,
-      std::move(initial_location),
-      std::move(initial_lane)
-    }))
+      Implementation{
+        initial_time,
+        initial_waypoint,
+        initial_orientation,
+        std::move(initial_location),
+        std::move(initial_lane)
+      }))
 {
   // Do nothing
 }
@@ -293,10 +293,10 @@ public:
 //==============================================================================
 Planner::Goal::Goal(const std::size_t waypoint)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      waypoint,
-      rmf_utils::nullopt
-    }))
+      Implementation{
+        waypoint,
+        rmf_utils::nullopt
+      }))
 {
   // Do nothing
 }
@@ -306,10 +306,10 @@ Planner::Goal::Goal(
   const std::size_t waypoint,
   const double goal_orientation)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      waypoint,
-      goal_orientation
-    }))
+      Implementation{
+        waypoint,
+        goal_orientation
+      }))
 {
   // Do nothing
 }
@@ -399,11 +399,11 @@ Planner::Planner(
   Configuration config,
   Options default_options)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      internal::planning::make_cache(config),
-      std::move(default_options),
-      config
-    }))
+      Implementation{
+        internal::planning::make_cache(config),
+        std::move(default_options),
+        config
+      }))
 {
   // Do nothing
 }

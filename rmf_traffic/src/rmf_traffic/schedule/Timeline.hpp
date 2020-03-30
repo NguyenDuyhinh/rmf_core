@@ -223,9 +223,11 @@ public:
     }
     else
     {
+      // *INDENT-OFF*
       throw std::runtime_error(
         "Unexpected Query::Participants mode: "
         + std::to_string(static_cast<uint16_t>(mode)));
+      // *INDENT-ON*
     }
   }
 
@@ -457,8 +459,8 @@ private:
         return timeline.insert(
           timeline.end(),
           std::make_pair(
-          time + PartialBucketDuration,
-          std::make_shared<Bucket>()));
+            time + PartialBucketDuration,
+            std::make_shared<Bucket>()));
       }
 
       auto last_it = --timeline.end();
@@ -467,8 +469,8 @@ private:
         last_it = timeline.insert(
           timeline.end(),
           std::make_pair(
-          last_it->first + BucketDuration,
-          std::make_shared<Bucket>()));
+            last_it->first + BucketDuration,
+            std::make_shared<Bucket>()));
       }
 
       return last_it;
@@ -479,8 +481,8 @@ private:
       start_it = timeline.insert(
         start_it,
         std::make_pair(
-        start_it->first - BucketDuration,
-        std::make_shared<Bucket>()));
+          start_it->first - BucketDuration,
+          std::make_shared<Bucket>()));
     }
 
     return start_it;

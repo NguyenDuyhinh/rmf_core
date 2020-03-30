@@ -57,7 +57,7 @@ Box::Box(double x_length, double y_length)
 //==============================================================================
 Box::Box(const Box& other)
 : ConvexShape(std::make_unique<BoxInternal>(
-    static_cast<const BoxInternal&>(*other._get_internal())))
+      static_cast<const BoxInternal&>(*other._get_internal())))
 {
   // Do nothing
 }

@@ -81,7 +81,7 @@ forward_iterator<E, I, F>::forward_iterator()
 template<typename E, typename I, typename F>
 forward_iterator<E, I, F>::forward_iterator(I impl)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{std::move(impl)}))
+      Implementation{std::move(impl)}))
 {
   // Do nothing
 }

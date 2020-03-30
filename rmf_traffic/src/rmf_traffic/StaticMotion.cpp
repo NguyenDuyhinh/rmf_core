@@ -58,8 +58,10 @@ fcl::FCL_REAL StaticMotion::computeMotionBound(
   std::cout <<
     " ----- OH NO, WE'RE USING StaticMotion::computeMotionBound(TriangleMotionBoundVisitor)!! ----- "
     << std::endl;
+  // *INDENT-OFF*
   throw std::runtime_error(
     "unimplemented function: StaticMotion::computeMotionBound(TriangleMotionBoundVisitor)");
+  // *INDENT-ON*
 }
 
 //==============================================================================
@@ -74,8 +76,10 @@ void StaticMotion::getTaylorModel(fcl::TMatrix3&, fcl::TVector3&) const
   std::cout <<
     " ----- OH NO, WE'RE USING StaticMotion::getTaylorModel()!! ----- "
     << std::endl;
+  // *INDENT-OFF*
   throw std::runtime_error(
     "unimplemented function: StaticMotion::getTaylorModel()");
+  // *INDENT-ON*
 }
 
 } // namespace internal

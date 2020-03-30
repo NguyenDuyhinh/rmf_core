@@ -170,11 +170,11 @@ public:
       {std::make_pair("linear velocity",
         traits.linear().get_nominal_velocity()),
         std::make_pair("linear acceleration",
-          traits.linear().get_nominal_acceleration()),
+        traits.linear().get_nominal_acceleration()),
         std::make_pair("rotational velocity",
-          traits.rotational().get_nominal_velocity()),
+        traits.rotational().get_nominal_velocity()),
         std::make_pair("rotational acceleration",
-          traits.rotational().get_nominal_acceleration())})
+        traits.rotational().get_nominal_acceleration())})
     {
       if (pair.second <= 0.0)
         values.push_back(pair);
@@ -217,10 +217,10 @@ Interpolate::Options::Options(
   const double rotation_thresh,
   const double corner_angle_thresh)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    always_stop,
-    translation_thresh,
-    rotation_thresh,
-    corner_angle_thresh))
+      always_stop,
+      translation_thresh,
+      rotation_thresh,
+      corner_angle_thresh))
 {
   // Do nothing
 }
@@ -365,7 +365,7 @@ Trajectory Interpolate::positions(
     {
       const Eigen::Vector3d& future_position = input_positions[i+1];
       if (internal::can_skip_interpolation(
-        last_position, next_position, future_position, options))
+          last_position, next_position, future_position, options))
       {
         continue;
       }

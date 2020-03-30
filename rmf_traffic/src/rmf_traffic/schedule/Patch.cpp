@@ -40,12 +40,12 @@ Patch::Participant::Participant(
   std::vector<Change::Delay> delays,
   Change::Add additions)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      id,
-      std::move(erasures),
-      std::move(delays),
-      std::move(additions)
-    }))
+      Implementation{
+        id,
+        std::move(erasures),
+        std::move(delays),
+        std::move(additions)
+      }))
 {
   // Do nothing
 }
@@ -104,13 +104,13 @@ Patch::Patch(
   rmf_utils::optional<Change::Cull> cull,
   Version latest_version)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(removed_participants),
-      std::move(new_participants),
-      std::move(changes),
-      cull,
-      latest_version
-    }))
+      Implementation{
+        std::move(removed_participants),
+        std::move(new_participants),
+        std::move(changes),
+        cull,
+        latest_version
+      }))
 {
   // Do nothing
 }
@@ -166,9 +166,9 @@ Version Patch::latest_version() const
 namespace detail {
 
 template class bidirectional_iterator<
-  const schedule::Patch::Participant,
-  schedule::Patch::IterImpl,
-  schedule::Patch
+    const schedule::Patch::Participant,
+    schedule::Patch::IterImpl,
+    schedule::Patch
 >;
 
 } // namespace detail

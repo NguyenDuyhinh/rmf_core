@@ -24,10 +24,10 @@ Route::Route(
   std::string map,
   Trajectory trajectory)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(map),
-      std::move(trajectory)
-    }))
+      Implementation{
+        std::move(map),
+        std::move(trajectory)
+      }))
 {
   // Do nothing
 }

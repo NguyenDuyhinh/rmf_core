@@ -57,11 +57,13 @@ public:
     // window size, then we have an exception.
     if (Window < distance)
     {
+      // *INDENT-OFF*
       throw std::runtime_error(
         "[rmf_traffic::schedule::Modular] modular distance between value ["
         + std::to_string(rhs) + "] and basis [" + std::to_string(_basis)
         + "] is too big [" + std::to_string(distance) + "]. Maximum is "
         + std::to_string(Window));
+      // *INDENT-ON*
     }
 
     // If the distance from the adjusted basis is less than half the window

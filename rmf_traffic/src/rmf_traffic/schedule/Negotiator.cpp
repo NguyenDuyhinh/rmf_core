@@ -37,11 +37,11 @@ SimpleResponder::SimpleResponder(
   schedule::ParticipantId for_participant,
   std::vector<schedule::ParticipantId> to_accommodate)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      std::move(negotiation),
-      for_participant,
-      std::move(to_accommodate)
-    }))
+      Implementation{
+        std::move(negotiation),
+        for_participant,
+        std::move(to_accommodate)
+      }))
 {
   // Do nothing
 }

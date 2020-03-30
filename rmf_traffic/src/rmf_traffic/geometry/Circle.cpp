@@ -53,7 +53,7 @@ Circle::Circle(double radius)
 //==============================================================================
 Circle::Circle(const Circle& other)
 : ConvexShape(std::make_unique<CircleInternal>(
-    static_cast<const CircleInternal&>(*other._get_internal())))
+      static_cast<const CircleInternal&>(*other._get_internal())))
 {
   // Do nothing
 }

@@ -26,9 +26,11 @@ std::unique_ptr<Motion> Motion::compute_cubic_splines(
 {
   if (input_begin == input_end)
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[rmf_traffic::Motion::compute_cubic_spline] invalid waypoint range: "
       "begin == end");
+    // *INDENT-ON*
   }
 
   using const_iterator = internal::WaypointList::const_iterator;

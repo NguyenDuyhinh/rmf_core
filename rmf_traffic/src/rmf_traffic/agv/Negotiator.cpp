@@ -81,10 +81,10 @@ SimpleNegotiator::SimpleNegotiator(
   Planner::Configuration planner_configuration,
   const Options& options)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    std::move(start),
-    std::move(goal),
-    std::move(planner_configuration),
-    Planner::Options(nullptr, options.minimum_holding_time())))
+      std::move(start),
+      std::move(goal),
+      std::move(planner_configuration),
+      Planner::Options(nullptr, options.minimum_holding_time())))
 {
   // Do nothing
 }

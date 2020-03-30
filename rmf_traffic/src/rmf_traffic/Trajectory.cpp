@@ -335,10 +335,12 @@ Trajectory::Waypoint& Trajectory::Waypoint::change_time(const Time new_time)
     {
       // The new time conflicts with an existing time, so we will throw an
       // exception.
+      // *INDENT-OFF*
       throw std::invalid_argument(
         "[Trajectory::Waypoint::change_time] Attempted to set time to "
         + std::to_string(new_time.time_since_epoch().count())
         + "ns, but a waypoint already exists at that timestamp.");
+      // *INDENT-ON*
     }
 
     segments.splice(destination, segments, data_it);

@@ -184,7 +184,7 @@ public:
 
     // Remove this Table's participant from the unsubmitted
     const auto it = std::remove_if(unsubmitted.begin(), unsubmitted.end(),
-      [&](const ParticipantId p) { return p == participant; });
+        [&](const ParticipantId p) { return p == participant; });
     assert(it != unsubmitted.end());
     unsubmitted.erase(it);
   }
@@ -232,8 +232,8 @@ public:
     auto table = std::make_shared<Table>(Table());
     table->_pimpl = rmf_utils::make_unique_impl<Implementation>(
       Implementation(
-      table, negotiation_data, viewer, participant, 1, {},
-      participants, {}, nullptr));
+        table, negotiation_data, viewer, participant, 1, {},
+        participants, {}, nullptr));
 
     return table;
   }
@@ -368,9 +368,8 @@ public:
         const auto& table = entry.second;
         if (table->_pimpl->rejected && negotiation_data)
         {
-          negotiation_data->num_terminated_tables -=
-            termination_factor(
-              table->_pimpl->depth, negotiation_data->participants.size());
+          negotiation_data->num_terminated_tables -= termination_factor(
+            table->_pimpl->depth, negotiation_data->participants.size());
 
           negotiation_data->rejected_tables.erase(table->_pimpl.get());
         }
@@ -484,10 +483,12 @@ public:
   {
     if (!data->participants.insert(new_participant).second)
     {
+      // *INDENT-OFF*
       throw std::runtime_error(
         "[rmf_traffic::schedule::Negotiation::add_participant] "
         "Participant [" + std::to_string(new_participant) + "] is already "
         "present in the Negotiation");
+      // *INDENT-ON*
     }
 
     // We can update the maximum number of terminating tables by just
@@ -533,7 +534,7 @@ Negotiation::Negotiation(
   const Viewer& viewer,
   std::vector<ParticipantId> participants)
 : _pimpl(rmf_utils::make_unique_impl<Implementation>(
-    viewer, std::move(participants)))
+      viewer, std::move(participants)))
 {
   // Do nothing
 }

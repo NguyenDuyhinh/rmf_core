@@ -136,7 +136,7 @@ public:
   Inconsistencies inconsistencies;
 
   using StagedChanges = std::unordered_map<ParticipantId,
-    std::map<ItineraryVersion, Change>>;
+      std::map<ItineraryVersion, Change>>;
   StagedChanges staged_changes;
 
   std::unordered_set<ParticipantId> participant_ids;
@@ -187,9 +187,11 @@ public:
       // this itinerary change.
       if (insertion.first->second)
       {
+        // *INDENT-OFF*
         throw std::runtime_error(
           "[Database::set] New route ID [" + std::to_string(item.id)
           + "] collides with one already in the database");
+        // *INDENT-ON*
       }
 
       entries.push_back(&insertion.first->second);
@@ -334,10 +336,12 @@ public:
 
     } while (_next_participant_id != initial_suggestion);
 
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::Implementation::get_next_participant_id] There are no "
       "remaining Participant ID values available. This should never happen."
       " Please report this as a serious bug.");
+    // *INDENT-ON
   }
 
 private:
@@ -393,9 +397,11 @@ void Database::set(
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::set] No participant with ID ["
       + std::to_string(participant) + "]");
+    // *INDENT-ON*
   }
 
   Implementation::ParticipantState& state = p_it->second;
@@ -440,9 +446,11 @@ void Database::extend(
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::extend] No participant with ID ["
       + std::to_string(participant) + "]");
+    // *INDENT-ON*
   }
 
   Implementation::ParticipantState& state = p_it->second;
@@ -483,9 +491,11 @@ void Database::delay(
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::delay] No participant with ID ["
       + std::to_string(participant) + "]");
+    // *INDENT-ON*
   }
 
   Implementation::ParticipantState& state = p_it->second;
@@ -517,9 +527,11 @@ void Database::erase(
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::erase] No participant with ID ["
       + std::to_string(participant) + "]");
+    // *INDENT-ON*
   }
 
   Implementation::ParticipantState& state = p_it->second;
@@ -553,9 +565,11 @@ void Database::erase(
   const auto p_it = _pimpl->states.find(participant);
   if (p_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::erase] No participant with ID ["
       + std::to_string(participant) + "]");
+    // *INDENT-ON*
   }
 
   Implementation::ParticipantState& state = p_it->second;
@@ -580,9 +594,11 @@ void Database::erase(
   {
     if (state.active_routes.count(id) == 0)
     {
+      // *INDENT-OFF*
       throw std::runtime_error(
         "[Database::erase] The route with ID [" + std::to_string(id)
         + "] is not active!");
+      // *INDENT-ON*
     }
 
     route_set.insert(id);
@@ -630,19 +646,23 @@ void Database::unregister_participant(
   if (id_it == _pimpl->participant_ids.end()
     && state_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::unregister_participant] Requested unregistering an "
       "inactive participant ID [" + std::to_string(participant) + "]");
+    // *INDENT-ON*
   }
   else if (id_it == _pimpl->participant_ids.end()
     || state_it == _pimpl->states.end())
   {
+    // *INDENT-OFF*
     throw std::runtime_error(
       "[Database::unregister_participant] Inconsistency in participant "
       "registration ["
       + std::to_string(id_it == _pimpl->participant_ids.end()) + ":"
       + std::to_string(state_it == _pimpl->states.end())
       + "]. Please report this as a serious bug!");
+    // *INDENT-ON*
   }
 
   _pimpl->inconsistencies._pimpl->unregister_participant(participant);
