@@ -60,13 +60,13 @@ std::vector<ScheduleNode::ConflictPair> get_conflicts(
           continue;
 
         if (rmf_traffic::DetectConflict::between(
-              vc->description.profile(),
-              vc->route.trajectory(),
-              description.profile(),
-              route->trajectory()))
+            vc->description.profile(),
+            vc->route.trajectory(),
+            description.profile(),
+            route->trajectory()))
         {
           conflicts.emplace_back(
-                ScheduleNode::ConflictPair{participant, vc->participant});
+            ScheduleNode::ConflictPair{participant, vc->participant});
         }
       }
     }
@@ -118,15 +118,13 @@ ScheduleNode::ScheduleNode()
     const MirrorUpdate::Response::SharedPtr response)
     { this->mirror_update(request_header, request, response); });
 
-  mirror_wakeup_publisher =
-    create_publisher<MirrorWakeup>(
-      rmf_traffic_ros2::MirrorWakeupTopicName,
-      rclcpp::SystemDefaultsQoS());
+  mirror_wakeup_publisher = create_publisher<MirrorWakeup>(
+    rmf_traffic_ros2::MirrorWakeupTopicName,
+    rclcpp::SystemDefaultsQoS());
 
-  conflict_publisher =
-    create_publisher<ScheduleConflictNotice>(
-      rmf_traffic_ros2::ScheduleConflictNoticeTopicName,
-      rclcpp::SystemDefaultsQoS());
+  conflict_publisher = create_publisher<ScheduleConflictNotice>(
+    rmf_traffic_ros2::ScheduleConflictNoticeTopicName,
+    rclcpp::SystemDefaultsQoS());
 
   itinerary_set_sub = create_subscription<ItinerarySet>(
     rmf_traffic_ros2::ItinerarySetTopicName,
@@ -168,10 +166,9 @@ ScheduleNode::ScheduleNode()
       this->itinerary_clear(*msg);
     });
 
-  inconsistency_pub =
-    create_publisher<InconsistencyMsg>(
-      rmf_traffic_ros2::ScheduleInconsistencyTopicName,
-      rclcpp::SystemDefaultsQoS().reliable());
+  inconsistency_pub = create_publisher<InconsistencyMsg>(
+    rmf_traffic_ros2::ScheduleInconsistencyTopicName,
+    rclcpp::SystemDefaultsQoS().reliable());
 
   const auto negotiation_qos = rclcpp::ServicesQoS();
   conflict_ack_sub = create_subscription<ConflictAck>(
@@ -199,7 +196,7 @@ ScheduleNode::ScheduleNode()
     });
 
   conflict_conclusion_pub = create_publisher<ConflictConclusion>(
-        rmf_traffic_ros2::ScheduleConflictConclusionTopicName, negotiation_qos);
+    rmf_traffic_ros2::ScheduleConflictConclusionTopicName, negotiation_qos);
 
   conflict_check_quit = false;
   conflict_check_thread = std::thread(
@@ -221,7 +218,7 @@ ScheduleNode::ScheduleNode()
           {
             return (database.latest_version() > last_checked_version)
             && !conflict_check_quit;
-        });
+          });
 
           if (database.latest_version() == last_checked_version
           || conflict_check_quit)
@@ -291,20 +288,20 @@ void ScheduleNode::register_query(
       // but there's no harm in double-checking.
       response->error = "No more space for additional queries to be registered";
       RCLCPP_ERROR(
-            get_logger(),
-            "[ScheduleNode::register_query] " + response->error);
+        get_logger(),
+        "[ScheduleNode::register_query] " + response->error);
       return;
     }
   } while (registered_queries.find(query_id) != registered_queries.end());
 
   last_query_id = query_id;
   registered_queries.insert(
-        std::make_pair(query_id, rmf_traffic_ros2::convert(request->query)));
+    std::make_pair(query_id, rmf_traffic_ros2::convert(request->query)));
 
   response->query_id = query_id;
   RCLCPP_INFO(
-        get_logger(),
-        "[" + std::to_string(query_id) + "] Registered query");
+    get_logger(),
+    "[" + std::to_string(query_id) + "] Registered query");
 }
 
 //==============================================================================
@@ -321,8 +318,8 @@ void ScheduleNode::unregister_query(
     response->confirmation = false;
 
     RCLCPP_WARN(
-          get_logger(),
-          "[ScheduleNode::unregister_query] " + response->error);
+      get_logger(),
+      "[ScheduleNode::unregister_query] " + response->error);
     return;
   }
 
@@ -330,8 +327,8 @@ void ScheduleNode::unregister_query(
   response->confirmation = true;
 
   RCLCPP_INFO(
-        get_logger(),
-        "[" + std::to_string(request->query_id) + "] Unregistered query");
+    get_logger(),
+    "[" + std::to_string(request->query_id) + "] Unregistered query");
 }
 
 //==============================================================================
@@ -346,20 +343,20 @@ void ScheduleNode::register_participant(
   try
   {
     response->participant_id = database.register_participant(
-          rmf_traffic_ros2::convert(request->description));
+      rmf_traffic_ros2::convert(request->description));
 
     RCLCPP_INFO(
-          get_logger(),
-          "Registered participant [" + std::to_string(response->participant_id)
-          + "] named [" + request->description.name + "] owned by ["
-          + request->description.owner + "]");
+      get_logger(),
+      "Registered participant [" + std::to_string(response->participant_id)
+      + "] named [" + request->description.name + "] owned by ["
+      + request->description.owner + "]");
   }
   catch (const std::exception& e)
   {
     RCLCPP_ERROR(
-          get_logger(),
-          "Failed to register participant [" + request->description.name
-          + "] owned by [" + request->description.owner + "]:" + e.what());
+      get_logger(),
+      "Failed to register participant [" + request->description.name
+      + "] owned by [" + request->description.owner + "]:" + e.what());
     response->error = e.what();
   }
 }
@@ -396,16 +393,16 @@ void ScheduleNode::unregister_participant(
     response->confirmation = true;
 
     RCLCPP_INFO(
-          get_logger(),
-          "Unregistered participant [" + std::to_string(request->participant_id)
-          +"] named [" + name + "] owned by [" + owner + "]");
+      get_logger(),
+      "Unregistered participant [" + std::to_string(request->participant_id)
+      +"] named [" + name + "] owned by [" + owner + "]");
   }
   catch (const std::exception& e)
   {
     RCLCPP_ERROR(
-          get_logger(),
-          "Failed to unregister participant ["
-          + std::to_string(request->participant_id) + "]:" + e.what());
+      get_logger(),
+      "Failed to unregister participant ["
+      + std::to_string(request->participant_id) + "]:" + e.what());
     response->error = e.what();
     response->confirmation = false;
   }
@@ -423,8 +420,8 @@ void ScheduleNode::mirror_update(
     response->error = "Unrecognized query_id: "
       + std::to_string(request->query_id);
     RCLCPP_WARN(
-          get_logger(),
-          "[ScheduleNode::mirror_update] " + response->error);
+      get_logger(),
+      "[ScheduleNode::mirror_update] " + response->error);
     return;
   }
 
@@ -441,9 +438,9 @@ void ScheduleNode::itinerary_set(const ItinerarySet& set)
 {
   std::unique_lock<std::mutex> lock(database_mutex);
   database.set(
-        set.participant,
-        rmf_traffic_ros2::convert(set.itinerary),
-        set.itinerary_version);
+    set.participant,
+    rmf_traffic_ros2::convert(set.itinerary),
+    set.itinerary_version);
 
   publish_inconsistencies(set.participant);
   wakeup_mirrors();
@@ -454,9 +451,9 @@ void ScheduleNode::itinerary_extend(const ItineraryExtend& extend)
 {
   std::unique_lock<std::mutex> lock(database_mutex);
   database.extend(
-        extend.participant,
-        rmf_traffic_ros2::convert(extend.routes),
-        extend.itinerary_version);
+    extend.participant,
+    rmf_traffic_ros2::convert(extend.routes),
+    extend.itinerary_version);
 
   publish_inconsistencies(extend.participant);
   wakeup_mirrors();
@@ -467,10 +464,10 @@ void ScheduleNode::itinerary_delay(const ItineraryDelay& delay)
 {
   std::unique_lock<std::mutex> lock(database_mutex);
   database.delay(
-        delay.participant,
-        rmf_traffic::Time(rmf_traffic::Duration(delay.from_time)),
-        rmf_traffic::Duration(delay.delay),
-        delay.itinerary_version);
+    delay.participant,
+    rmf_traffic::Time(rmf_traffic::Duration(delay.from_time)),
+    rmf_traffic::Duration(delay.delay),
+    delay.itinerary_version);
 
   publish_inconsistencies(delay.participant);
   wakeup_mirrors();
@@ -481,10 +478,10 @@ void ScheduleNode::itinerary_erase(const ItineraryErase& erase)
 {
   std::unique_lock<std::mutex> lock(database_mutex);
   database.erase(
-        erase.participant,
-        std::vector<rmf_traffic::RouteId>(
-          erase.routes.begin(), erase.routes.end()),
-        erase.itinerary_version);
+    erase.participant,
+    std::vector<rmf_traffic::RouteId>(
+      erase.routes.begin(), erase.routes.end()),
+    erase.itinerary_version);
 
   publish_inconsistencies(erase.participant);
   wakeup_mirrors();
@@ -544,9 +541,9 @@ void ScheduleNode::receive_proposal(const ConflictProposal& msg)
   if (!negotiation)
   {
     RCLCPP_WARN(
-          get_logger(),
-          "Received proposal for unknown negotiation ["
-          + std::to_string(msg.conflict_version) + "]");
+      get_logger(),
+      "Received proposal for unknown negotiation ["
+      + std::to_string(msg.conflict_version) + "]");
     return;
   }
 
@@ -608,9 +605,9 @@ void ScheduleNode::receive_rejection(const ConflictRejection& msg)
   if (!negotiation)
   {
     RCLCPP_WARN(
-          get_logger(),
-          "Received rejection for unknown negotiation ["
-          + std::to_string(msg.conflict_version) + "]");
+      get_logger(),
+      "Received rejection for unknown negotiation ["
+      + std::to_string(msg.conflict_version) + "]");
     return;
   }
 

@@ -140,7 +140,7 @@ public:
 
   using TablePtr = rmf_traffic::schedule::Negotiation::TablePtr;
   using ApprovalCallbackMap = std::unordered_map<TablePtr,
-    std::function<void()>>;
+      std::function<void()>>;
   using Approvals = std::unordered_map<Version, ApprovalCallbackMap>;
   Approvals approvals;
 
@@ -494,10 +494,12 @@ public:
 
     if (!insertion.second)
     {
+      // *INDENT-OFF*
       throw std::runtime_error(
         "[rmf_traffic_ros2::schedule::Negotiaton] Attempt to register a "
         "duplicate negotiator for participant ["
         + std::to_string(for_participant) + "]");
+      // *INDENT-ON*
     }
 
     return std::make_shared<Handle>(for_participant, negotiators);

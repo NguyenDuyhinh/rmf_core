@@ -191,10 +191,10 @@ MirrorManager::Options::Options(
   std::mutex* update_mutex,
   bool update_on_wakeup)
 : _pimpl(rmf_utils::make_impl<Implementation>(
-    Implementation{
-      update_mutex,
-      update_on_wakeup
-    }))
+      Implementation{
+        update_mutex,
+        update_on_wakeup
+      }))
 {
   // Do nothing
 }

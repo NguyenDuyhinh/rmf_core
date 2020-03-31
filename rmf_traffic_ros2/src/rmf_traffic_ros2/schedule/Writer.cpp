@@ -269,18 +269,22 @@ public:
     {
       if (!rclcpp::ok())
       {
+        // *INDENT-OFF*
         throw std::runtime_error(
           "[rmf_traffic_ros2::schedule::Writer] Tearing down while waiting "
           "for a schedule participant to finish registering");
+        // *INDENT-ON*
       }
     }
 
     const auto response = future.get();
     if (!response->error.empty())
     {
+      // *INDENT-OFF*
       throw std::runtime_error(
         "[rmf_traffic_ros2::schedule::Writer] Error while attempting to "
         "register a participant: " + response->error);
+      // *INDENT-ON*
     }
 
     return response->participant_id;

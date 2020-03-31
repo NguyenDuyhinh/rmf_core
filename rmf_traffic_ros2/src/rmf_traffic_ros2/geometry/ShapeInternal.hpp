@@ -87,12 +87,13 @@ public:
       if (cast != 0)
         return cast;
     }
-
+    // *INDENT-OFF*
     throw std::runtime_error(
       std::string()
       + "Failed to find a shape context type index for type ["
       + typeid(shape->source()).name() + "] with base type ["
       + typeid(ShapeType).name() + "]");
+    // *INDENT-ON*
   }
 
   ShapeMsgType insert(ShapeTypePtr shape)

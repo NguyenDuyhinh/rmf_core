@@ -103,10 +103,11 @@ rmf_traffic::schedule::Query::Spacetime convert(
     return parse_regions(from);
   else if (rmf_traffic_msgs::msg::ScheduleQuerySpacetime::TIMESPAN == from.type)
     return parse_timespan(from);
-
+  // *INDENT-OFF*
   throw std::runtime_error(
     "Invalid rmf_traffic_msgs/ScheduleQuerySpacetime type ["
     + std::to_string(from.type) + "]");
+  // *INDENT-ON*
 }
 
 namespace {
@@ -214,11 +215,12 @@ rmf_traffic::schedule::Query::Participants convert(
     return Participants::make_only(from.ids);
   else if (from.EXCLUDE == from.type)
     return Participants::make_all_except(from.ids);
-
+  // *INDENT-OFF*
   throw std::runtime_error(
     "[rmf_traffic_ros2::convert] Invalid type value for "
     "rmf_traffic::schedule::Query::Participants: " +
     std::to_string(from.type));
+  // *INDENT-ON*
 }
 
 //==============================================================================

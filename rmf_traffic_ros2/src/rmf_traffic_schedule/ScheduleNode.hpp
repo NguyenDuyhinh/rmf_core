@@ -226,10 +226,10 @@ public:
 
       const auto it =
         _entries.insert(
-          std::make_pair(
-            _next_conflict_version++,
-              Entry{pair, rmf_traffic::schedule::Negotiation(
-                _viewer, std::move(participants))}));
+        std::make_pair(
+          _next_conflict_version++,
+          Entry{pair, rmf_traffic::schedule::Negotiation(
+              _viewer, std::move(participants))}));
 
       return &it.first->first;
     }
